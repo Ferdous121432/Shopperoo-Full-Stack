@@ -22,6 +22,7 @@ const wishListRouter = require('./routes/wishListRoutes');
 const checkoutRouter = require('./routes/checkoutRoutes');
 // Start express app
 const app = express();
+app.set('trust proxy', 1);
 
 // Set Cross-Origin-Resource-Policy header
 app.use((req, res, next) => {
@@ -54,6 +55,7 @@ app.use((err, req, res, next) => {
     next();
   }
 });
+
 // Set security HTTP headers
 app.use(helmet());
 
@@ -69,12 +71,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Enable 'trust proxy' setting
-app.set('trust proxy', 1);
 
 // Apply rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later',
 });
 
 app.use('/api', limiter);
