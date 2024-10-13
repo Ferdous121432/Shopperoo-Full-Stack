@@ -8,7 +8,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
-require('dotenv').config();
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -21,23 +22,31 @@ const cartItemRouter = require('./routes/cartItemRoutes');
 const cartRouter = require('./routes/cartRoutes');
 const wishListRouter = require('./routes/wishListRoutes');
 const checkoutRouter = require('./routes/checkoutRoutes');
+
 // Start express app
 const app = express();
 app.set('trust proxy', 1);
 
-// Connect to MongoDB
+// Load environment variables
+dotenv.config({ path: './config.env' });
+
+// Atlas connection string
+const DB = process.env.MONGO_URI.replace(
+  '<db_password>',
+  process.env.MONGO_PASSWORD,
+);
+
+//DB connection
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  // .connect(process.env.DATABASE_local)
+  .connect(DB, {
+    dbName: 'Shopperoo',
   })
+
   .then(() => {
-    console.log('Connected to MongoDB');
-    res.send('Connected to MongoDB');
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err);
-    res.status(500).send('Internal Server Error');
+    // console.log(con.connections);
+    console.log('DB connection successful!');
+    res.send('DB connection successful!');
   });
 
 // Set Cross-Origin-Resource-Policy header
