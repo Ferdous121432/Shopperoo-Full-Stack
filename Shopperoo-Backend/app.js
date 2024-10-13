@@ -102,6 +102,14 @@ app.use(xss());
 //   }),
 // );
 
+// Test route for varsel check
+app.get('/api/v1/varsel-check', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Varsel check route is working!',
+  });
+});
+
 // 3) ROUTES
 // app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
