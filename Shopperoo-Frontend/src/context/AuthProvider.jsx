@@ -1,0 +1,249 @@
+/* eslint-disable */
+
+import React, { createContext, useReducer, useContext, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+// Initial state
+const initialState = {
+  isAuthenticated: false,
+  user: null,
+  loading: false,
+  error: null,
+  token: null,
+  status: null,
+  userData: null,
+  cartData: null,
+};
+
+// Action types
+// const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+// const LOGOUT = "LOGOUT";
+// const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+// const AUTH_ERROR = "AUTH_ERROR";
+
+// Reducer function
+const authReducer = (state, action) => {
+  switch (action.type) {
+    case "LOADING":
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+
+    case "LOGIN_SUCCESS":
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.data.user,
+        token: action.payload.token,
+        loading: false,
+        error: null,
+        status: "success",
+        userData: action.payload.userData,
+      };
+
+    case "USER_DATA":
+      return {
+        ...state,
+        userData: action.payload.userData,
+        cartData: action.payload.cartData,
+        loading: false,
+      };
+
+    case "SIGNUP_SUCCESS":
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
+        loading: false,
+        error: null,
+      };
+    case "LOGOUT":
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+        loading: false,
+        error: null,
+      };
+    case "AUTH_ERROR":
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+        loading: false,
+        token: null,
+        status: null,
+        userData: null,
+        error: action.payload,
+      };
+
+    case "LOAD_STATE":
+      return {
+        ...state,
+        ...action.payload,
+        loading: false,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// Create context
+export const AuthContext = createContext();
+
+// AuthProvider component
+export const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(authReducer, initialState);
+
+  // Load state from local storage
+  useEffect(() => {
+    dispatch({ type: "LOADING" });
+    const storedState = localStorage.getItem("appState");
+    if (storedState) {
+      dispatch({ type: "LOAD_STATE", payload: JSON.parse(storedState) });
+    }
+  }, [dispatch]);
+
+  // Login function to authenticate the user and save the token to local storage and user data to state and local storage
+  const login = async (credentials) => {
+    dispatch({ type: "LOADING" });
+    try {
+      const url = "http://127.0.0.1:3000/api/v1/users/login";
+      const response = await axios.post(url, credentials);
+
+      localStorage.setItem(
+        "appState",
+        JSON.stringify({
+          isAuthenticated: true,
+          user: response.data.data.user,
+          token: response.data.token,
+          loading: false,
+          error: null,
+          status: "success",
+        })
+      );
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          ...response.data,
+        },
+      });
+      console.log("Sign in successful:", response.data);
+    } catch (error) {
+      console.error("Error signing in:", error);
+      dispatch({ type: "AUTH_ERROR", payload: error.message });
+    }
+  };
+
+  // Fetch the user's data when the token changes and  it will ensure whether page is authenticated or not and fetch the user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      dispatch({ type: "LOADING" });
+      if (state.token) {
+        try {
+          const userdata = await axios.get(
+            "http://127.0.0.1:3000/api/v1/users/me",
+            {
+              headers: {
+                Authorization: `Bearer ${state.token}`,
+              },
+            }
+          );
+          const cartData = await axios.get(
+            "http://127.0.0.1:3000/api/v1/cartItems/mycart",
+            {
+              headers: {
+                Authorization: `Bearer ${state.token}`,
+              },
+            }
+          );
+          dispatch({
+            type: "USER_DATA",
+            payload: {
+              data: { user: state.user },
+              token: state.token,
+              userData: userdata.data.data.data,
+              cartData: cartData.data.data,
+              loading: false,
+            },
+          });
+          // localStorage.setItem(
+          //   "cartState",
+          //   JSON.stringify({
+          //     cartData: cartData.data.data.cartItems,
+          //   })
+          // );
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          dispatch({ type: "AUTH_ERROR", payload: error.message });
+          dispatch({ type: "LOGOUT" });
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [state.token]);
+
+  // Signup function to create a new user account
+  const signup = async (userData) => {
+    dispatch({ type: "LOADING" });
+    try {
+      // Perform signup logic here (e.g., API call)
+      dispatch({ type: SIGNUP_SUCCESS, payload: userData });
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR, payload: error.message });
+    }
+  };
+
+  // Logout function to remove the token from local storage and set the user state to null
+  const logout = () => {
+    dispatch({ type: "LOADING" });
+    // Perform logout logic here (e.g., API call)
+    localStorage.removeItem("appState");
+    dispatch({ type: "LOGOUT" });
+  };
+
+  // Fetch the user's cart when the token changes
+  // //TODO: cart will be fetched when the user is logged in
+  // useEffect(() => {
+  //   const fetchCart = async () => {
+  //     console.log(state.token);
+  //     try {
+  //       const response = await axios.get(
+  //         "http://127.0.0.1:3000/api/v1/carts/my-cart",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${state.token}`,
+  //           },
+  //         }
+  //       );
+
+  //       // Handle the response data here
+  //       console.log("Cart data:", response.data);
+  //     } catch (error) {
+  //       console.log(state.token);
+  //       console.error("Error fetching the cart:", error);
+  //     }
+  //   };
+
+  //   fetchCart();
+  // }, [state.token]);
+
+  return (
+    <AuthContext.Provider value={{ state, login, signup, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+// Custom hook to use the AuthContext
+export const useAuth = () => {
+  if (!AuthContext) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+
+  return useContext(AuthContext);
+};
