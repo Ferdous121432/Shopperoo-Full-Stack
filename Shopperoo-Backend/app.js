@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -23,6 +24,21 @@ const checkoutRouter = require('./routes/checkoutRoutes');
 // Start express app
 const app = express();
 app.set('trust proxy', 1);
+
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+    res.send('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    res.status(500).send('Internal Server Error');
+  });
 
 // Set Cross-Origin-Resource-Policy header
 app.use((req, res, next) => {
