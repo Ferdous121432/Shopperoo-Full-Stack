@@ -46,7 +46,6 @@ mongoose
   .then(() => {
     // console.log(con.connections);
     console.log('DB connection successful!');
-    res.send('DB connection successful!');
   });
 
 // Set Cross-Origin-Resource-Policy header
@@ -138,10 +137,16 @@ app.get('/api/v1/varsel-check', (req, res) => {
     message: 'Varsel check route is working!',
   });
 });
-
 app.get('/', (req, res) => {
-  res.send('Hello from Express on Vercel!');
+  res.status(200).json({
+    status: 'success',
+    message: 'Varsel check route is working!',
+  });
 });
+
+// app.get('/', (req, res) => {
+//   res.send('Hello from Express on Vercel!');
+// });
 
 // 3) ROUTES
 // app.use('/api/v1/tours', tourRouter);
