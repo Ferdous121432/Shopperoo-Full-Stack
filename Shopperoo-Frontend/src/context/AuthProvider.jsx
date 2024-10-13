@@ -3,6 +3,7 @@
 import React, { createContext, useReducer, useContext, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { baseURL, loginURL, userURL, mycartURL } from "../api/apiURL";
 // Initial state
 const initialState = {
   isAuthenticated: false,
@@ -111,7 +112,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     dispatch({ type: "LOADING" });
     try {
-      const url = "http://127.0.0.1:3000/api/v1/users/login";
+      const url = `${baseURL}/${loginURL}`;
       const response = await axios.post(url, credentials);
 
       localStorage.setItem(
@@ -144,22 +145,16 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: "LOADING" });
       if (state.token) {
         try {
-          const userdata = await axios.get(
-            "http://127.0.0.1:3000/api/v1/users/me",
-            {
-              headers: {
-                Authorization: `Bearer ${state.token}`,
-              },
-            }
-          );
-          const cartData = await axios.get(
-            "http://127.0.0.1:3000/api/v1/cartItems/mycart",
-            {
-              headers: {
-                Authorization: `Bearer ${state.token}`,
-              },
-            }
-          );
+          const userdata = await axios.get(`${baseURL}/${userURL}`, {
+            headers: {
+              Authorization: `Bearer ${state.token}`,
+            },
+          });
+          const cartData = await axios.get(`${baseURL}/${mycartURL}`, {
+            headers: {
+              Authorization: `Bearer ${state.token}`,
+            },
+          });
           dispatch({
             type: "USER_DATA",
             payload: {

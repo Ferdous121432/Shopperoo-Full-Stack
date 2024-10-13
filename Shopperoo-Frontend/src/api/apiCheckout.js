@@ -18,7 +18,7 @@ export const makePayment = async (paymentDetails, token) => {
   // };
 
   const response = await axios.post(
-    `${baseURL}${checkoutURL}`,
+    `${baseURL}/${checkoutURL}`,
     paymentDetails,
     {
       headers: {

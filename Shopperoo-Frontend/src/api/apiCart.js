@@ -11,11 +11,15 @@ export const addToCart = async (credentials, token) => {
     //     price: price,
     //     subtotal: price * quantity,
     //   };
-    const response = await axios.post(`${baseURL}${carItemsURL}`, credentials, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      `${baseURL}/${carItemsURL}`,
+      credentials,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log(response);
     if (response.status === 201) {
       console.log(`Product ${credentials.productName} added to cart`);
@@ -30,7 +34,7 @@ export const addToCart = async (credentials, token) => {
 export const deleteFromCart = async (cartItem, token) => {
   try {
     const response = await axios.delete(
-      `${baseURL}${carItemsURL}/${cartItem._id}`,
+      `${baseURL}/${carItemsURL}/${cartItem._id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -53,7 +57,7 @@ export const deleteFromCart = async (cartItem, token) => {
 //TODO: After updating cart item, the cart page should be updated with the new data
 export const getCart = async (token) => {
   try {
-    const response = await axios.get(`${baseURL}${carItemsURL}`, {
+    const response = await axios.get(`${baseURL}/${carItemsURL}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -72,7 +76,7 @@ export const getCart = async (token) => {
 export const updateCartItem = async (cartItem, token) => {
   try {
     const response = await axios.patch(
-      `${baseURL}${carItemsURL}/${cartItem._id}`,
+      `${baseURL}/${carItemsURL}/${cartItem._id}`,
       cartItem,
       {
         headers: {

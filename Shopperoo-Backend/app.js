@@ -144,10 +144,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// app.get('/', (req, res) => {
-//   res.send('Hello from Express on Vercel!');
-// });
-
 // 3) ROUTES
 // app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);

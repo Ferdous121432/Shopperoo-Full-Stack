@@ -61,7 +61,7 @@ export const ProductProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseURL}${productURL}`);
+        const response = await axios.get(`${baseURL}/${productURL}`);
         dispatch({ type: "FETCH_SUCCESS", payload: response.data.data });
         console.log(response);
       } catch (error) {
