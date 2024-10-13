@@ -14,9 +14,6 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <Suspense fallback={<SpinnerFullPage />}>
-        <Elements stripe={stripePromise}>
-          <App />
-        </Elements>
         <App />
       </Suspense>
     </AuthProvider>
