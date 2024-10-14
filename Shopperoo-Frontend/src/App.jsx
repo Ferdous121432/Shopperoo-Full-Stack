@@ -5,7 +5,7 @@ import { lazy } from "react";
 
 import ProductPage from "./pages/ProductPage";
 import SingleProductPage from "./pages/SingleProductPage";
-import HomePage from "./pages/Homepage";
+import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import ContactUs from "./pages/ContactUs";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -33,7 +33,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Home />} />
         <Route path="product" element={<ProductPage />} />
         <Route path="product/f" element={<SingleProductPage />} />
         <Route path="checkout" element={<CheckoutPage />} />

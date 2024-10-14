@@ -5,7 +5,7 @@ import BrowseRange from "../components/BrowseRange/BrowseRange";
 import NewArrivalSection from "../components/NewArrivalSection/NewArrivalSection";
 import ProductsSection from "../components/ProductsSection/ProductsSection";
 
-export default function HomePage() {
+export default function Home() {
   return (
     <Layout>
       <div>Home</div>
