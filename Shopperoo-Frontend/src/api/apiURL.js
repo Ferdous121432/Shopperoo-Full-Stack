@@ -1,5 +1,5 @@
 // export const baseURL = "http://127.0.0.1:3000";
-export const baseURL = "https://shopperoo-full-stack.vercel.app";
+export const baseURL = "https://shopperoo-backend.vercel.app";
 export const loginURL = "api/v1/users/login";
 export const userURL = "api/v1/users/me";
 export const productURL = "api/v1/products";

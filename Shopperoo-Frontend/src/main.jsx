@@ -2,8 +2,6 @@
 
 import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import { Elements } from "@stripe/react-stripe-js";
-import { stripePromise } from "./payment/StripeProvider.js";
 
 import App from "./App.jsx";
 import "./index.css";

@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { useAuth } from "./context/AuthProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy } from "react";
 
@@ -12,7 +13,6 @@ import { lazy } from "react";
 // import SignIn from "./pages/SignIn";
 // import RestrictedPage from "./pages/RestrictedPage";
 // import About from "./pages/About";
-
 const HomePage = lazy(() => import("./pages/Homepage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 const SingleProductPage = lazy(() => import("./pages/SingleProductPage"));
@@ -26,8 +26,6 @@ const About = lazy(() => import("./pages/About"));
 
 // dist/assets/index-59fcab9b.css   30.56 kB │ gzip:   5.14 kB
 // dist/assets/index-f7c12d89.js   572.44 kB │ gzip: 151.29 kB
-
-import { useAuth } from "./context/AuthProvider";
 
 function App() {
   const { state } = useAuth();
