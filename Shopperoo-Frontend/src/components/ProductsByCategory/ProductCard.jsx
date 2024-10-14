@@ -14,7 +14,6 @@ const ProductCard = ({ product }) => {
   const newItem = true;
   const discount = "30%";
   const { state } = useAuth();
-  const redirectURL = `${baseURL}/product/${_id}`;
 
   const [quantity, setQuantity] = useState(1);
   const productDetails = {
@@ -25,6 +24,7 @@ const ProductCard = ({ product }) => {
     price: price,
     subtotal: price * quantity,
   };
+  const redirectURL = `${baseURL}/product/${_id}`;
 
   const handleAddToCart = async () => {
     addToCart(productDetails, state.token);
