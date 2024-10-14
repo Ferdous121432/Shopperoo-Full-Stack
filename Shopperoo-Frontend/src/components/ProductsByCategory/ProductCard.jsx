@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthProvider";
 import { addToCart } from "../../api/apiCart";
 import { Link } from "react-router-dom";
 import { makePayment } from "../../api/apiCheckout";
+import { baseURL } from "../../api/apiURL";
 
 const ProductCard = ({ product }) => {
   const { name, price, slug, description, summary, imageCover, _id } = product;
@@ -40,7 +41,7 @@ const ProductCard = ({ product }) => {
       className="flex flex-col self-stretch my-auto min-w-[240px] w-[285px]"
       data-id={_id}>
       <Link
-        to={`http://localhost:5173/product/${_id}`}
+        to={`${baseURL}/product/${_id}`}
         className="flex relative flex-col items-end px-7 pt-6 pb-56 w-full text-base font-medium text-white whitespace-nowrap aspect-[0.947] max-md:px-5 max-md:pb-24">
         <LazyLoadImage
           src={imageCover}
