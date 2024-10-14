@@ -5,10 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "npm run generate-html && vite build",
+    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "generate-html": "mkdir -p dist && cp index.html dist/"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
