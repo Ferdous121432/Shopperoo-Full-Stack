@@ -14,6 +14,7 @@ const ProductCard = ({ product }) => {
   const newItem = true;
   const discount = "30%";
   const { state } = useAuth();
+  const redirectURL = `${baseURL}/product/${_id}`;
 
   const [quantity, setQuantity] = useState(1);
   const productDetails = {
@@ -41,7 +42,7 @@ const ProductCard = ({ product }) => {
       className="flex flex-col self-stretch my-auto min-w-[240px] w-[285px]"
       data-id={_id}>
       <Link
-        to={`${baseURL}/product/${_id}`}
+        to={redirectURL}
         className="flex relative flex-col items-end px-7 pt-6 pb-56 w-full text-base font-medium text-white whitespace-nowrap aspect-[0.947] max-md:px-5 max-md:pb-24">
         <LazyLoadImage
           src={imageCover}
@@ -61,7 +62,7 @@ const ProductCard = ({ product }) => {
       </Link>
 
       <div className="flex flex-col items-start px-4 pt-4 pb-8 w-full bg-gray-100">
-        <Link to={`http://localhost:5173/product/${_id}`}>
+        <Link to={redirectURL}>
           <h3 className="text-2xl font-semibold leading-tight text-neutral-700">
             {name}
           </h3>
