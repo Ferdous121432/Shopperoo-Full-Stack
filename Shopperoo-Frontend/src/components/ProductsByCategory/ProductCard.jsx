@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
     price: price,
     subtotal: price * quantity,
   };
-  const redirectURL = `${baseURL}/product/${_id}`;
+  const redirectURL = `https://shopperoo-frontend.vercel.app/product/${_id}`;
 
   const handleAddToCart = async () => {
     addToCart(productDetails, state.token);
