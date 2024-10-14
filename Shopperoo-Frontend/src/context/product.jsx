@@ -39,13 +39,6 @@ const reducer = (state, action) => {
         cart: [...state.cart, action.payload],
       };
 
-    case "FETCH_ERROR":
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-
     default:
       return state;
   }
