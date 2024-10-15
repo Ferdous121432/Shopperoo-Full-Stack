@@ -26,7 +26,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     success_url: `http://localhost:5173/product`,
     cancel_url: `http://localhost:5173/product`,
     customer_email: req.user.email,
-    client_reference_id: req.params.product_id,
+    client_reference_id: req.params.product_id, //TODO: will be replaced with product id
     mode: 'payment',
     line_items: [
       {
@@ -36,7 +36,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
             name: `${product.productName}`,
             description: product.description,
             images: [
-              `${req.protocol}://${req.get('host')}/img/products/cover-image/${product.imageCover}`,
+              `https://shopperoo-backend.vercel.app/img/products/cover-image/${product.imageCover}`,
             ],
           },
           unit_amount: product.price * 100, // In stripe, currency is in cents
@@ -72,15 +72,42 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 });
 
 //TODO: will be implemented in the future
-exports.createBookingCheckout = catchAsync(async (req, res, next) => {
-  // This is only TEMPORARY, because it's UNSECURE: everyone can make bookings without paying
-  const { tour, user, price } = req.query;
+const createProductCheckout = async (session) => {
+  const product = session.client_reference_id;
+  const user = (await User.findOne({ email: session.customer_email })).id;
+  const price = session.display_items[0].amount / 100;
+  await Checkout.create({
+    session_id: session.id,
+    currency: session.currency,
+    totalPrice: price,
+    subtotal: price,
+    unitPrice: product.price,
+    quantity: product.quantity,
+    deliveryAddress: session.billing_address_collection,
+    products: product.product_id,
+    user,
+  });
+};
 
-  if (!tour && !user && !price) return next();
-  await Booking.create({ tour, user, price });
+exports.webhookCheckout = (req, res, next) => {
+  const signature = req.headers['stripe-signature'];
 
-  res.redirect(req.originalUrl.split('?')[0]);
-});
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook error: ${err.message}`);
+  }
+
+  if (event.type === 'checkout.session.completed')
+    createProductCheckout(event.data.object);
+
+  res.status(200).json({ received: true });
+};
 
 exports.createBooking = factory.createOne(Checkout);
 exports.getBooking = factory.getOne(Checkout);

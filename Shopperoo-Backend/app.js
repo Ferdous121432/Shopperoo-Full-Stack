@@ -19,9 +19,9 @@ const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const subCategoryRouter = require('./routes/subCategoryRoutes');
 const cartItemRouter = require('./routes/cartItemRoutes');
-const cartRouter = require('./routes/cartRoutes');
 const wishListRouter = require('./routes/wishListRoutes');
 const checkoutRouter = require('./routes/checkoutRoutes');
+const checkoutController = require('./controllers/checkoutController');
 
 // Start express app
 const app = express();
@@ -105,6 +105,13 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
+// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  checkoutController.webhookCheckout,
+);
+
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10000kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10000kb' }));
@@ -131,12 +138,7 @@ app.use(xss());
 // );
 
 // Test route for varsel check
-app.get('/api/v1/varsel-check', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'Varsel check route is working!',
-  });
-});
+
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
