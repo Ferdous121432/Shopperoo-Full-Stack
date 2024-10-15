@@ -6,8 +6,8 @@ import axios from "axios";
 function SignInForm() {
   const { login } = useAuth();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "admin@a.com",
+    password: "test1234",
   });
 
   const handleChange = (e) => {
