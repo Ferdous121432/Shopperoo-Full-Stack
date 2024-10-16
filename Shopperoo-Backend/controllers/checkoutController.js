@@ -26,7 +26,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     success_url: `http://localhost:5173/product`,
     cancel_url: `http://localhost:5173/product`,
     customer_email: req.user.email,
-    client_reference_id: req.params.product_id, //TODO: will be replaced with product id
+    client_reference_id: product.product_id, //TODO: will be replaced with product id
     mode: 'payment',
     line_items: [
       {
@@ -49,20 +49,20 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   console.log('Checkout controller ❌❌❌❌❌', session);
 
   // 3) Create a new checkout document in the database
-  if (session.id) {
-    //TODO: Data will be generated from session object
-    await Checkout.create({
-      session_id: session.id,
-      currency: session.currency,
-      totalPrice: session.amount_total / 100,
-      subtotal: session.amount_subtotal / 100,
-      unitPrice: product.price,
-      quantity: product.quantity,
-      deliveryAddress: session.billing_address_collection,
-      products: product.product_id,
-      user: req.user._id,
-    });
-  }
+  // if (session.id) {
+  //   //TODO: Data will be generated from session object
+  //   await Checkout.create({
+  //     session_id: session.id,
+  //     currency: session.currency,
+  //     totalPrice: session.amount_total / 100,
+  //     subtotal: session.amount_subtotal / 100,
+  //     unitPrice: product.price,
+  //     quantity: product.quantity,
+  //     deliveryAddress: session.billing_address_collection,
+  //     products: product.product_id,
+  //     user: req.user._id,
+  //   });
+  // }
 
   // 3) Create session as response
   res.status(200).json({

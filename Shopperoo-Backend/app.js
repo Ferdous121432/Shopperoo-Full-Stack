@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin: 'https://shopperoo-frontend.vercel.app', // Replace with your frontend URL
+  origin: '*', // Allow all websites
   credentials: true, // Allow credentials (cookies, etc.)
 };
 
