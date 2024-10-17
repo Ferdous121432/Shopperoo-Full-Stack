@@ -1,52 +1,153 @@
 /* eslint-disable */
 import React from "react";
-import InputField from "./InputField";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../../context/AuthProvider";
+import { frontendURL } from "../../../frontendURL/frontendURL";
+
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 function RegistrationForm() {
-  const inputFields = [
-    { label: "First name", type: "text", id: "firstName" },
-    { label: "Last name", type: "text", id: "lastName" },
-    { label: "Email address", type: "email", id: "email" },
-    { label: "Password", type: "password", id: "password" },
-    { label: "Confirm your password", type: "password", id: "confirmPassword" },
-  ];
+  const { signup } = useAuth();
+
+  const [formData, setFormData] = React.useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    dateofbirth: "1998-12-12",
+    phoneNumber: "01521427421",
+    userName: "ferdouss",
+  });
+
+  const [passwordMatch, setPasswordMatch] = useState(true);
+
+  useEffect(() => {
+    if (formData.password !== formData.passwordConfirm) {
+      setPasswordMatch(false);
+    } else {
+      setPasswordMatch(true);
+    }
+  }, [formData.password, formData.passwordConfirm]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  console.log(formData);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("jdjs");
+    signup(formData);
+    window.location.href = frontendURL("signin");
+  };
 
   return (
-    <form className="flex flex-col mt-10 w-full text-base max-w-[534px] text-stone-500 max-md:max-w-full">
-      <div className="flex flex-wrap gap-4 items-start max-md:max-w-full">
-        {inputFields.slice(0, 2).map((field) => (
-          <InputField key={field.id} {...field} />
-        ))}
+    <div className="bg-grey-lighter min-h-screen flex flex-col">
+      <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+          <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="block border border-grey-light w-full p-3 rounded mb-4"
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              className="block border border-grey-light w-full p-3 rounded mb-4"
+              name="lastName"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+            <input
+              type="email"
+              className="block border border-grey-light w-full p-3 rounded mb-4"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              className="block border border-grey-light w-full p-3 rounded mb-4"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <div className="mb-6">
+              <input
+                type="password"
+                className="block border border-grey-light w-full p-3 rounded mb-2"
+                name="passwordConfirm"
+                placeholder="Confirm Password"
+                value={formData.passwordConfirm}
+                onChange={handleChange}
+              />
+              {!passwordMatch && (
+                <p className="text-red-500 text-xs italic mb-8 ">
+                  Passwords do not match
+                </p>
+              )}
+              {passwordMatch &&
+                formData.password &&
+                formData.passwordConfirm && (
+                  <p className="text-green-500 text-xs italic mb-8">
+                    Passwords match
+                  </p>
+                )}
+            </div>
+            {/* Mui date picker */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Date of Birth"
+                value={dayjs(formData.dateofbirth)}
+                onChange={(newValue) => {
+                  setFormData({ ...formData, dateofbirth: newValue });
+                }}
+              />
+            </LocalizationProvider>
+            <button
+              type="submit"
+              className="w-full text-center py-3 rounded bg-green-200 text-slate-200 hover:bg-green-dark focus:outline-none my-1 mt-8">
+              Create Account
+            </button>
+          </form>
+          <div className="text-center text-sm text-grey-dark mt-4">
+            By signing up, you agree to the
+            <a
+              className="no-underline border-b border-grey-dark text-grey-dark"
+              href="#">
+              Terms of Service
+            </a>{" "}
+            and
+            <a
+              className="no-underline border-b border-grey-dark text-grey-dark"
+              href="#">
+              Privacy Policy
+            </a>
+          </div>
+        </div>
+        <div className="text-grey-dark mt-6">
+          Already have an account?
+          <a
+            className="no-underline border-b border-blue text-blue"
+            href="../login/">
+            Log in
+          </a>
+          .
+        </div>
       </div>
-      {inputFields.slice(2).map((field) => (
-        <InputField key={field.id} {...field} fullWidth />
-      ))}
-      <p className="mt-2 max-md:max-w-full">
-        Use 8 or more characters with a mix of letters, numbers & symbols
-      </p>
-      <div className="flex gap-2 items-start self-start py-2 pr-2 mt-2 text-zinc-800">
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/83327219ef862fbeb0feddb7c11c02ad95ef811779c8e45af1447e69550f7e4e?apiKey=5f7c255a63be4d4b97b4f114fa9e17d0&"
-          className="object-contain shrink-0 w-6 aspect-square"
-          alt=""
-        />
-        <label htmlFor="showPassword">
-          <input type="checkbox" id="showPassword" className="sr-only" />
-          Show password
-        </label>
-      </div>
-      <div className="flex flex-wrap gap-5 justify-between mt-10 max-w-full rounded-[32px] w-[534px]">
-        <a href="#" className="my-auto text-base text-neutral-900">
-          Log in instead
-        </a>
-        <button
-          type="submit"
-          className="flex overflow-hidden flex-col justify-center px-7 py-4 text-2xl font-medium text-center text-white bg-neutral-900 rounded-[32px] max-md:px-5">
-          Create an account
-        </button>
-      </div>
-    </form>
+    </div>
   );
 }
 

@@ -10,7 +10,19 @@ const ProductDetails = ({ product }) => {
   const { state } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const { name, price, imageCover, _id } = product;
-  const productDetails = {
+
+  const checkout_product = {
+    product_id: _id,
+    quantity,
+    productName: name,
+    price,
+    image: imageCover,
+    subtotal: price * quantity,
+  };
+
+  const checkout_productDetails = [checkout_product];
+
+  const cart_productDetails = {
     product_id: _id,
     image: imageCover.split("/").slice(-1).join(),
     quantity: quantity,
@@ -18,16 +30,14 @@ const ProductDetails = ({ product }) => {
     price: price,
     subtotal: price * quantity,
   };
-  // console.log(productDetails);
-  // console.log(state.token);
 
   const handleAddToCart = async () => {
-    addToCart(productDetails, state.token);
+    addToCart(cart_productDetails, state.token);
     setQuantity(1);
   };
 
   const handleMakePayment = async () => {
-    makePayment(productDetails, state.token);
+    makePayment(checkout_productDetails, state.token);
     setQuantity(1);
   };
 

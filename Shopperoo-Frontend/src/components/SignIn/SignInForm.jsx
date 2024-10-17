@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthProvider";
-import axios from "axios";
 
 function SignInForm() {
   const { login } = useAuth();
@@ -13,8 +12,6 @@ function SignInForm() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  console.log(formData);
 
   // const credentials = {
   //   email: "admin@a.com",
