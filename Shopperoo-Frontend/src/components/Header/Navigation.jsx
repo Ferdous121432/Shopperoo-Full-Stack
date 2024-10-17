@@ -1,12 +1,12 @@
 /* eslint-disable */
-import React from 'react';
+import React from "react";
 
 function Navigation() {
   const navItems = [
-    { title: 'Home', url: '/' },
-    { title: 'Product', url: '/product' },
-    { title: 'About', url: '/about' },
-    { title: 'Contact', url: '/contact-us' }
+    { title: "Home", url: "/" },
+    { title: "Product", url: "/product" },
+    { title: "Dashboard", url: "/dashboard" },
+    { title: "Contact", url: "/contact-us" },
   ];
 
   return (

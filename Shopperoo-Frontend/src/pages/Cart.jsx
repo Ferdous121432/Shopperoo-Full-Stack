@@ -7,6 +7,7 @@ import CartSummary from "../components/Cart/CartSummary";
 import FeatureSection from "../components/FeatureSection/FeatureSection";
 import { useAuth } from "../context/AuthProvider";
 import CartItemHeader from "../components/Cart/CartItemHeader";
+import { makeMultiplePayments } from "../api/apiCheckout";
 
 // const cartItems = [
 //   {
@@ -26,6 +27,10 @@ const Cart = () => {
   console.log(cart);
   console.log(totalPrice);
 
+  const handleCheckout = () => {
+    makeMultiplePayments(cart, state.token);
+  };
+
   return (
     <div className="flex overflow-hidden flex-col pb-12 bg-white">
       <Layout>
@@ -43,7 +48,11 @@ const Cart = () => {
               </div>
             </div>
             <div className="flex flex-col ml-5 w-[32%] max-md:ml-0 max-md:w-full">
-              <CartSummary subtotal={totalPrice} total={totalPrice} />
+              <CartSummary
+                subtotal={totalPrice}
+                total={totalPrice}
+                handleCheckout={handleCheckout}
+              />
             </div>
           </div>
         </main>

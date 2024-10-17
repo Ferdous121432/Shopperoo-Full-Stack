@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { baseURL, carItemsURL } from "./apiURL";
 
+// post & patch request will be handle with this route
 export const addToCart = async (credentials, token) => {
   try {
     // const credentials = {
@@ -74,6 +75,7 @@ export const getCart = async (token) => {
   }
 };
 
+//TODO: After updating cart item, the cart page should be updated with the new data
 export const updateCartItem = async (cartItem, token) => {
   try {
     const response = await axios.patch(
