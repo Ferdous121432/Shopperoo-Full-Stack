@@ -2,9 +2,6 @@
 import { useAuth } from "./context/AuthProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy } from "react";
-import DashboardHome from "./components/Dashboard/DashBoardHome/DashboardHome";
-import OrderManagement from "./components/Dashboard/OrderManagement/OrderManagement";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 // import ProductPage from "./pages/ProductPage";
 // import SingleProductPage from "./pages/SingleProductPage";
@@ -16,6 +13,10 @@ import ErrorPage from "./components/ErrorPage/ErrorPage";
 // import SignIn from "./pages/SignIn";
 // import RestrictedPage from "./pages/RestrictedPage";
 // import About from "./pages/About";
+// import DashboardHome from "./components/Dashboard/DashBoardHome/DashboardHome";
+// import OrderManagement from "./components/Dashboard/OrderManagement/OrderManagement";
+// import ErrorPage from "./components/ErrorPage/ErrorPage";
+
 const Home = lazy(() => import("./pages/Home"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 const SingleProductPage = lazy(() => import("./pages/SingleProductPage"));
@@ -26,6 +27,13 @@ const Signup = lazy(() => import("./pages/Signup"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const RestrictedPage = lazy(() => import("./pages/RestrictedPage"));
 const About = lazy(() => import("./pages/About"));
+const DashboardHome = lazy(
+  () => import("./components/Dashboard/DashBoardHome/DashboardHome")
+);
+const OrderManagement = lazy(
+  () => import("./components/Dashboard/OrderManagement/OrderManagement")
+);
+const ErrorPage = lazy(() => import("./components/ErrorPage/ErrorPage"));
 
 // dist/assets/index-59fcab9b.css   30.56 kB │ gzip:   5.14 kB
 // dist/assets/index-f7c12d89.js   572.44 kB │ gzip: 151.29 kB

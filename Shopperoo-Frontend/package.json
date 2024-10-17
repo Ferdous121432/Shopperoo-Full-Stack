@@ -10,9 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@builder.io/dev-tools": "^1.1.13",
-    "@builder.io/react": "^5.0.4",
-    "@builder.io/sdk": "^3.0.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
