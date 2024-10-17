@@ -3,13 +3,7 @@
 import React, { createContext, useReducer, useContext, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {
-  baseURL,
-  loginURL,
-  userURL,
-  mycartURL,
-  signupURL,
-} from "../api/apiURL";
+import { baseURL, loginURL, userURL, mycartURL } from "../api/apiURL";
 // Initial state
 const initialState = {
   isAuthenticated: false,
@@ -189,15 +183,13 @@ export const AuthProvider = ({ children }) => {
   }, [state.token]);
 
   // Signup function to create a new user account
-  const signup = async (signupData) => {
+  const signup = async (userData) => {
     dispatch({ type: "LOADING" });
     try {
-      const url = `${baseURL}/${signupURL}`;
-      const response = await axios.post(url, signupData);
-      console.log("Sign up successful:", response.data);
-      dispatch({ type: "SIGNUP_SUCCESS", payload: response.data });
+      // Perform signup logic here (e.g., API call)
+      dispatch({ type: SIGNUP_SUCCESS, payload: userData });
     } catch (error) {
-      dispatch({ type: "AUTH_ERROR", payload: error.message });
+      dispatch({ type: AUTH_ERROR, payload: error.message });
     }
   };
 

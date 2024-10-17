@@ -1,24 +1,19 @@
 /* eslint-disable */
-import React from "react";
-import Layout from "../components/Layout";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
+// import jwt from "jwt-decode";
+import { useAuth } from "../context/AuthProvider";
 
-const About = () => {
-  return (
-    <Layout>
-      <div>
-        <h1>About Us</h1>
-        <p>
-          Welcome to Shopperoo! We are dedicated to providing the best shopping
-          experience.
-        </p>
-        <p>
-          Our mission is to offer a wide variety of products at competitive
-          prices.
-        </p>
-        <p>Thank you for choosing Shopperoo!</p>
-      </div>
-    </Layout>
-  );
-};
+export default function About() {
+  const [jwt, setJwt] = useState(null);
+  const { state } = useAuth();
 
-export default About;
+  useEffect(() => {
+    const token = Cookies.get("jwt");
+    setJwt(token);
+    console.log(token);
+  }, []);
+
+  return <div>{jwt ? <p>JWT: {jwt}</p> : <p>No JWT found</p>}</div>;
+}

@@ -14,29 +14,9 @@ const ProductCard = ({ product }) => {
   const newItem = true;
   const discount = "30%";
   const { state } = useAuth();
-  const redirectURL = `http://localhost:5173/product/${_id}`;
 
   const [quantity, setQuantity] = useState(1);
-  // const productDetails = {
-  //   product_id: _id,
-  //   image: imageCover.split("/").slice(-1).join(),
-  //   quantity: quantity,
-  //   productName: name,
-  //   price: price,
-  //   subtotal: price * quantity,
-  // };
-  const checkout_product = {
-    product_id: _id,
-    quantity,
-    productName: name,
-    price,
-    image: imageCover,
-    subtotal: price * quantity,
-  };
-
-  const checkout_productDetails = [checkout_product];
-
-  const cart_productDetails = {
+  const productDetails = {
     product_id: _id,
     image: imageCover.split("/").slice(-1).join(),
     quantity: quantity,
@@ -44,14 +24,15 @@ const ProductCard = ({ product }) => {
     price: price,
     subtotal: price * quantity,
   };
+  const redirectURL = `https://shopperoo-frontend.vercel.app/product/${_id}`;
 
   const handleAddToCart = async () => {
-    addToCart(cart_productDetails, state.token);
+    addToCart(productDetails, state.token);
     setQuantity(1);
   };
 
   const handleMakePayment = async () => {
-    makePayment(checkout_productDetails, state.token);
+    makePayment(productDetails, state.token);
     setQuantity(1);
   };
 

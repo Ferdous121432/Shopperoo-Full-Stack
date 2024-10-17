@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
         validator.isAlphanumeric,
         'Username must only contain alphanumeric characters',
       ],
-      // unique: [true, 'Username has already been used'],
+      unique: [true, 'Username has already been used'],
     },
     email: {
       type: String,
@@ -51,14 +51,14 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, 'A user must have a password'],
-      minlength: [2, 'Password must be more or equal than 8 characters'],
+      minlength: [8, 'Password must be more or equal than 8 characters'],
       select: false, // hide the password from the output
     },
     passwordConfirm: {
       type: String,
       required: [true, 'A user must confirm their password'],
       minlength: [
-        2,
+        8,
         'Password confirmation must be more or equal than 8 characters',
       ],
       validate: {
@@ -82,7 +82,7 @@ const userSchema = new mongoose.Schema(
 
     dateOfBirth: {
       type: Date,
-      // required: [true, 'A user must have a date of birth'],
+      required: [true, 'A user must have a date of birth'],
       validate: [validator.isDate, 'Please provide a valid date of birth'],
     },
 

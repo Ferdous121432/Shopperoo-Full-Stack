@@ -5,11 +5,7 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 router.use(authController.protect);
-router.use(authController.isLoggedIn);
 
-router
-  .route('/checkout-session/:id')
-  .post(checkoutController.getCheckoutSession);
 router.route('/checkout-session').post(checkoutController.getCheckoutSession);
 
 // router.use(authController.restrictedTo('admin', 'lead-guide'));

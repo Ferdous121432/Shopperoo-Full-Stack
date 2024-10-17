@@ -1,10 +1,7 @@
 const express = require('express');
 const wishListItemController = require('../controllers/wishListItemController');
-const authController = require('../controllers/authController');
 
 const router = express.Router();
-
-router.use(authController.isLoggedIn);
 
 router
   .route('/')

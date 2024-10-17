@@ -24,7 +24,7 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-    secure: true, // Set to true if using HTTPS
+    secure: false, // Set to true if using HTTPS
     sameSite: 'Lax', // Controls when cookies are sent
     path: '/', // Ensure the cookie is accessible on all routes
     maxAge: 24 * 60 * 60 * 1000, // 1 day
@@ -59,13 +59,19 @@ exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
 
   // Create cart for the user
-  // const cart = await Cart.create({
-  //   userID: newUser._id,
-  //   total: 0,
-  // });
+  const cart = await Cart.create({
+    userID: newUser._id,
+    total: 0,
+  });
 
-  // const url = `${req.protocol}://${req.get('host')}/me`;
-  // console.log(url);
+  // create wishlist for the user
+
+  const wishlist = await Wishlist.create({
+    userID: newUser._id,
+  });
+
+  const url = `${req.protocol}://${req.get('host')}/me`;
+  console.log(url);
 
   // await new Email(newUser, url).sendWelcome();
 

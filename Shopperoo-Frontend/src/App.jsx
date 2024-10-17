@@ -2,9 +2,6 @@
 import { useAuth } from "./context/AuthProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy } from "react";
-import DashboardHome from "./components/Dashboard/DashBoardHome/DashboardHome";
-import OrderManagement from "./components/Dashboard/OrderManagement/OrderManagement";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 // import ProductPage from "./pages/ProductPage";
 // import SingleProductPage from "./pages/SingleProductPage";
@@ -48,9 +45,6 @@ function App() {
         <Route path="restricted" element={<RestrictedPage />} />
         <Route path="/product/:product_id" element={<SingleProductPage />} />
         <Route path="about" element={<About />} />
-        <Route path="dashboard" element={<DashboardHome />} />
-        <Route path="ordermanagement" element={<OrderManagement />} />
-        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

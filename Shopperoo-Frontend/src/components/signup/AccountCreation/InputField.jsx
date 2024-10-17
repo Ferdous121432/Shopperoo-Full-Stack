@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from "react";
 
-function InputField(setFormData, { label, type, id, fullWidth }) {
+function InputField({ label, type, id, fullWidth }) {
   return (
     <div
       className={`flex flex-col ${fullWidth ? "w-full" : "min-w-[240px] w-[259px]"}`}>

@@ -18,7 +18,7 @@ export const makePayment = async (paymentDetails, token) => {
   // };
 
   const response = await axios.post(
-    `${baseURL}/${checkoutURL}/:product_id`,
+    `${baseURL}/${checkoutURL}`,
     paymentDetails,
     {
       headers: {
@@ -26,36 +26,6 @@ export const makePayment = async (paymentDetails, token) => {
       },
     }
   );
-
-  const session = response.data.session;
-  console.log(session);
-  const result = await stripe.redirectToCheckout({
-    sessionId: session.id,
-  });
-  console.log(result);
-};
-
-export const makeMultiplePayments = async (products, token) => {
-  const stripe = await loadStripe(
-    "pk_test_51Q8ouGIeuxFSv7HPlf3neWTa0YHpGfFjPeCPPxKwAKXal02hyOHm7k8gZObfQPlmU2ttYsIAgn182hfCuKZ6nCx100iC3TVn49"
-  );
-
-  // const products = [
-  //   {
-  //     product_id: product._id,
-  //     quantity: product.quantity,
-  //     productName: product.name,
-  //     price: product.price,
-  //     subtotal: product.price * product.quantity,
-  //     image: product.imageCover,
-  //   },
-  // ];
-
-  const response = await axios.post(`${baseURL}/${checkoutURL}`, products, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
 
   const session = response.data.session;
   console.log(session);

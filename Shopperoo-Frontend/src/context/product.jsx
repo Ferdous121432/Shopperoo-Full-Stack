@@ -64,6 +64,34 @@ export const ProductProvider = ({ children }) => {
     fetchData();
   }, []);
 
+  // const addToCart = async (product, quantity) => {
+  //   const credentials = {
+  //     product_id: product._id,
+  //     quantity: quantity,
+  //   };
+  //   try {
+  //     const response = await axios.post(
+  //       `${baseURL}${carItemsURL}`,
+  //       credentials,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${state.token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response);
+  //     if (response.status === 201) {
+  //       console.log(`Product ${product.name} added to cart`);
+  //       dispatch({ type: "ADDCART", payload: product });
+  //     } else {
+  //       console.error("Failed to add product to cart");
+  //     }
+  //   } catch (error) {
+  //     dispatch({ type: "FETCH_ERROR", payload: error.message });
+  //     console.error("Error adding product to cart:", error);
+  //   }
+  // };
+
   return (
     <ProductContext.Provider value={{ state, dispatch }}>
       {children}

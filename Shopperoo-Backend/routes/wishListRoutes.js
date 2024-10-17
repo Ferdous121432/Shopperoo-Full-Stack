@@ -3,7 +3,6 @@ const wishListController = require('../controllers/wishListController');
 const authController = require('../controllers/authController');
 
 const router = express.Router();
-router.use(authController.isLoggedIn);
 
 router.route('/').get(wishListController.getAllWishLists);
 // .post(authController.protect, wishListController.createWishList);
