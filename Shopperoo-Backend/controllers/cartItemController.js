@@ -9,7 +9,7 @@ exports.getMyCart = catchAsync(async (req, res, next) => {
 
   const cartItems = await CartItem.find({ user_id: req.user.id });
 
-  if (!cartItems.length) {
+  if (!cartItems) {
     return next(new AppError('No products found for this category', 404));
   }
 

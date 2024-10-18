@@ -8,19 +8,22 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { avatar } from "@material-tailwind/react";
 
 function RegistrationForm() {
   const { signup } = useAuth();
 
   const [formData, setFormData] = React.useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    dateofbirth: "1998-12-12",
+    firstName: "Ferdous",
+    lastName: "Azam",
+    email: "admin@a.com",
+    password: "test1234",
+    passwordConfirm: "test1234",
+    role: "admin",
+    dateOfBirth: "13 july 1990",
     phoneNumber: "01521427421",
-    userName: "ferdouss",
+    userName: "atsss",
+    avatar: "default.jpg",
   });
 
   const [passwordMatch, setPasswordMatch] = useState(true);
@@ -40,8 +43,7 @@ function RegistrationForm() {
   console.log(formData);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("jdjs");
+    alert(formData);
     signup(formData);
     window.location.href = frontendURL("signin");
   };
@@ -110,9 +112,9 @@ function RegistrationForm() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Date of Birth"
-                value={dayjs(formData.dateofbirth)}
+                value={dayjs(formData.dateOfBirth)}
                 onChange={(newValue) => {
-                  setFormData({ ...formData, dateofbirth: newValue });
+                  setFormData({ ...formData, dateOfBirth: newValue });
                 }}
               />
             </LocalizationProvider>

@@ -156,6 +156,7 @@ export const AuthProvider = ({ children }) => {
               Authorization: `Bearer ${state.token}`,
             },
           });
+
           const cartData = await axios.get(`${baseURL}/${mycartURL}`, {
             headers: {
               Authorization: `Bearer ${state.token}`,
@@ -167,7 +168,7 @@ export const AuthProvider = ({ children }) => {
               data: { user: state.user },
               token: state.token,
               userData: userdata.data.data.data,
-              cartData: cartData.data.data,
+              cartData: cartData?.data?.data,
               loading: false,
             },
           });
@@ -192,11 +193,13 @@ export const AuthProvider = ({ children }) => {
   const signup = async (signupData) => {
     dispatch({ type: "LOADING" });
     try {
+      alert("Sign up successful:", signupData);
       const url = `${baseURL}/${signupURL}`;
       const response = await axios.post(url, signupData);
-      console.log("Sign up successful:", response.data);
+      alert("Sign up successful:", response.data);
       dispatch({ type: "SIGNUP_SUCCESS", payload: response.data });
     } catch (error) {
+      alert("Error signing up:", error);
       dispatch({ type: "AUTH_ERROR", payload: error.message });
     }
   };

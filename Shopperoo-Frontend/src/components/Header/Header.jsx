@@ -1,13 +1,13 @@
 /* eslint-disable */
-import React from 'react';
-import Logo from './Logo';
-import Navigation from './Navigation';
-import SocialIcons from './SocialIcons';
+import React from "react";
+import Logo from "./Logo";
+import Navigation from "./Navigation";
+import SocialIcons from "./SocialIcons";
 
 function Header() {
   return (
-    <header className="px-16 py-8 w-full bg-white max-md:px-5 max-md:max-w-full">
-      <div className="flex gap-5 max-md:flex-col">
+    <header className="px-4 py-8 w-full bg-white md:px-16">
+      <div className="flex flex-col gap-5 md:flex-row md:items-center">
         <Logo />
         <Navigation />
         <SocialIcons />

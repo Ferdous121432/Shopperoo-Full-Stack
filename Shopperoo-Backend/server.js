@@ -17,22 +17,19 @@ dotenv.config({ path: './config.env' });
 // }
 
 // Atlas connection string
-const DB = process.env.MONGO_URI.replace(
-  '<db_password>',
-  process.env.MONGO_PASSWORD,
-);
+// const DB = process.env.MONGO_URI.replace(
+//   '<db_password>',
+//   process.env.MONGO_PASSWORD,
+// );
 
 //DB connection
-mongoose
-  // .connect(process.env.DATABASE_local)
-  .connect(DB, {
-    dbName: 'Shopperoo',
-  })
-
-  .then(() => {
-    // console.log(con.connections);
-    console.log('DB connection successful!');
-  });
+// mongoose
+//   .connect(DB, {
+//     dbName: 'Shopperoo',
+//   })
+//   .then(() => {
+//     console.log('DB connection successful!');
+//   });
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
