@@ -8,14 +8,14 @@ import Dashboard from "../Dashboard";
 
 function OrderManagement() {
   return (
-    <Dashboard>
-      <main className="flex flex-col">
-        <TabNavigation />
-        <SearchAndFilter />
-        <OrderTable />
-        <Pagination />
-      </main>
-    </Dashboard>
+    // <Dashboard>
+    <main className="flex flex-col">
+      <TabNavigation />
+      <SearchAndFilter />
+      <OrderTable />
+      <Pagination />
+    </main>
+    // {/* </Dashboard> */}
   );
 }
 

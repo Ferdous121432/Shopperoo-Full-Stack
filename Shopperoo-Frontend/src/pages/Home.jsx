@@ -8,7 +8,6 @@ import ProductsSection from "../components/ProductsSection/ProductsSection";
 export default function Home() {
   return (
     <Layout>
-      <div>Home</div>
       <NewArrivalSection />
       <BrowseRange />
       <ProductsSection />

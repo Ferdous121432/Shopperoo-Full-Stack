@@ -15,6 +15,7 @@ import { lazy } from "react";
 // import About from "./pages/About";
 // import DashboardHome from "./components/Dashboard/DashBoardHome/DashboardHome";
 // import OrderManagement from "./components/Dashboard/OrderManagement/OrderManagement";
+// import DashboardLayoutBasic from "./components/MuiHeader/MuiHeader";
 // import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -34,6 +35,9 @@ const OrderManagement = lazy(
   () => import("./components/Dashboard/OrderManagement/OrderManagement")
 );
 const ErrorPage = lazy(() => import("./components/ErrorPage/ErrorPage"));
+const DashboardLayoutBasic = lazy(
+  () => import("./components/MuiHeader/MuiHeader")
+);
 
 // dist/assets/index-59fcab9b.css   30.56 kB │ gzip:   5.14 kB
 // dist/assets/index-f7c12d89.js   572.44 kB │ gzip: 151.29 kB
@@ -56,8 +60,12 @@ function App() {
         <Route path="restricted" element={<RestrictedPage />} />
         <Route path="/product/:product_id" element={<SingleProductPage />} />
         <Route path="about" element={<About />} />
-        <Route path="dashboard" element={<DashboardHome />} />
+        {/* <Route path="dashboard" element={<DashboardHome />} /> */}
         <Route path="ordermanagement" element={<OrderManagement />} />
+        <Route path="dashboard" element={<DashboardLayoutBasic />}>
+          <Route path="dashboard" element={<DashboardHome />} />
+          <Route path="ordermanagement" element={<OrderManagement />} />
+        </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

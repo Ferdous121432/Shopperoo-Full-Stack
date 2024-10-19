@@ -23,20 +23,21 @@ module.exports = class Email {
     }
 
     return nodemailer.createTransport({
-      // service: 'SendGrid',
-      // auth: {
-      //   user: process.env.SENDGRID_USERNAME,
-      //   pass: process.env.SENDGRID_PASSWORD,
-      // },
+      host: 'sandbox.smtp.mailtrap.io',
+      port: 2525,
+      auth: {
+        user: 'f134735078351c',
+        pass: '********6dc0',
+      },
 
       //BROVO MAIL SERVER
-      host: 'smtp-relay.brevo.com',
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: process.env.BRAVO_USERNAME,
-        pass: process.env.BRAVO_PASSWORD,
-      },
+      // host: 'smtp-relay.brevo.com',
+      // port: 587,
+      // secure: false, // true for 465, false for other ports
+      // auth: {
+      //   user: process.env.BRAVO_USERNAME,
+      //   pass: process.env.BRAVO_PASSWORD,
+      // },
     });
   }
 

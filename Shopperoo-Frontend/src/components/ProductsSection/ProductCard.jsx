@@ -1,29 +1,54 @@
 /* eslint-disable */
-import React from 'react';
+import React from "react";
 
-const ProductCard = ({ image, discount, newProduct, name, description, price, oldPrice }) => {
+const ProductCard = ({
+  image,
+  discount,
+  newProduct,
+  name,
+  description,
+  price,
+  oldPrice,
+}) => {
   return (
-    <article className="flex flex-col self-stretch my-auto min-w-[240px] w-[285px]">
-      <div className="flex relative flex-col items-end px-7 pt-6 pb-56 w-full text-base font-medium text-white whitespace-nowrap aspect-[0.947] max-md:px-5 max-md:pb-24">
-        <img loading="lazy" src={image} alt={name} className="object-cover absolute inset-0 size-full" />
+    <article className="mx-auto my-auto flex w-[285px] min-w-[240px] flex-col self-stretch">
+      <div className="relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 text-base font-medium text-white max-md:px-5 max-md:pb-24">
+        <img
+          loading="lazy"
+          src={image}
+          alt={name}
+          className="absolute inset-0 size-full object-cover"
+        />
         {discount && (
-          <div className="relative px-1.5 mb-0 w-12 h-12 bg-red-400 rounded-full fill-red-400 max-md:mb-2.5">
-            {discount}
+          <div className="relative mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-1.5 max-md:mb-2.5">
+            <span className="transform-middle text-slate-100 text-sm font-semibold">
+              {discount}
+            </span>
           </div>
         )}
         {newProduct && (
-          <div className="relative px-1.5 mb-0 w-12 h-12 bg-emerald-400 rounded-full fill-emerald-400 max-md:mb-2.5">
-            New
+          <div className="relative h-12 w-12 rounded-full bg-teal-800">
+            <span className="transform-middle text-slate-100 text-sm font-semibold">
+              New
+            </span>
           </div>
         )}
       </div>
-      <div className="flex flex-col items-start px-4 pt-4 pb-8 w-full bg-gray-100">
-        <h3 className="text-2xl font-semibold leading-tight text-neutral-700">{name}</h3>
-        <p className="mt-2 text-base font-medium text-zinc-500">{description}</p>
-        <div className="flex gap-4 items-center self-stretch mt-2">
-          <span className="self-stretch my-auto text-xl font-semibold text-neutral-700">{price}</span>
+      <div className="flex w-full flex-col items-start bg-gray-100 px-4 pb-8 pt-4">
+        <h3 className="text-neutral-700 text-2xl font-semibold leading-tight">
+          {name}
+        </h3>
+        <p className="text-zinc-500 mt-2 text-base font-medium">
+          {description}
+        </p>
+        <div className="mt-2 flex items-center gap-4 self-stretch">
+          <span className="text-neutral-700 my-auto self-stretch text-xl font-semibold">
+            {price}
+          </span>
           {oldPrice && (
-            <span className="self-stretch my-auto text-base text-zinc-400">{oldPrice}</span>
+            <span className="my-auto self-stretch text-lg line-through decoration-red-700 decoration-2">
+              {oldPrice}
+            </span>
           )}
         </div>
       </div>

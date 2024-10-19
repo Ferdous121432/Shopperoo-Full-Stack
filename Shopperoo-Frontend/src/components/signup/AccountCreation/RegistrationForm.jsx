@@ -43,7 +43,6 @@ function RegistrationForm() {
   console.log(formData);
 
   const handleSubmit = async (e) => {
-    alert(formData);
     signup(formData);
     window.location.href = frontendURL("signin");
   };

@@ -193,10 +193,8 @@ export const AuthProvider = ({ children }) => {
   const signup = async (signupData) => {
     dispatch({ type: "LOADING" });
     try {
-      alert("Sign up successful:", signupData);
       const url = `${baseURL}/${signupURL}`;
       const response = await axios.post(url, signupData);
-      alert("Sign up successful:", response.data);
       dispatch({ type: "SIGNUP_SUCCESS", payload: response.data });
     } catch (error) {
       alert("Error signing up:", error);
