@@ -7,12 +7,24 @@ import { addToCart } from "../../api/apiCart";
 import { Link } from "react-router-dom";
 import { makePayment } from "../../api/apiCheckout";
 import { baseURL } from "../../api/apiURL";
+import LocalMallRoundedIcon from "@mui/icons-material/LocalMallRounded";
 
 const ProductCard = ({ product }) => {
-  const { name, price, slug, description, summary, imageCover, _id } = product;
+  const {
+    name,
+    price,
+    old_price,
+    discount,
+    newItem,
+    slug,
+    description,
+    summary,
+    imageCover,
+    _id,
+  } = product;
   const [showMore, setShowMore] = React.useState(false);
-  const newItem = true;
-  const discount = "30%";
+  // const newItem = true;
+  // const discount = "30%";
   const { state } = useAuth();
   const redirectURL = `http://localhost:5173/product/${_id}`;
 
@@ -23,6 +35,7 @@ const ProductCard = ({ product }) => {
     quantity,
     productName: name,
     price,
+    old_price,
     image: imageCover,
     subtotal: price * quantity,
   };
@@ -35,6 +48,7 @@ const ProductCard = ({ product }) => {
     quantity: quantity,
     productName: name,
     price: price,
+    old_price: old_price,
     subtotal: price * quantity,
   };
 
@@ -47,103 +61,90 @@ const ProductCard = ({ product }) => {
     makePayment(checkout_productDetails, state.token);
     setQuantity(1);
   };
-  let oldPrice = 0;
 
   return (
     <article
       key={_id}
-      className="my-auto flex w-[285px] min-w-[240px] flex-col self-stretch"
+      className="group my-auto flex w-[285px] min-w-[240px] flex-col self-stretch"
       data-id={_id}
     >
-      <Link
-        to={redirectURL}
-        className="relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 text-base font-medium text-white max-md:px-5 max-md:pb-24"
-      >
-        <LazyLoadImage
-          src={imageCover}
-          alt={name}
-          className="absolute inset-0 size-full object-cover"
-        />
-        {discount && (
-          <div className="absolute left-2 top-5 mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-1.5 max-md:mb-2.5">
-            <span className="transform-middle text-xs font-semibold text-white">
-              {discount}
-            </span>
-          </div>
-        )}
-        {newItem && (
-          <div className="bg-emerald-400 fill-emerald-400 absolute right-2 top-5 mb-0 h-12 w-12 rounded-full px-1.5 max-md:mb-2.5">
-            <span className="transform-middle text-xs font-semibold text-white">
-              New
-            </span>
-          </div>
-        )}
-      </Link>
-
-      <div className="flex w-full flex-col items-start bg-gray-100 px-4 pb-8 pt-4">
-        <Link to={redirectURL}>
-          <h3 className="text-neutral-700 text-2xl font-semibold leading-tight">
-            {name}
-          </h3>
+      <div>
+        <Link
+          to={redirectURL}
+          className="relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 text-base font-medium text-white max-md:px-5 max-md:pb-24"
+        >
+          <LazyLoadImage
+            src={imageCover}
+            alt={name}
+            className="absolute inset-0 size-full object-cover"
+          />
+          {discount && (
+            <div className="absolute left-2 top-5 mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-1.5 max-md:mb-2.5">
+              <span className="transform-middle text-xs font-semibold text-white">
+                {discount}
+              </span>
+            </div>
+          )}
+          {newItem && (
+            <div className="bg-emerald-400 fill-emerald-400 absolute right-2 top-5 mb-0 h-12 w-12 rounded-full px-1.5 max-md:mb-2.5">
+              <span className="transform-middle text-xs font-semibold text-white">
+                New
+              </span>
+            </div>
+          )}
         </Link>
-        <p className="text-zinc-500 mt-2 text-base font-medium">
-          {!showMore
-            ? description.split(" ").slice(0, 30).join(" ") + "..."
-            : description}
 
-          <button
-            className="text-blue-500"
-            onClick={() => setShowMore(!showMore)}
-          >
-            {showMore ? "less" : "more"}
-          </button>
-        </p>
+        <div className="flex w-full flex-col items-start bg-gray-100 px-4 pb-8 pt-4">
+          <Link to={redirectURL}>
+            <h3 className="text-neutral-700 text-2xl font-semibold leading-tight">
+              {name}
+            </h3>
+          </Link>
+          <div className="mt-2 flex items-center gap-4 self-stretch">
+            <span className="text-neutral-700 my-auto self-stretch text-xl font-semibold">
+              {price}
+            </span>
+            {old_price && (
+              <span className="text-zinc-400 my-auto self-stretch text-base">
+                {old_price}
+              </span>
+            )}
+          </div>
+        </div>
         <div className="mt-2 flex items-center gap-4 self-stretch">
           <span className="text-neutral-700 my-auto self-stretch text-xl font-semibold">
-            {price}
+            {product.price}
           </span>
-          {oldPrice && (
-            <span className="text-zinc-400 my-auto self-stretch text-base">
-              {/* {oldPrice ? oldPrice : price} */}
-              price
-            </span>
-          )}
         </div>
       </div>
-      <div className="mt-2 flex items-center gap-4 self-stretch">
-        <span className="text-neutral-700 my-auto self-stretch text-xl font-semibold">
-          {product.price}
-        </span>
+      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-2 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+        <button
+          className="bg-emerald-700 rounded px-4 py-2 text-white hover:bg-blue-600"
+          onClick={() => handleAddToCart()}
+        >
+          Add to Cart
+        </button>
         <div className="flex items-center">
-          <label
+          {/* <label
             htmlFor={`quantity-${_id}`}
-            className="text-zinc-500 mr-2 text-base font-medium"
+            className="text-zinc-500 mr-2 text-center text-base font-medium"
           >
             Quantity:
-          </label>
+          </label> */}
           <input
             id={`quantity-${_id}`}
             type="number"
             min="1"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
-            className="w-16 rounded border border-gray-300 px-2 py-1 text-base"
+            className="w-16 rounded border border-gray-300 px-2 py-1 text-center text-base"
           />
         </div>
-      </div>
-      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-2">
-        <button
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          onClick={() => handleAddToCart()}
-        >
-          Add to Cart
-        </button>
-
         <button
           onClick={handleMakePayment}
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          className="bg-emarald-primary rounded bg-transparent px-4 py-2 text-white hover:bg-blue-600"
         >
-          Buy Now
+          <LocalMallRoundedIcon />
         </button>
       </div>
     </article>

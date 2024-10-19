@@ -24,7 +24,7 @@ const ProductDetails = ({ product }) => {
 
   const cart_productDetails = {
     product_id: _id,
-    image: imageCover.split("/").slice(-1).join(),
+    image: imageCover?.split("/").slice(-1).join(),
     quantity: quantity,
     productName: name,
     price: price,
@@ -42,44 +42,46 @@ const ProductDetails = ({ product }) => {
   };
 
   return (
-    <section className="flex flex-col items-center px-20 pt-9 pb-14 w-full bg-white max-md:px-5 max-md:max-w-full">
-      <div className="self-start w-full max-w-[1217px] max-md:max-w-full">
+    <section className="flex w-full flex-col items-center bg-white px-20 pb-14 pt-9 max-md:max-w-full max-md:px-5">
+      <div className="w-full max-w-[1217px] self-start max-md:max-w-full">
         <div className="flex gap-5 max-md:flex-col">
-          <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+          <div className="flex w-6/12 flex-col max-md:ml-0 max-md:w-full">
             <img
               loading="lazy"
               src={product.imageCover}
               alt={product.name}
-              className="object-contain grow w-full rounded-none aspect-[1.11] max-md:mt-10 max-md:max-w-full"
+              className="aspect-[1.11] w-full grow rounded-none object-contain max-md:mt-10 max-md:max-w-full"
             />
           </div>
-          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col items-start w-full max-md:mt-10 max-md:max-w-full">
+          <div className="ml-5 flex w-6/12 flex-col max-md:ml-0 max-md:w-full">
+            <div className="flex w-full flex-col items-start max-md:mt-10 max-md:max-w-full">
               <h1 className="text-5xl text-black">{product.name}</h1>
-              <div className="text-2xl font-medium text-neutral-400">
+              <div className="text-neutral-400 text-2xl font-medium">
                 Rs. {(product.price ?? 0).toFixed(2)}
               </div>
 
               <p className="mt-3.5 text-sm text-black">{product.description}</p>
               {/* <SizeSelector sizes={product.sizes} />
               <ColorSelector colors={product.colors} /> */}
-              <div className="flex flex-wrap gap-4 self-stretch mt-8 w-full text-black max-md:max-w-full">
+              <div className="mt-8 flex w-full flex-wrap gap-4 self-stretch text-black max-md:max-w-full">
                 <QuantitySelector
                   quantity={quantity}
                   setQuantity={setQuantity}
                 />
                 <button
                   onClick={handleAddToCart}
-                  className="px-12 py-4 text-xl rounded-2xl border border-black border-solid max-md:px-5">
+                  className="rounded-2xl border border-solid border-black px-12 py-4 text-xl max-md:px-5"
+                >
                   Add To Cart
                 </button>
                 {/* <Link
                   to={`http://localhost:5173/checkout/${_id}?quantity=${quantity}`}> */}
                 <button
                   onClick={handleMakePayment}
-                  className="flex flex-col justify-center px-12 py-4 whitespace-nowrap rounded-2xl border border-black border-solid max-md:px-5">
-                  <div className="flex gap-2.5 justify-center items-center">
-                    <span className="self-stretch my-auto text-xl">
+                  className="flex flex-col justify-center whitespace-nowrap rounded-2xl border border-solid border-black px-12 py-4 max-md:px-5"
+                >
+                  <div className="flex items-center justify-center gap-2.5">
+                    <span className="my-auto self-stretch text-xl">
                       Buy Now
                     </span>
                   </div>

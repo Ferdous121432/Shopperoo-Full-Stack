@@ -8,6 +8,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
@@ -19,18 +21,13 @@ const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const subCategoryRouter = require('./routes/subCategoryRoutes');
 const cartItemRouter = require('./routes/cartItemRoutes');
+const cartRouter = require('./routes/cartRoutes');
 const wishListRouter = require('./routes/wishListRoutes');
 const checkoutRouter = require('./routes/checkoutRoutes');
 const checkoutController = require('./controllers/checkoutController');
 
-// Start express app
-const app = express();
-app.set('trust proxy', 1);
-
-// Load environment variables
-dotenv.config({ path: './config.env' });
-
 // Atlas connection string
+dotenv.config({ path: './config.env' });
 const DB = process.env.MONGO_URI.replace(
   '<db_password>',
   process.env.MONGO_PASSWORD,
@@ -38,15 +35,18 @@ const DB = process.env.MONGO_URI.replace(
 
 //DB connection
 mongoose
-  // .connect(process.env.DATABASE_local)
   .connect(DB, {
     dbName: 'Shopperoo',
   })
-
   .then(() => {
-    // console.log(con.connections);
     console.log('DB connection successful!');
   });
+
+// Start express app
+const app = express();
+
+// Load environment variables
+dotenv.config({ path: './config.env' });
 
 // Set Cross-Origin-Resource-Policy header
 app.use((req, res, next) => {
@@ -55,18 +55,12 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin: '*', // Allow all websites
+  origin: '*', // Replace with your frontend URL
   credentials: true, // Allow credentials (cookies, etc.)
 };
 
 app.use(cors(corsOptions));
 
-// app.use(cors());
-
-// app.set('view engine', 'pug');
-// app.set('views', path.join(__dirname, 'views'));
-
-// 1) GLOBAL MIDDLEWARES
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -83,18 +77,10 @@ app.use((err, req, res, next) => {
 // Set security HTTP headers
 app.use(helmet());
 
-// Set Cross-Origin-Resource-Policy header
-app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-  next();
-});
-
 // Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
-// Enable 'trust proxy' setting
 
 // Apply rate limiting
 const limiter = rateLimit({
@@ -138,7 +124,6 @@ app.use(xss());
 // );
 
 // Test route for varsel check
-
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -147,7 +132,6 @@ app.get('/', (req, res) => {
 });
 
 // 3) ROUTES
-// app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/addresses', addressRouter);
 app.use('/api/v1/products', productRouter);
@@ -155,8 +139,7 @@ app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/subCategories', subCategoryRouter);
 app.use('/api/v1/cartItems', cartItemRouter);
 app.use('/api/v1/wishLists', wishListRouter);
-app.use('/api/v1/checkout', checkoutRouter); // Add this line
-app.use('/api/v1/wishLists', wishListRouter);
+app.use('/api/v1/checkout', checkoutRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

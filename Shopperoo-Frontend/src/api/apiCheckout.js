@@ -4,7 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 export const makePayment = async (paymentDetails, token) => {
   const stripe = await loadStripe(
-    "pk_test_51Q8ouGIeuxFSv7HPlf3neWTa0YHpGfFjPeCPPxKwAKXal02hyOHm7k8gZObfQPlmU2ttYsIAgn182hfCuKZ6nCx100iC3TVn49"
+    "pk_test_51Q8ouGIeuxFSv7HPlf3neWTa0YHpGfFjPeCPPxKwAKXal02hyOHm7k8gZObfQPlmU2ttYsIAgn182hfCuKZ6nCx100iC3TVn49",
   );
 
   // send product details to the server
@@ -18,13 +18,13 @@ export const makePayment = async (paymentDetails, token) => {
   // };
 
   const response = await axios.post(
-    `${baseURL}/${checkoutURL}/:product_id`,
+    `${baseURL}/${checkoutURL}`,
     paymentDetails,
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 
   const session = response.data.session;
@@ -37,7 +37,7 @@ export const makePayment = async (paymentDetails, token) => {
 
 export const makeMultiplePayments = async (products, token) => {
   const stripe = await loadStripe(
-    "pk_test_51Q8ouGIeuxFSv7HPlf3neWTa0YHpGfFjPeCPPxKwAKXal02hyOHm7k8gZObfQPlmU2ttYsIAgn182hfCuKZ6nCx100iC3TVn49"
+    "pk_test_51Q8ouGIeuxFSv7HPlf3neWTa0YHpGfFjPeCPPxKwAKXal02hyOHm7k8gZObfQPlmU2ttYsIAgn182hfCuKZ6nCx100iC3TVn49",
   );
 
   // const products = [

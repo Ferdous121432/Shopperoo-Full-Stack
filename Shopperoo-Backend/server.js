@@ -24,12 +24,14 @@ dotenv.config({ path: './config.env' });
 
 //DB connection
 // mongoose
-//   .connect(DB, {
-//     dbName: 'Shopperoo',
-//   })
-//   .then(() => {
-//     console.log('DB connection successful!');
-//   });
+// .connect(process.env.DATABASE_local)
+// .connect(DB, {
+//   dbName: 'Shopperoo',
+// })
+// .then(() => {
+// console.log(con.connections);
+//   console.log('DB connection successful!');
+// });
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {

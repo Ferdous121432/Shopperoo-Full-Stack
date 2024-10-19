@@ -51,27 +51,38 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, 'A user must have a password'],
-      minlength: [8, 'Password must be more or equal than 8 characters'],
+      minlength: [2, 'Password must be more or equal than 8 characters'],
       select: false, // hide the password from the output
     },
-    // passwordConfirm: {
-    //   type: String,
-    //   required: [true, 'A user must confirm their password'],
-    //   minlength: [
-    //     8,
-    //     'Password confirmation must be more or equal than 8 characters',
-    //   ],
-    //   validate: {
-    //     validator: function (val) {
-    //       return val === this.password;
-    //     },
-    //     message: 'Passwords are not the same',
-    //   },
-    // },
+    passwordConfirm: {
+      type: String,
+      required: [true, 'A user must confirm their password'],
+      minlength: [
+        2,
+        'Password confirmation must be more or equal than 8 characters',
+      ],
+      validate: {
+        validator: function (val) {
+          return val === this.password;
+        },
+        message: 'Passwords are not the same',
+      },
+    },
+    passwordChangedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    active: {
+      type: Boolean,
+      default: true,
+      select: false,
+    },
 
     dateOfBirth: {
       type: Date,
-      required: [true, 'A user must have a date of birth'],
+      // required: [true, 'A user must have a date of birth'],
       validate: [validator.isDate, 'Please provide a valid date of birth'],
     },
 
@@ -95,38 +106,17 @@ const userSchema = new mongoose.Schema(
       default: 'user',
     },
 
-    passwordChangedAt: {
-      type: Date,
-      default: Date.now,
-    },
-    passwordResetToken: String,
-    passwordResetExpires: Date,
-
-    // if user delete account, the account will be deactivated
-    active: {
-      type: Boolean,
-      default: true,
-      select: false,
-    },
-
     created_at: {
       type: Date,
       default: Date.now,
     },
-
     updated_at: {
       type: Date,
       default: Date.now,
     },
-
     deleted_at: {
       type: Date,
     },
-
-    // email verification
-    verified: { type: Boolean, default: false },
-    verificationToken: { type: String, unique: true },
-    verificationTokenExpires: { type: Date },
   },
   {
     virtuals: true,

@@ -8,7 +8,7 @@ const ProductCatalog = () => {
   const { state } = useProduct();
   const products = state.products?.data || [];
 
-  console.log(products[0]);
+  console.log(products);
   return (
     <main className="flex items-center justify-center">
       <div className="my-auto flex w-[1440px] flex-col self-stretch max-md:max-w-full">
