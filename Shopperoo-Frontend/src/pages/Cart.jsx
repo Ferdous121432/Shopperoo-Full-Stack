@@ -8,6 +8,7 @@ import FeatureSection from "../components/FeatureSection/FeatureSection";
 import { useAuth } from "../context/AuthProvider";
 import CartItemHeader from "../components/Cart/CartItemHeader";
 import { makeMultiplePayments } from "../api/apiCheckout";
+import Breadcrumb from "../reuseableComponents/Breadcrumb";
 
 // const cartItems = [
 //   {
@@ -32,22 +33,22 @@ const Cart = () => {
   };
 
   return (
-    <div className="flex overflow-hidden flex-col pb-12 bg-white">
+    <div className="flex flex-col overflow-hidden bg-white pb-12">
       <Layout>
-        <Banner />
-        <main className="z-10 px-20 py-16 -mt-1.5 w-full bg-white max-md:px-5 max-md:max-w-full">
-          <div className="flex gap-5 max-md:flex-col">
-            <div className="flex flex-col w-[68%] max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col w-full max-md:mt-10 max-md:max-w-full">
+        <Breadcrumb name="Cart" />
+        <main className="max-md:px-5 max-md:max-w-full z-10 -mt-1.5 w-full bg-white px-20 py-16">
+          <div className="max-md:flex-col flex gap-5">
+            <div className="max-md:ml-0 max-md:w-full flex w-[68%] flex-col">
+              <div className="max-md:mt-10 max-md:max-w-full flex w-full flex-col">
                 <CartItemHeader />
-                <div className="mt-14 mr-6 max-md:mt-10 max-md:mr-2.5 max-md:max-w-full">
+                <div className="max-md:mt-10 max-md:mr-2.5 max-md:max-w-full mr-6 mt-14">
                   {cart.map((item) => (
                     <CartItem key={item._id} item={item} />
                   ))}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col ml-5 w-[32%] max-md:ml-0 max-md:w-full">
+            <div className="max-md:ml-0 max-md:w-full ml-5 flex w-[32%] flex-col">
               <CartSummary
                 subtotal={totalPrice}
                 total={totalPrice}

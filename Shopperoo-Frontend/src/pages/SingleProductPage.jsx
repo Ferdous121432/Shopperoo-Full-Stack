@@ -3,12 +3,15 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import Breadcrumb from "../components/SingleProduct/Breadcrumb";
+import Breadcrumb from "../reuseableComponents/Breadcrumb";
 import ProductDetails from "../components/SingleProduct/ProductDetails";
 import RelatedProducts from "../components/SingleProduct/RelatedProducts";
 import Layout from "../components/Layout";
 
 import { getProductById } from "../api/apiProduct";
+import SpinnerFullPage from "../components/SpinnerFullPage";
+
+// const currentURL = window.location.pathname;
 
 const ProductPage = () => {
   const { product_id } = useParams();
@@ -26,29 +29,29 @@ const ProductPage = () => {
 
     fetchProduct();
   }, [product_id]);
+  const [loadingError, setLoadingError] = useState(false);
 
-  if (!product) {
-    return <div>Loading...</div>;
+  useEffect(() => {
+    if (!product) {
+      const timer = setTimeout(() => {
+        setLoadingError(true);
+      }, 5000); // 5 seconds timeout
+
+      return () => clearTimeout(timer);
+    }
+  }, [product]);
+
+  if (loadingError) {
+    return (
+      <div className="items-center justify-center align-middle">
+        Error loading page
+      </div>
+    );
   }
 
-  const breadcrumbItems = [
-    { label: "Home", path: "/" },
-    { label: "Shop", path: "/shop" },
-    { label: "Asgaard sofa", path: "/shop/asgaard-sofa" },
-  ];
-
-  const productData = {
-    name: "Asgaard sofa",
-    price: 250000.0,
-    rating: 4,
-    reviewCount: 5,
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    sizes: ["L", "XL", "XS"],
-    colors: ["#9F73AB", "#000000", "#B88E2F"],
-    image:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/cffdaab977ea8691467dcd5daa95166d0f5ec1cdf7893e255cdd25dffaf81ed1?placeholderIfAbsent=true&apiKey=5f7c255a63be4d4b97b4f114fa9e17d0",
-  };
+  if (!product) {
+    return <SpinnerFullPage />;
+  }
 
   const relatedProducts = [
     {
@@ -86,14 +89,17 @@ const ProductPage = () => {
     },
   ];
 
-  console.log(product);
-
   return (
     <Layout>
-      <div className="flex overflow-hidden flex-col pb-12 bg-white">
-        <Breadcrumb items={breadcrumbItems} />
-        <ProductDetails product={product} />
-        <RelatedProducts products={relatedProducts} />
+      <div className="m-0 mx-auto flex flex-col overflow-hidden bg-white pb-12">
+        <Breadcrumb name={product.name} />
+        <div className="flex justify-center">
+          <ProductDetails product={product} />
+        </div>
+
+        <div className="flex justify-center">
+          <RelatedProducts products={relatedProducts} />
+        </div>
       </div>
     </Layout>
   );

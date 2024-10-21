@@ -45,3 +45,18 @@ code {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.transform-bottom {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+/* Add this to your CSS file if needed */
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px; /* Adjust the gap as needed */
+  padding: 10px; /* Optional: Add padding for better appearance */
+}

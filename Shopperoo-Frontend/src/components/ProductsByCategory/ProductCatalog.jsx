@@ -11,9 +11,9 @@ const ProductCatalog = () => {
   console.log(products);
   return (
     <main className="flex items-center justify-center">
-      <div className="my-auto flex w-[1440px] flex-col self-stretch max-md:max-w-full">
+      <div className="my-auto flex w-[1440px] flex-col items-center self-stretch max-md:max-w-full">
         <div className="flex min-h-[2rem] w-full bg-white max-md:max-w-full" />
-        <section className="z-10 mt-0 flex flex-col items-center gap-8 self-center max-md:mt-0 max-md:max-w-full">
+        <section className="z-10 mt-0 flex flex-col justify-center gap-8 max-md:mt-0 max-md:max-w-full">
           <ProductGrid products={products} />
           <Pagination currentPage={2} totalPages={3} />
         </section>

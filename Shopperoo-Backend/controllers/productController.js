@@ -25,25 +25,57 @@ const upload = multer({
   fileFilter: multerFilter,
 });
 
-exports.uploadProductCoverImage = upload.single('imageCover');
+exports.uploadProductImages = upload.fields([
+  {
+    name: 'imageCover',
+    maxCount: 1,
+  },
+  {
+    name: 'images',
+    maxCount: 4,
+  },
+]);
 
 // upload.single('image') req.file
 // upload.array('images', 5) req.files
 // upload.fields([{ name: 'image', maxCount: 1 }, { name: 'images', maxCount: 3 }]) req.files
 
 exports.resizeProductCoverImage = catchAsync(async (req, res, next) => {
-  if (!req.file) return next();
+  if (!req.files.imageCover && !req.files.images) return next();
 
   // 1) Cover Image
-  req.body.imageCover = `product-${req.user.id}-${Date.now()}-cover-image.jpeg`;
+  if (req.files.imageCover) {
+    req.body.imageCover = `product-${req.user.id}-${Date.now()}-cover-image.jpeg`;
 
-  await sharp(req.file.buffer)
-    .resize(500, 500)
-    .toFormat('jpeg')
-    .jpeg({
-      quality: 90,
-    })
-    .toFile(`public/img/products/cover-image/${req.body.imageCover}`);
+    await sharp(req.files.imageCover[0].buffer)
+      .resize(400, 500)
+      .toFormat('jpeg')
+      .jpeg({
+        quality: 90,
+      })
+      .toFile(`public/img/products/cover-image/${req.body.imageCover}`);
+  }
+
+  // 2) Images
+  if (req.files.images) {
+    req.body.images = [];
+
+    await Promise.all(
+      req.files.images.map(async (file, i) => {
+        const filename = `product-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+
+        await sharp(file.buffer)
+          .resize(400, 500)
+          .toFormat('jpeg')
+          .jpeg({
+            quality: 80,
+          })
+          .toFile(`public/img/products/images/${filename}`);
+
+        req.body.images.push(filename);
+      }),
+    );
+  }
 
   console.log(req.body);
   next();
@@ -80,6 +112,9 @@ exports.getProductsByCategory = catchAsync(async (req, res, next) => {
     products.map((product) => {
       if (product.imageCover) {
         product.imageCover = `${req.protocol}://${req.get('host')}/img/products/cover-image/${product.imageCover}`;
+        product.images = product.images.map((image) => {
+          return `${req.protocol}://${req.get('host')}/img/products/images/${image}`;
+        });
       }
     });
   }

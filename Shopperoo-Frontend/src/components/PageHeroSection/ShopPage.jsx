@@ -4,7 +4,7 @@ import PageHeader from "./PageHeader";
 
 function ShopPage() {
   return (
-    <main className="flex flex-col text-black whitespace-nowrap">
+    <main className="flex flex-col whitespace-nowrap text-red-900">
       <PageHeader title="Shop" breadcrumbs={["Home", "Shop"]} />
     </main>
   );

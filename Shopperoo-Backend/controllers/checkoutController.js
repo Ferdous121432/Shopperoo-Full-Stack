@@ -79,7 +79,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const products = req.body;
   console.log('Booking controller ❌❌❌❌❌ Product', products);
   const lineItems = products.map((product) => {
-    const image = `http://localhost:3000/img/products/cover-image/${product.image.split('/')[-1]}`;
+    const image = product.image;
+    // const image = `http://localhost:3000/img/products/cover-image/${product.image.split('/')[-1]}`;
     return {
       price_data: {
         currency: 'usd',
@@ -104,7 +105,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     cancel_url: `http://localhost:5173/product`,
     customer_email: req.user.email,
     mode: 'payment',
-    billing_address_collection: 'required',
+    // billing_address_collection: 'required',
     // metadatadd
     line_items: lineItems,
     // shipping_options: [
@@ -129,6 +130,46 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     session,
   });
 });
+
+exports.webhookCheckout = async (req, res, next) => {
+  const signature = req.headers['stripe-signature'];
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
+  } catch (err) {
+    console.error(`Webhook error: ${err.message}`);
+    return res.status(400).send(`Webhook error: ${err.message}`);
+  }
+
+  console.log('Event 🚀🚀🚀🚀🚀', event);
+
+  // Handle the event
+  if (event.type === 'checkout.session.completed') {
+    console.log('Checkout session completed event received');
+
+    const session = await stripe.checkout.sessions.retrieve(
+      event.data.object.id,
+      { expand: ['line_items', 'line_items.data.price.product'] },
+    );
+
+    // Check if the session has already been processed
+    const existingCheckout = await Checkout.findOne({ session_id: session.id });
+    if (existingCheckout) {
+      console.log('Session already processed, skipping creation');
+      return res.status(200).json({ received: true });
+    }
+
+    // Fulfill the purchase
+    await createProductCheckout(session);
+  }
+
+  res.status(200).json({ received: true });
+};
 
 // TODO: will be implemented in the future
 const createProductCheckout = async (session) => {
@@ -186,46 +227,6 @@ const createProductCheckout = async (session) => {
   });
 
   console.log('Final checkout data after creating DB ⏩😁', data);
-};
-
-exports.webhookCheckout = async (req, res, next) => {
-  const signature = req.headers['stripe-signature'];
-
-  let event;
-  try {
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET,
-    );
-  } catch (err) {
-    console.error(`Webhook error: ${err.message}`);
-    return res.status(400).send(`Webhook error: ${err.message}`);
-  }
-
-  console.log('Event 🚀🚀🚀🚀🚀', event);
-
-  // Handle the event
-  if (event.type === 'checkout.session.completed') {
-    console.log('Checkout session completed event received');
-
-    const session = await stripe.checkout.sessions.retrieve(
-      event.data.object.id,
-      { expand: ['line_items', 'line_items.data.price.product'] },
-    );
-
-    // Check if the session has already been processed
-    const existingCheckout = await Checkout.findOne({ session_id: session.id });
-    if (existingCheckout) {
-      console.log('Session already processed, skipping creation');
-      return res.status(200).json({ received: true });
-    }
-
-    // Fulfill the purchase
-    await createProductCheckout(session);
-  }
-
-  res.status(200).json({ received: true });
 };
 
 exports.createBooking = factory.createOne(Checkout);

@@ -4,7 +4,7 @@ import React from "react";
 const Pagination = ({ currentPage, totalPages }) => {
   return (
     <nav
-      className="mb-10 mt-10 flex items-start gap-10 whitespace-nowrap pt-8 text-xl text-black"
+      className="mb-10 mt-10 flex items-start justify-center gap-10 whitespace-nowrap pt-8 text-xl text-black"
       aria-label="Pagination"
     >
       {" "}

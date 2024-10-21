@@ -26,6 +26,7 @@ module.exports = withMT({
         "black-secondary": "#334155",
         "emarald-primary": "#065f46",
         "emarald-secondary": "#059669",
+        "emarald-trans": "rgba(6, 95, 70, .01)",
         "red-primary": "#9f1239",
         "red-secondary": "#e11d48",
         primary: "#ECEEFF",
@@ -54,14 +55,22 @@ module.exports = withMT({
         card: "url('assets/images/thumbnail-background.svg')",
       },
       screens: {
-        wide: "90rem", // 1440px
-        "max-xs": { max: "20rem" }, // 320px
-        "max-sm": { max: "30rem" }, // 480px
-        "max-md": { max: "48rem" }, // 768px
-        "max-lg": { max: "64rem" }, // 1024px
-        "max-xl": { max: "80rem" }, // 1280px
-        "max-2xl": { max: "96rem" }, // 1536px
-        "max-3xl": { max: "102rem" }, // 1632px
+        xs: "385px",
+        // => @media (min-width: 375px) { ... }
+        sm: "645px",
+        // => @media (min-width: 640px) { ... }
+
+        md: "775px",
+        // => @media (min-width: 768px) { ... }
+
+        lg: "1030px",
+        // => @media (min-width: 1024px) { ... }
+
+        xl: "1285px",
+        // => @media (min-width: 1280px) { ... }
+
+        "2xl": "1540px",
+        // => @media (min-width: 1536px) { ... }
       },
     },
   },

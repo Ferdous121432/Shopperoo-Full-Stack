@@ -24,6 +24,9 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A product must have a cover image'],
   },
+  images: {
+    type: [String],
+  },
   categoryID: {
     type: mongoose.Schema.ObjectId,
     // required: [true, 'A product must have a category'],

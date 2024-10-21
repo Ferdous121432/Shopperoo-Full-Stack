@@ -12,7 +12,7 @@ router
   .post(
     authController.protect,
     authController.restrictedTo('admin', 'executive', 'salesman'),
-    productController.uploadProductCoverImage,
+    productController.uploadProductImages,
     productController.resizeProductCoverImage,
     productController.checkBody,
     productController.createProduct,
@@ -24,7 +24,7 @@ router
   .patch(
     authController.protect,
     authController.restrictedTo('admin', 'lead-guide'),
-    productController.uploadProductCoverImage,
+    productController.uploadProductImages,
     productController.resizeProductCoverImage,
     productController.updateProduct,
   )

@@ -5,11 +5,32 @@ import { addToCart } from "../../api/apiCart";
 
 import { useAuth } from "../../context/AuthProvider";
 import { makePayment } from "../../api/apiCheckout";
+import ResponsiveImage from "../../reuseableComponents/ResponsiveImage";
+import GalaryImageList from "../../reuseableComponents/GalaryImageList";
+import ProductTop from "./ProductTop";
+import CustopTabs from "./CustomTabs";
 
 const ProductDetails = ({ product }) => {
   const { state } = useAuth();
+  const { name, price, old_price, imageCover, images, _id } = product;
+
+  const [imageIndex, setImageIndex] = useState(3);
+
+  const [color, setColor] = React.useState("");
+  const [sizes, setSizes] = React.useState("");
   const [quantity, setQuantity] = useState(1);
-  const { name, price, imageCover, _id } = product;
+
+  const handleChangeColor = (event) => {
+    setColor(event.target.value);
+  };
+
+  const handleChangeSizes = (event) => {
+    setSizes(event.target.value);
+  };
+
+  const handleChangeQuantity = (event) => {
+    setQuantity(event.target.value);
+  };
 
   const checkout_product = {
     product_id: _id,
@@ -41,58 +62,62 @@ const ProductDetails = ({ product }) => {
     setQuantity(1);
   };
 
-  return (
-    <section className="flex w-full flex-col items-center bg-white px-20 pb-14 pt-9 max-md:max-w-full max-md:px-5">
-      <div className="w-full max-w-[1217px] self-start max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col">
-          <div className="flex w-6/12 flex-col max-md:ml-0 max-md:w-full">
-            <img
-              loading="lazy"
-              src={product.imageCover}
-              alt={product.name}
-              className="aspect-[1.11] w-full grow rounded-none object-contain max-md:mt-10 max-md:max-w-full"
-            />
-          </div>
-          <div className="ml-5 flex w-6/12 flex-col max-md:ml-0 max-md:w-full">
-            <div className="flex w-full flex-col items-start max-md:mt-10 max-md:max-w-full">
-              <h1 className="text-5xl text-black">{product.name}</h1>
-              <div className="text-neutral-400 text-2xl font-medium">
-                Rs. {(product.price ?? 0).toFixed(2)}
-              </div>
+  const tabData = [
+    {
+      label: "Specification",
+      value: "0",
+      content:
+        "This is the specification content. Here you can add details about the product specifications.",
+    },
+    {
+      label: "Description",
+      value: "1",
+      content:
+        "This is the description content. Here you can add a detailed description of the product.",
+    },
+    {
+      label: "Reviews",
+      value: "2",
+      content:
+        "This is the reviews content. Here you can add customer reviews and ratings.",
+    },
+  ];
 
-              <p className="mt-3.5 text-sm text-black">{product.description}</p>
-              {/* <SizeSelector sizes={product.sizes} />
-              <ColorSelector colors={product.colors} /> */}
-              <div className="mt-8 flex w-full flex-wrap gap-4 self-stretch text-black max-md:max-w-full">
-                <QuantitySelector
-                  quantity={quantity}
-                  setQuantity={setQuantity}
-                />
-                <button
-                  onClick={handleAddToCart}
-                  className="rounded-2xl border border-solid border-black px-12 py-4 text-xl max-md:px-5"
-                >
-                  Add To Cart
-                </button>
-                {/* <Link
-                  to={`http://localhost:5173/checkout/${_id}?quantity=${quantity}`}> */}
-                <button
-                  onClick={handleMakePayment}
-                  className="flex flex-col justify-center whitespace-nowrap rounded-2xl border border-solid border-black px-12 py-4 max-md:px-5"
-                >
-                  <div className="flex items-center justify-center gap-2.5">
-                    <span className="my-auto self-stretch text-xl">
-                      Buy Now
-                    </span>
-                  </div>
-                </button>
-                {/* </Link> */}
-              </div>
-            </div>
-          </div>
+  return (
+    <section className="flex max-w-[1200px] flex-col flex-wrap items-center justify-center bg-white px-4 pb-14 pt-9 sm:px-10 md:px-20 lg:flex-row lg:items-start lg:gap-10">
+      <div className="flex flex-col gap-6 lg:w-[30%]">
+        <div className="">
+          <ResponsiveImage
+            src={`http://localhost:3000/img/products/images/${images[imageIndex]}`}
+            alt={name}
+            sizes={{ large: imageCover }}
+          />
+        </div>
+        <div className="w-full">
+          <GalaryImageList images={images} setImageIndex={setImageIndex} />
         </div>
       </div>
-      {/* Additional product details */}
+      <div className="mt-4 flex flex-col gap-6 sm:mt-8 lg:mt-0 lg:w-[60%]">
+        <ProductTop
+          name={name}
+          price={price}
+          old_price={old_price}
+          product={product}
+          handleAddToCart={handleAddToCart}
+          handleMakePayment={handleMakePayment}
+          handleChangeSizes={handleChangeSizes}
+          handleChangeColor={handleChangeColor}
+          handleChangeQuantity={handleChangeQuantity}
+          color={color}
+          sizes={sizes}
+          quantity={quantity}
+        />
+      </div>
+      <CustopTabs
+        tabData={tabData}
+        flexDirection="column"
+        orientation={"horizontal"}
+      />
     </section>
   );
 };

@@ -7,12 +7,13 @@ import FeatureSection from "../components/FeatureSection/FeatureSection";
 import ShopPage from "../components/PageHeroSection/ShopPage";
 import ProductCatalog from "../components/ProductsByCategory/ProductCatalog";
 import { AuthProvider } from "../context/AuthProvider";
+import Breadcrumb from "../reuseableComponents/Breadcrumb";
 
 function ProductPage() {
   return (
     <Layout>
       <ProductProvider>
-        <ShopPage />
+        <Breadcrumb name="Product" />
         <ProductCatalog />
         <FeatureSection />
       </ProductProvider>

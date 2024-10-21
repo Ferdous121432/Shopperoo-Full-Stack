@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { makePayment } from "../../api/apiCheckout";
 import { baseURL } from "../../api/apiURL";
 import LocalMallRoundedIcon from "@mui/icons-material/LocalMallRounded";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const ProductCard = ({ product }) => {
   const {
@@ -65,7 +67,7 @@ const ProductCard = ({ product }) => {
   return (
     <article
       key={_id}
-      className="group my-auto flex w-[285px] min-w-[240px] flex-col self-stretch"
+      className="group relative my-auto flex w-[285px] min-w-[240px] flex-col self-stretch"
       data-id={_id}
     >
       <div>
@@ -104,33 +106,28 @@ const ProductCard = ({ product }) => {
             <span className="text-neutral-700 my-auto self-stretch text-xl font-semibold">
               {price}
             </span>
-            {old_price && (
-              <span className="text-zinc-400 my-auto self-stretch text-base">
-                {old_price}
-              </span>
-            )}
+
+            <span className="text-black-primary decoration-red-primary my-auto self-stretch text-lg line-through decoration-2">
+              {old_price !== 0 ? old_price : ""}
+            </span>
           </div>
         </div>
-        <div className="mt-2 flex items-center gap-4 self-stretch">
-          <span className="text-neutral-700 my-auto self-stretch text-xl font-semibold">
-            {product.price}
-          </span>
-        </div>
       </div>
-      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-2 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+
+      <div className="bg bg-slate-200 flex w-full flex-1 justify-between justify-items-stretch bg-opacity-[.9] px-4 py-2 lg:absolute lg:top-[50%] lg:bg-transparent lg:opacity-0 lg:transition-opacity lg:duration-700 lg:group-hover:opacity-100">
         <button
-          className="bg-emerald-700 rounded px-4 py-2 text-white hover:bg-blue-600"
-          onClick={() => handleAddToCart()}
+          onClick={handleAddToCart}
+          className="bg-emarald-primary hover:bg-white-secondary hover:text-emarald-primary rounded px-4 py-2 text-white"
         >
-          Add to Cart
+          <ShoppingCartIcon />
         </button>
-        <div className="flex items-center">
-          {/* <label
-            htmlFor={`quantity-${_id}`}
-            className="text-zinc-500 mr-2 text-center text-base font-medium"
-          >
-            Quantity:
-          </label> */}
+        <button
+          // onClick={handleMakePayment}
+          className="bg-emarald-primary hover:bg-white-secondary hover:text-emarald-primary rounded px-4 py-2 text-white"
+        >
+          <FavoriteIcon />
+        </button>
+        {/* <div className="flex items-center">
           <input
             id={`quantity-${_id}`}
             type="number"
@@ -139,10 +136,10 @@ const ProductCard = ({ product }) => {
             onChange={(e) => setQuantity(e.target.value)}
             className="w-16 rounded border border-gray-300 px-2 py-1 text-center text-base"
           />
-        </div>
+        </div> */}
         <button
           onClick={handleMakePayment}
-          className="bg-emarald-primary rounded bg-transparent px-4 py-2 text-white hover:bg-blue-600"
+          className="bg-emarald-primary hover:bg-white-secondary hover:text-emarald-primary rounded px-4 py-2 text-white"
         >
           <LocalMallRoundedIcon />
         </button>

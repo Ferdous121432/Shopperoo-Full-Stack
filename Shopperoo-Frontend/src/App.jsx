@@ -29,15 +29,16 @@ const SignIn = lazy(() => import("./pages/SignIn"));
 const RestrictedPage = lazy(() => import("./pages/RestrictedPage"));
 const About = lazy(() => import("./pages/About"));
 const DashboardHome = lazy(
-  () => import("./components/Dashboard/DashBoardHome/DashboardHome")
+  () => import("./components/Dashboard/DashBoardHome/DashboardHome"),
 );
 const OrderManagement = lazy(
-  () => import("./components/Dashboard/OrderManagement/OrderManagement")
+  () => import("./components/Dashboard/OrderManagement/OrderManagement"),
 );
 const ErrorPage = lazy(() => import("./components/ErrorPage/ErrorPage"));
 const DashboardLayoutBasic = lazy(
-  () => import("./components/MuiHeader/MuiHeader")
+  () => import("./components/MuiHeader/MuiHeader"),
 );
+const UserProfile = lazy(() => import("./pages/UserProfile"));
 
 // dist/assets/index-59fcab9b.css   30.56 kB │ gzip:   5.14 kB
 // dist/assets/index-f7c12d89.js   572.44 kB │ gzip: 151.29 kB
@@ -62,6 +63,7 @@ function App() {
         <Route path="about" element={<About />} />
         {/* <Route path="dashboard" element={<DashboardHome />} /> */}
         <Route path="ordermanagement" element={<OrderManagement />} />
+        <Route path="userprofile" element={<UserProfile />} />
         <Route path="dashboard" element={<DashboardLayoutBasic />}>
           <Route path="dashboard" element={<DashboardHome />} />
           <Route path="ordermanagement" element={<OrderManagement />} />

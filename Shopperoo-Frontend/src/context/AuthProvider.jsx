@@ -130,7 +130,7 @@ export const AuthProvider = ({ children }) => {
           loading: false,
           error: null,
           status: "success",
-        })
+        }),
       );
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -203,7 +203,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout function to remove the token from local storage and set the user state to null
-  const logout = () => {
+  const logout = (e) => {
     dispatch({ type: "LOADING" });
     // Perform logout logic here (e.g., API call)
     localStorage.removeItem("appState");
