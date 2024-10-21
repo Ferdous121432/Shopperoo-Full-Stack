@@ -30,9 +30,9 @@ const UserDashboard = () => {
     _id: userData._id,
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     logout();
-    cookie.remove("token");
     window.location.href = "/signin";
   };
 
@@ -92,14 +92,20 @@ const UserDashboard = () => {
       content: userDetails,
     },
     {
-      label: "Description",
+      label: "My Orders",
       value: "1",
       content:
         "This is the description content. Here you can add a detailed description of the product.",
     },
     {
-      label: "Reviews",
+      label: "Wishlist",
       value: "2",
+      content:
+        "This is the reviews content. Here you can add customer reviews and ratings.",
+    },
+    {
+      label: "Reviews",
+      value: "3",
       content:
         "This is the reviews content. Here you can add customer reviews and ratings.",
     },
@@ -117,7 +123,9 @@ const UserDashboard = () => {
           orientation={"vertical"}
         />
       </div>
-      <Button onClick={handleLogout}>Logout</Button>
+      <div className="flex justify-center">
+        <Button handleClick={handleLogout}>Logout</Button>
+      </div>
     </div>
   );
 };
