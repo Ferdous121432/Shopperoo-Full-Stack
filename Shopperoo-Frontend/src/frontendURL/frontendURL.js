@@ -9,7 +9,7 @@ export const frontendURL = (path) => {
 export const basedURL = (path) => {
   const protocol = window.location.protocol; // http: or https:
   const host = window.location.host; // domain:port
-  const baseURL = `${protocol}//${host}`; // http://localhost:3000
+  const baseURL = `${protocol}//${host}`; //
 
   return baseURL;
 };

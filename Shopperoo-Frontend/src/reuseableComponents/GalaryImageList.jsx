@@ -1,5 +1,6 @@
 import React from "react";
 import { Img } from "react-image";
+import { baseURL } from "../api/apiURL";
 
 const GalaryImageList = ({ images }) => {
   return (
@@ -8,7 +9,7 @@ const GalaryImageList = ({ images }) => {
         <div key={index} className="">
           <Img
             key={index}
-            src={`http://localhost:3000/img/products/images/${image}`}
+            src={`${baseURL}/img/products/images/${image}`}
             alt="product"
             style={{ width: "100%" }}
           />
