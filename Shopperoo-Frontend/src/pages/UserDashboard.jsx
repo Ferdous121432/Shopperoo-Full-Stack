@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import cookie from "js-cookie";
 
@@ -110,6 +110,30 @@ const UserDashboard = () => {
         "This is the reviews content. Here you can add customer reviews and ratings.",
     },
   ];
+
+  const [loadingError, setLoadingError] = useState(false);
+
+  useEffect(() => {
+    if (!userData) {
+      const timer = setTimeout(() => {
+        setLoadingError(true);
+      }, 5000); // 5 seconds timeout
+
+      return () => clearTimeout(timer);
+    }
+  }, [userData]);
+
+  if (loadingError) {
+    return (
+      <div className="items-center justify-center align-middle">
+        Error loading page
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return <SpinnerFullPage />;
+  }
 
   return (
     <div className="relative flex max-w-[1200px] flex-col justify-center gap-4 md:gap-10 lg:mx-20 lg:gap-16 lg:py-20">

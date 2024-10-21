@@ -7,21 +7,39 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import cookie from "js-cookie";
 import { useAuth } from "../../context/AuthProvider";
 import UserAvatar from "../../reuseableComponents/UserAvatar";
+import { Navigate } from "react-router-dom";
 
 export default function BasicMenu() {
   const { state, logout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const handleProfileClick = () => {
-    window.location.href = "/userprofile";
     handleClose();
+    window.location.href = "/userprofile";
+  };
+
+  const handleOrderClick = () => {
+    handleClose();
+    window.location.href = "/my-order";
+  };
+
+  const handleLoginClick = () => {
+    handleClose();
+    window.location.href = "/signin";
+  };
+
+  const handleRegisterClick = () => {
+    handleClose();
+    window.location.href = "/signup";
   };
 
   const handleLogout = (e) => {
@@ -58,7 +76,7 @@ export default function BasicMenu() {
           }}
         >
           <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My Order</MenuItem>
+          <MenuItem onClick={handleOrderClick}>My Order</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       ) : (
@@ -71,8 +89,8 @@ export default function BasicMenu() {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleProfileClick}>Login</MenuItem>
-          <MenuItem onClick={handleClose}>Register</MenuItem>
+          <MenuItem onClick={handleLoginClick}>Login</MenuItem>
+          <MenuItem onClick={handleRegisterClick}>Register</MenuItem>
         </Menu>
       )}
     </div>
