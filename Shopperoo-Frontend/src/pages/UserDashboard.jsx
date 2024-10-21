@@ -91,3 +91,35 @@ const UserDashboard = () => {
       value: "0",
       content: userDetails,
     },
+    {
+      label: "Description",
+      value: "1",
+      content:
+        "This is the description content. Here you can add a detailed description of the product.",
+    },
+    {
+      label: "Reviews",
+      value: "2",
+      content:
+        "This is the reviews content. Here you can add customer reviews and ratings.",
+    },
+  ];
+
+  return (
+    <div className="relative flex max-w-[1200px] flex-col justify-center gap-4 md:gap-10 lg:mx-20 lg:gap-16 lg:py-20">
+      <div className="max-width-[20%] w-[100px] md:w-[200px] lg:w-[250px]">
+        <img className="rounded-full" src={user.avatar} alt="User Avatar" />
+      </div>
+      <div className="flex">
+        <CustopTabs
+          tabData={tabData}
+          flexDirection="row"
+          orientation={"vertical"}
+        />
+      </div>
+      <Button onClick={handleLogout}>Logout</Button>
+    </div>
+  );
+};
+
+export default UserDashboard;
