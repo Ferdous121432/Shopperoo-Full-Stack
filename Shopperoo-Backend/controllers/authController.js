@@ -24,7 +24,7 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-    secure: false, // Set to true if using HTTPS
+    secure: true, // Set to true if using HTTPS
     sameSite: 'Lax', // Controls when cookies are sent
     path: '/', // Ensure the cookie is accessible on all routes
     maxAge: 24 * 60 * 60 * 1000, // 1 day
