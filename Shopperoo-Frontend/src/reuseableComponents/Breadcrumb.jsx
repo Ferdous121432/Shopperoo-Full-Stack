@@ -28,7 +28,6 @@ const Breadcrumb = ({ name }) => {
 
   return (
     <div
-      onClick={handleClick}
       role="presentation"
       className="relative flex min-h-[100px] w-full flex-col items-start justify-center px-4 py-8 md:px-20 md:py-12"
     >
@@ -40,7 +39,13 @@ const Breadcrumb = ({ name }) => {
       />
       <Breadcrumbs aria-label="breadcrumb" sx={{ zIndex: 10, fontWeight: 600 }}>
         {items.map((item, index) => (
-          <Link key={index} underline="hover" color="inherit" href={item.path}>
+          <Link
+            key={index}
+            underline="hover"
+            color="inherit"
+            href={item.path}
+            onClick={handleClick}
+          >
             {item.label}
           </Link>
         ))}
