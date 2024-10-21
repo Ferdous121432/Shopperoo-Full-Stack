@@ -111,9 +111,16 @@ exports.getProductsByCategory = catchAsync(async (req, res, next) => {
   if (products.length) {
     products.map((product) => {
       if (product.imageCover) {
-        product.imageCover = `${req.protocol}://${req.get('host')}/img/products/cover-image/${product.imageCover}`;
+        product.imageCover =
+          `${req.protocol}://${req.get('host')}/img/products/cover-image/${product.imageCover}`.replace(
+            'http:',
+            'https:',
+          );
         product.images = product.images.map((image) => {
-          return `${req.protocol}://${req.get('host')}/img/products/images/${image}`;
+          return `${req.protocol}://${req.get('host')}/img/products/images/${image}`.replace(
+            'http:',
+            'https:',
+          );
         });
       }
     });
