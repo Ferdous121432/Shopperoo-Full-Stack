@@ -9,6 +9,7 @@ import ResponsiveImage from "../../reuseableComponents/ResponsiveImage";
 import GalaryImageList from "../../reuseableComponents/GalaryImageList";
 import ProductTop from "./ProductTop";
 import CustopTabs from "./CustomTabs";
+import { baseURL } from "../../api/apiURL";
 
 const ProductDetails = ({ product }) => {
   const { state } = useAuth();
@@ -88,7 +89,7 @@ const ProductDetails = ({ product }) => {
       <div className="flex flex-col gap-6 lg:w-[30%]">
         <div className="">
           <ResponsiveImage
-            src={`http://localhost:3000/img/products/images/${images[imageIndex]}`}
+            src={`${baseURL}/img/products/images/${images[imageIndex]}`}
             alt={name}
             sizes={{ large: imageCover }}
           />
