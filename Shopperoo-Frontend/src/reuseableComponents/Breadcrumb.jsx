@@ -4,19 +4,19 @@ import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 
-const currentURL = window.location.pathname;
-
-function handleClick(event) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
-
 const Breadcrumb = ({ name }) => {
+  const currentURL = window.location.pathname;
+
+  function handleClick(event) {
+    event.preventDefault();
+    window.location.href = event.target.href;
+  }
   const createBreadcrumbFromURL = (url) => {
     const pathnames = url
       .split("/")
       .filter((x) => x)
       .slice(0, -1);
+
     const breadcrumbItems = pathnames.map((name, index) => {
       const path = `/${pathnames.slice(0, index + 1).join("/")}`;
       return { label: name.charAt(0).toUpperCase() + name.slice(1), path };
@@ -25,12 +25,11 @@ const Breadcrumb = ({ name }) => {
   };
 
   const items = createBreadcrumbFromURL(currentURL);
-  // console.log(breadcrumbItems);
 
   return (
     <div
-      role="presentation"
       onClick={handleClick}
+      role="presentation"
       className="relative flex min-h-[100px] w-full flex-col items-start justify-center px-4 py-8 md:px-20 md:py-12"
     >
       <img
