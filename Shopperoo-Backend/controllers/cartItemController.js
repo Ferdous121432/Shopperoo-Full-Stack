@@ -18,7 +18,8 @@ exports.getMyCart = catchAsync(async (req, res, next) => {
   if (cartItems.length) {
     cartItems.map((cartItem) => {
       if (cartItem.image) {
-        cartItem.image = `${req.protocol}://${req.get('host')}/img/products/cover-image/${cartItem.image}`;
+        cartItem.image = `${req.protocol === 'https' ? 'https' : 'http'}://${req.get('host')}/img/products/cover-image/${cartItem.image}`;
+        // cartItem.image = `${req.protocol}://${req.get('host')}/img/products/cover-image/${cartItem.image}`;
       }
       totalPrice += cartItem.subtotal;
     });
