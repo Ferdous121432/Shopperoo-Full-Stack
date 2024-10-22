@@ -117,6 +117,10 @@ const userSchema = new mongoose.Schema(
     deleted_at: {
       type: Date,
     },
+    // email verification
+    verified: { type: Boolean, default: false },
+    verificationToken: { type: String, unique: true },
+    verificationTokenExpires: { type: Date },
   },
   {
     virtuals: true,

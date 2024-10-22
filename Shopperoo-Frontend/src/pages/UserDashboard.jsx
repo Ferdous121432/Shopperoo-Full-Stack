@@ -116,6 +116,7 @@ const UserDashboard = () => {
   useEffect(() => {
     if (!userData) {
       const timer = setTimeout(() => {
+        <SpinnerFullPage />;
         setLoadingError(true);
       }, 5000); // 5 seconds timeout
 
@@ -129,10 +130,6 @@ const UserDashboard = () => {
         Error loading page
       </div>
     );
-  }
-
-  if (!userData) {
-    return <SpinnerFullPage />;
   }
 
   return (

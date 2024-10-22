@@ -1,17 +1,19 @@
 /* eslint-disable */
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from "../../reuseableComponents/Button";
+import Constants from "../../../constants";
 
 const CartSummary = ({ subtotal, total, handleCheckout }) => {
   return (
-    <div className="flex flex-col px-20 pt-4 pb-20 mx-auto w-full bg-orange-50 max-md:px-5 max-md:mt-10">
+    <div className="max-md:px-5 max-md:mt-10 mx-auto flex w-full flex-col bg-orange-50 px-20 pb-20 pt-4">
       <h2 className="self-center text-3xl font-semibold text-black">
         Cart Totals
       </h2>
-      <div className="flex gap-5 justify-between mt-16 max-md:mt-10">
-        <div className="flex flex-col self-start text-base font-medium text-black whitespace-nowrap">
+      <div className="max-md:mt-10 mt-16 flex justify-between gap-5">
+        <div className="flex flex-col self-start whitespace-nowrap text-base font-medium text-black">
           <div>Subtotal</div>
-          <div className="self-start mt-8">Total</div>
+          <div className="mt-8 self-start">Total</div>
         </div>
         <div className="flex flex-col">
           <div className="self-end text-base text-neutral-400">{subtotal}</div>
@@ -20,11 +22,10 @@ const CartSummary = ({ subtotal, total, handleCheckout }) => {
           </div>
         </div>
       </div>
-      <button
-        onClick={handleCheckout}
-        className="px-14 py-4 mt-11 mr-2.5 ml-3 text-xl text-black rounded-2xl border border-black border-solid max-md:px-5 max-md:mt-10 max-md:ml-2.5">
+
+      <Button handleClick={handleCheckout} color={Constants.EMARALD_PRIMARY}>
         Check Out
-      </button>
+      </Button>
     </div>
   );
 };

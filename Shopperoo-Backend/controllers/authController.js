@@ -4,10 +4,8 @@ const crypto = require('crypto');
 
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const Email = require('../utils/email');
 const User = require('../models/userModel');
-const Cart = require('../models/cartModel');
-const cookieParser = require('cookie-parser');
+const sendVerificationEmail = require('../utils/sendVerificationEmail');
 
 // jwt token creation
 const signToken = (id) => {
@@ -50,35 +48,39 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
-exports.signup = catchAsync(async (req, res, next) => {
-  // Roles will be defined by the admin. Default role is user
-  if (req.body.role) {
-    req.body.role = 'user';
-  }
+// exports.signup = catchAsync(async (req, res, next) => {
+//   // Roles will be defined by the admin. Default role is user
+//   if (req.body.role) {
+//     req.body.role = 'user';
+//   }
 
-  const newUser = await User.create(req.body);
+//   const newUser = await User.create(req.body);
 
-  // Create cart for the user
-  // const cart = await Cart.create({
-  //   userID: newUser._id,
-  //   total: 0,
-  // });
+//   sendVerificationEmail(newUser);
 
-  // const url = `${req.protocol}://${req.get('host')}/me`;
-  // console.log(url);
+//   // const url = `${req.protocol}://${req.get('host')}/me`;
 
-  // await new Email(newUser, url).sendWelcome();
+//   // await new Email(newUser, url).sendWelcome();
 
-  // Create token for signed up user and send it to client
-  //TODO remove this functriuonality at production
-  createSendToken(newUser, 201, res);
-});
+//   // Create token for signed up user and send it to client
+//   //TODO remove this functriuonality at production
+//   createSendToken(newUser, 201, res);
+// });
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   // 1. Check if email and password exist
   if (!email || !password) {
     return next(new AppError('Please provide email and password', 400));
+  }
+
+  // check if user verified his email
+  const userVerify = await User.findOne({
+    email,
+  });
+
+  if (userVerify.verified === false) {
+    return next(new AppError('User not found', 404));
   }
 
   // 2. Check if user exists && password is correct
@@ -312,4 +314,61 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4. Log user in, send JWT
   // TODO remove this functionality at production
   createSendToken(user._id, 201, res);
+});
+
+// ggg
+exports.signup = catchAsync(async (req, res, next) => {
+  // Roles will be defined by the admin. Default role is user
+  if (req.body.role) {
+    req.body.role = 'user';
+  }
+
+  console.log('req.body :', req.body);
+  // check if user with the email already exists
+  const user = await User.findOne({ email: req.body.email });
+  if (user) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'User with this email already exists.',
+    });
+  }
+
+  const newUser = await User.create(req.body);
+  console.log(newUser);
+
+  // Generate verification token
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+  newUser.verificationToken = verificationToken;
+  newUser.verificationTokenExpires = Date.now() + 24 * 60 * 60 * 1000; // Token valid for 24 hours
+  await newUser.save({ validateBeforeSave: false });
+  // Send verification email
+  const verificationUrl = `${req.protocol}://${req.get('host')}/api/v1/users/verify/${verificationToken}`;
+  await sendVerificationEmail(newUser, verificationUrl);
+  res.status(201).json({
+    status: 'success',
+    message: 'User registered. Please check your email to verify your account.',
+  });
+});
+
+// Endpoint to verify email
+exports.verifyEmail = catchAsync(async (req, res, next) => {
+  const token = req.params.token;
+  const user = await User.findOne({
+    verificationToken: token,
+    verificationTokenExpires: { $gt: Date.now() },
+  });
+  if (!user) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Token is invalid or has expired.',
+    });
+  }
+  user.verified = true;
+  user.verificationToken = undefined;
+  user.verificationTokenExpires = undefined;
+  await user.save();
+  res.status(200).json({
+    status: 'success',
+    message: 'Email verified successfully!',
+  });
 });

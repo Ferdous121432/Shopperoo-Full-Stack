@@ -43,19 +43,20 @@ function RegistrationForm() {
   console.log(formData);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     signup(formData);
-    window.location.href = frontendURL("signin");
+    // window.location.href = frontendURL("signin");
   };
 
   return (
-    <div className="bg-grey-lighter min-h-screen flex flex-col">
-      <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-        <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-          <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+    <div className="bg-grey-lighter flex min-h-screen flex-col">
+      <div className="container mx-auto flex max-w-sm flex-1 flex-col items-center justify-center px-2">
+        <div className="w-full rounded bg-white px-6 py-8 text-black shadow-md">
+          <h1 className="mb-8 text-center text-3xl">Sign up</h1>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="border-grey-light mb-4 block w-full rounded border p-3"
               name="firstName"
               placeholder="First Name"
               value={formData.firstName}
@@ -63,7 +64,7 @@ function RegistrationForm() {
             />
             <input
               type="text"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="border-grey-light mb-4 block w-full rounded border p-3"
               name="lastName"
               placeholder="Last Name"
               value={formData.lastName}
@@ -71,7 +72,7 @@ function RegistrationForm() {
             />
             <input
               type="email"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="border-grey-light mb-4 block w-full rounded border p-3"
               name="email"
               placeholder="Email"
               value={formData.email}
@@ -79,7 +80,7 @@ function RegistrationForm() {
             />
             <input
               type="password"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="border-grey-light mb-4 block w-full rounded border p-3"
               name="password"
               placeholder="Password"
               value={formData.password}
@@ -88,21 +89,21 @@ function RegistrationForm() {
             <div className="mb-6">
               <input
                 type="password"
-                className="block border border-grey-light w-full p-3 rounded mb-2"
+                className="border-grey-light mb-2 block w-full rounded border p-3"
                 name="passwordConfirm"
                 placeholder="Confirm Password"
                 value={formData.passwordConfirm}
                 onChange={handleChange}
               />
               {!passwordMatch && (
-                <p className="text-red-500 text-xs italic mb-8 ">
+                <p className="mb-8 text-xs italic text-red-500">
                   Passwords do not match
                 </p>
               )}
               {passwordMatch &&
                 formData.password &&
                 formData.passwordConfirm && (
-                  <p className="text-green-500 text-xs italic mb-8">
+                  <p className="mb-8 text-xs italic text-green-500">
                     Passwords match
                   </p>
                 )}
@@ -119,21 +120,24 @@ function RegistrationForm() {
             </LocalizationProvider>
             <button
               type="submit"
-              className="w-full text-center py-3 rounded bg-green-200 text-slate-200 hover:bg-green-dark focus:outline-none my-1 mt-8">
+              className="hover:bg-green-dark my-1 mt-8 w-full rounded bg-green-200 py-3 text-center text-slate-200 focus:outline-none"
+            >
               Create Account
             </button>
           </form>
-          <div className="text-center text-sm text-grey-dark mt-4">
+          <div className="text-grey-dark mt-4 text-center text-sm">
             By signing up, you agree to the
             <a
-              className="no-underline border-b border-grey-dark text-grey-dark"
-              href="#">
+              className="border-grey-dark text-grey-dark border-b no-underline"
+              href="#"
+            >
               Terms of Service
             </a>{" "}
             and
             <a
-              className="no-underline border-b border-grey-dark text-grey-dark"
-              href="#">
+              className="border-grey-dark text-grey-dark border-b no-underline"
+              href="#"
+            >
               Privacy Policy
             </a>
           </div>
@@ -141,8 +145,9 @@ function RegistrationForm() {
         <div className="text-grey-dark mt-6">
           Already have an account?
           <a
-            className="no-underline border-b border-blue text-blue"
-            href="../login/">
+            className="border-blue text-blue border-b no-underline"
+            href="../login/"
+          >
             Log in
           </a>
           .

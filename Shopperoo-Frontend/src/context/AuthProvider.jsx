@@ -13,6 +13,7 @@ import {
 // Initial state
 const initialState = {
   isAuthenticated: false,
+  isVerified: false,
   user: null,
   loading: false,
   error: null,
@@ -42,6 +43,7 @@ const authReducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
+        isVerified: action.payload.data.user.verified,
         user: action.payload.data.user,
         token: action.payload.token,
         loading: false,
@@ -70,6 +72,7 @@ const authReducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
+        isVerified: false,
         user: null,
         loading: false,
         error: null,
@@ -78,6 +81,7 @@ const authReducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
+        isVerified: false,
         user: null,
         loading: false,
         token: null,
@@ -120,12 +124,14 @@ export const AuthProvider = ({ children }) => {
     try {
       const url = `${baseURL}/${loginURL}`;
       const response = await axios.post(url, credentials);
+      console.log(response.data);
 
       localStorage.setItem(
         "appState",
         JSON.stringify({
           isAuthenticated: true,
-          user: response.data.data.user,
+          isVerified: response.data.data.verified,
+          userData: response.data.data.user,
           token: response.data.token,
           loading: false,
           error: null,
@@ -196,9 +202,10 @@ export const AuthProvider = ({ children }) => {
       const url = `${baseURL}/${signupURL}`;
       const response = await axios.post(url, signupData);
       dispatch({ type: "SIGNUP_SUCCESS", payload: response.data });
+      alert("Account created successfully");
     } catch (error) {
-      alert("Error signing up:", error);
       dispatch({ type: "AUTH_ERROR", payload: error.message });
+      alert("Error signing up:", error);
     }
   };
 

@@ -8,6 +8,7 @@ const router = express.Router();
 // middleware runs in sequence
 
 router.post('/signup', authController.signup);
+router.get('/verify/:token', authController.verifyEmail);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 // router.post('/forgotpassword', authController.forgotPassword);
