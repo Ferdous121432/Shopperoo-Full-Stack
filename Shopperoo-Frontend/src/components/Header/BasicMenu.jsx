@@ -56,13 +56,17 @@ export default function BasicMenu() {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        style={{ color: "#065f46" }}
+        style={{
+          color: "#065f46",
+        }}
         size="large"
       >
         {state.isAuthenticated ? (
           <UserAvatar />
         ) : (
-          <AccountCircleIcon fontSize="large" />
+          <AccountCircleIcon
+            fontSize={window.innerWidth < 670 ? "medium" : "large"}
+          />
         )}
       </Button>
       {state.isAuthenticated ? (

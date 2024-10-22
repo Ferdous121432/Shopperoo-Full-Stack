@@ -6,7 +6,10 @@ export default function UserAvatar() {
     <Avatar
       alt="Remy Sharp"
       src="/public/image/avatar-1.AVIF"
-      sx={{ width: 40, height: 40 }}
+      sx={{
+        width: window.innerWidth < 600 ? 30 : 40,
+        height: window.innerWidth < 600 ? 30 : 40,
+      }}
     />
   );
 }

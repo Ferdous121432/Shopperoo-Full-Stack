@@ -3,13 +3,9 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import Constants from "../../../constants";
 
@@ -70,7 +66,7 @@ export default function MobileNavigation() {
           <Button onClick={toggleDrawer(anchor, true)}>
             <MenuTwoToneIcon
               sx={{
-                fontSize: "3rem",
+                fontSize: window.innerWidth < 600 ? "2rem" : "3rem",
                 color: Constants.EMARALD_PRIMARY,
               }}
             />
@@ -93,6 +89,7 @@ export default function MobileNavigation() {
               onClick={toggleDrawer("right", false)}
               sx={{
                 position: "absolute",
+                fontSize: window.innerWidth < 800 ? "1rem" : "1.5rem",
                 bottom: 0,
                 width: "100%",
                 background: Constants.EMARALD_PRIMARY,

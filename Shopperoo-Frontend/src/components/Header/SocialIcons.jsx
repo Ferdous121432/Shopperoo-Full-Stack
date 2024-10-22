@@ -18,7 +18,7 @@ function SocialIcons({ isScrolled }) {
       <Link to="/cart">
         <ShoppingCartIcon
           className="cursor-pointer"
-          fontSize="large"
+          fontSize={window.innerWidth < 600 ? "medium" : "large"}
           style={{ color: Constants.EMARALD_PRIMARY }}
         />
       </Link>

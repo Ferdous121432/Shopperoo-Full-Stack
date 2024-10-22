@@ -13,7 +13,7 @@ function Logo({ isScrolled }) {
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/05944335d4c8ea27735c375aa3816d3f0f03f0b176bd0909049a018400cd773a?placeholderIfAbsent=true&apiKey=5f7c255a63be4d4b97b4f114fa9e17d0"
           alt=""
-          className="my-auto aspect-[1.56] w-[50px] shrink-0 items-center self-stretch object-contain"
+          className="my-auto aspect-[1.56] w-[50px] shrink-0 items-center self-stretch object-contain transition-transform duration-700 hover:rotate-180"
         />
         {isScrolled === false && (
           <div className="my-auto self-stretch text-sm md:text-2xl lg:text-2xl">
