@@ -6,7 +6,7 @@ module.exports = withMT({
     fontSize: {
       xs: ["0.75rem", "1rem"], // 12px, 16px
       sm: ["0.875rem", "1.25rem"], // 14px, 20px
-      base: ["1rem", "1.21875rem"], // 16px, 19.5px
+      md: ["1rem", "1.21875rem"], // 16px, 19.5px
       lg: ["1.125rem", "1.37125rem"], // 18px, 21.94px
       xl: ["1.25rem", "1.52375rem"], // 20px, 24.38px
       "2xl": ["1.5rem", "1.82875rem"], // 24px, 29.26px

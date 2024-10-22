@@ -8,7 +8,7 @@ import SpinnerFullPage from "./SpinnerFullPage";
 
 const Layout = ({ children }) => (
   <Suspense fallback={<SpinnerFullPage />}>
-    <div className="flex flex-col overflow-hidden bg-white">
+    <div className="relative flex flex-col overflow-hidden bg-white">
       <Header />
       <main>{children}</main>
       <Footer />

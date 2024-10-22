@@ -4,6 +4,9 @@ class Constants {
   static MAX_RETRIES = 3;
 
   //COLORS
+  static AMBER_50 = "#fefce8";
+  static AMBER_100 = "#fef3c7";
+  static AMBER_200 = "#fde68a";
   static PRIMARY_COLOR = "#FFD700";
   static WHITE_PRIMARY = "#f8fafc";
   static WHITE_SECONDARY = "#e2e8f0";
