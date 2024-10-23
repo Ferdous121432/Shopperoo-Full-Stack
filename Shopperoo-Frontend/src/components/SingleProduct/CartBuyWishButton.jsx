@@ -18,14 +18,14 @@ export default function CartBuyWishButton({
     <div className="flex w-full flex-1 justify-center justify-items-stretch gap-8 bg-opacity-[.9] px-4 py-2 sm:gap-20">
       <button
         onClick={handleAddToCart}
-        className="bg-emarald-primary hover:bg-white-secondary hover:text-emarald-primary rounded px-4 py-2 text-white"
+        className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
       >
         <ShoppingCartIcon />
       </button>
 
       <button
         // onClick={handleMakePayment}
-        className="bg-emarald-primary hover:bg-white-secondary hover:text-emarald-primary rounded px-4 py-2 text-white"
+        className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
       >
         <FavoriteIcon />
       </button>
@@ -41,7 +41,7 @@ export default function CartBuyWishButton({
     </div> */}
       <button
         onClick={handleMakePayment}
-        className="bg-emarald-primary hover:bg-white-secondary hover:text-emarald-primary rounded px-4 py-2 text-white"
+        className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
       >
         <LocalMallRoundedIcon />
       </button>

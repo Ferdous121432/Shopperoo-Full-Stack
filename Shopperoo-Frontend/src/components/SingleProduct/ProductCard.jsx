@@ -1,35 +1,40 @@
 /* eslint-disable */
-import React from 'react';
+import React from "react";
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="flex flex-col self-stretch my-auto min-w-[240px] w-[285px]">
-      <div className="flex relative flex-col items-end px-7 pt-6 pb-56 w-full text-base font-medium text-white whitespace-nowrap aspect-[0.947] max-md:px-5 max-md:pb-24">
-        <img loading="lazy" src={product.image} alt={product.name} className="object-cover absolute inset-0 size-full" />
+    <div className="flex w-[90%] min-w-[240px] flex-col sm:w-[45%] md:w-[30%] xl:w-[22%]">
+      <div className="text-base relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 font-medium text-white">
+        <img
+          loading="lazy"
+          src={product.image}
+          alt={product.name}
+          className="absolute inset-0 size-full object-cover"
+        />
         {product.discount && (
-          <div className="relative px-px mb-0 w-12 h-12 bg-red-400 rounded-full fill-red-400 max-md:mb-2.5">
+          <div className="relative mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-px">
             -{product.discount}%
           </div>
         )}
         {product.isNew && (
-          <div className="relative px-1.5 mb-0 w-12 h-12 bg-emerald-400 rounded-full fill-emerald-400 max-md:mb-2.5">
+          <div className="relative mb-0 h-12 w-12 rounded-full bg-emerald-400 fill-emerald-400 px-1.5">
             New
           </div>
         )}
       </div>
-      <div className="flex flex-col items-start px-4 pt-4 pb-8 w-full bg-gray-100">
+      <div className="flex w-full flex-col items-start bg-gray-100 px-4 pb-8 pt-4">
         <h3 className="text-2xl font-semibold leading-tight text-neutral-700">
           {product.name}
         </h3>
-        <div className="mt-2 text-base font-medium text-zinc-500">
+        <div className="text-base text-zinc-500 mt-2 font-medium">
           {product.description}
         </div>
-        <div className="flex gap-4 items-center self-stretch mt-2">
-          <div className="self-stretch my-auto text-xl font-semibold text-neutral-700">
+        <div className="mt-2 flex items-center gap-4 self-stretch">
+          <div className="my-auto self-stretch text-xl font-semibold text-neutral-700">
             Rp {product.price.toLocaleString()}
           </div>
           {product.originalPrice && (
-            <div className="self-stretch my-auto text-base text-zinc-400">
+            <div className="text-base text-zinc-400 my-auto self-stretch">
               Rp {product.originalPrice.toLocaleString()}
             </div>
           )}

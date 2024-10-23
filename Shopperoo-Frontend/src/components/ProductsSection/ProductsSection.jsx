@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "../../reuseableComponents/ProductCard";
 
 const products = [
   {

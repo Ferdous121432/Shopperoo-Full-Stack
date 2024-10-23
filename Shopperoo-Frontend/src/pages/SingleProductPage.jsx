@@ -97,7 +97,7 @@ const ProductPage = () => {
           <ProductDetails product={product} />
         </div>
 
-        <div className="flex justify-center">
+        <div className="mt-[0.5rem] flex flex-wrap items-start justify-center gap-6">
           <RelatedProducts products={relatedProducts} />
         </div>
       </div>

@@ -4,6 +4,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import Constants from "../../../constants";
 
 function CustomTabs({ tabData, flexDirection, orientation }) {
   const [value, setValue] = useState("0");
@@ -27,9 +28,28 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
             onChange={handleChange}
             aria-label="lab API tabs example"
             orientation={orientation || "horizontal"}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: Constants.YELLOW_PRIMARY,
+              },
+            }}
           >
             {tabData.map((tab) => (
-              <Tab key={tab.value} label={tab.label} value={tab.value} />
+              <Tab
+                sx={{
+                  "&.Mui-selected": {
+                    color: Constants.YELLOW_PRIMARY,
+                  },
+                  "&:hover": {
+                    color: Constants.YELLOW_PRIMARY,
+                  },
+
+                  color: Constants.BLACK_PRIMARY,
+                }}
+                key={tab.value}
+                label={tab.label}
+                value={tab.value}
+              />
             ))}
           </TabList>
         </Box>

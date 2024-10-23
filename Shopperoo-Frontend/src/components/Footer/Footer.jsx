@@ -1,7 +1,5 @@
 /* eslint-disable */
 import React from "react";
-import FooterColumn from "./FooterColumn";
-import NewsletterForm from "./NewsletterForm";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -47,13 +45,19 @@ const Footer = () => {
         {footerText.map((column, index) => (
           <div key={index} className="flex flex-col">
             <h2 className="pb-3 text-xl font-semibold">{column.title}</h2>
-            <ul className="flex flex-col">
+            <ul className="flex flex-col gap-2">
               {column.items.map((item, index) => (
                 <li
                   key={index}
-                  className="hover:border-yellow-primary hover:text-yellow-primary py-1 hover:border-b-2"
+                  className="hover:border-yellow-primary hover:text-yellow-primary group relative"
                 >
-                  <Link to="/">{item}</Link>
+                  <Link
+                    to="/"
+                    className="relative block cursor-pointer text-black no-underline transition-all duration-500 ease-in-out"
+                  >
+                    {item}
+                  </Link>
+                  <span className="bg-yellow-primary absolute bottom-[-5px] left-0 h-0.5 w-full scale-x-0 transition-transform duration-500 ease-in-out group-hover:scale-x-100"></span>
                 </li>
               ))}
             </ul>

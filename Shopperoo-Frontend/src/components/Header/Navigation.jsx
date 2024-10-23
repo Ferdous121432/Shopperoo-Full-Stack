@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Navigation() {
   const navItems = [
@@ -18,14 +19,21 @@ function Navigation() {
   ];
 
   return (
-    <nav className="max-md:ml-0 max-md:w-full ml-5 hidden flex-col lg:flex">
-      <ul className="max-md:mt-10 max-md:max-w-full text-base my-auto flex items-center justify-center gap-8 self-stretch whitespace-nowrap font-medium text-black">
+    <nav className="ml-5 hidden flex-col lg:flex">
+      <ul className="text-base my-auto flex items-center justify-center gap-8 self-stretch whitespace-nowrap font-medium text-black">
         {navItems.map((item, index) => (
           <li
             key={index}
-            className="hover:border-yellow-primary hover:text-yellow-primary hover:border-b-2"
+            className="hover:border-yellow-primary hover:text-yellow-primary group relative"
           >
-            <a href={item.url.toLowerCase()}>{item.title}</a>
+            <Link
+              to={item.url.toLowerCase()}
+              className="relative block cursor-pointer text-black no-underline transition-all duration-500 ease-in-out"
+              style={{ fontSize: ".9rem", padding: "6px 0" }}
+            >
+              {item.title}
+            </Link>
+            <span className="bg-yellow-primary absolute bottom-0 left-0 h-0.5 w-full scale-x-0 transition-transform duration-500 ease-in-out group-hover:scale-x-100"></span>
           </li>
         ))}
       </ul>

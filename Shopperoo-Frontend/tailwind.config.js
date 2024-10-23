@@ -22,6 +22,7 @@ module.exports = withMT({
       colors: {
         "yellow-primary": "#ca8a04",
         "yellow-secondary": "#fde047",
+        "yellow-tertiary": "#fefce8",
         "white-primary": "#f8fafc",
         "white-secondary": "#e2e8f0",
         "black-primary": "#0f172a",

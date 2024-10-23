@@ -66,13 +66,13 @@ const ProductCard = ({ product }) => {
   return (
     <article
       key={_id}
-      className="group relative my-auto flex w-[285px] min-w-[240px] flex-col self-stretch"
+      className="group relative my-auto flex w-[90%] min-w-[240px] flex-col self-stretch bg-gray-100 sm:w-[45%] md:w-[30%] xl:w-[22%]"
       data-id={_id}
     >
       <div>
         <Link
           to={redirectURL}
-          className="max-md:px-5 max-md:pb-24 relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 text-base font-medium text-white"
+          className="max-md:px-5 max-md:pb-24 text-base relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 font-medium text-white"
         >
           <LazyLoadImage
             src={imageCover}
@@ -95,7 +95,7 @@ const ProductCard = ({ product }) => {
           )}
         </Link>
 
-        <div className="flex w-full flex-col items-start bg-gray-100 px-4 pb-8 pt-4">
+        <div className="flex w-full flex-col items-start px-4 pb-8 pt-4">
           <Link to={redirectURL}>
             <h3 className="text-2xl font-semibold leading-tight text-neutral-700">
               {name}
@@ -113,16 +113,16 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
 
-      <div className="bg flex w-full flex-1 justify-between justify-items-stretch bg-slate-200 bg-opacity-[.9] px-4 py-2 lg:absolute lg:top-[50%] lg:bg-transparent lg:opacity-0 lg:transition-opacity lg:duration-700 lg:group-hover:opacity-100">
+      <div className="bg flex w-full flex-1 justify-between justify-items-stretch bg-opacity-[.9] px-4 py-2 lg:absolute lg:top-[50%] lg:bg-transparent lg:opacity-0 lg:transition-opacity lg:duration-700 lg:group-hover:opacity-100">
         <button
           onClick={handleAddToCart}
-          className="rounded bg-emarald-primary px-4 py-2 text-white hover:bg-white-secondary hover:text-emarald-primary"
+          className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
         >
           <ShoppingCartIcon />
         </button>
         <button
           // onClick={handleMakePayment}
-          className="rounded bg-emarald-primary px-4 py-2 text-white hover:bg-white-secondary hover:text-emarald-primary"
+          className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
         >
           <FavoriteIcon />
         </button>
@@ -138,7 +138,7 @@ const ProductCard = ({ product }) => {
         </div> */}
         <button
           onClick={handleMakePayment}
-          className="rounded bg-emarald-primary px-4 py-2 text-white hover:bg-white-secondary hover:text-emarald-primary"
+          className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
         >
           <LocalMallRoundedIcon />
         </button>
