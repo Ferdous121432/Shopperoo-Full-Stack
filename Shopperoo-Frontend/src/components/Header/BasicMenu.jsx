@@ -8,6 +8,7 @@ import cookie from "js-cookie";
 import { useAuth } from "../../context/AuthProvider";
 import UserAvatar from "../../reuseableComponents/UserAvatar";
 import { Navigate } from "react-router-dom";
+import Constants from "../../../constants";
 
 export default function BasicMenu() {
   const { state, logout } = useAuth();
@@ -57,7 +58,7 @@ export default function BasicMenu() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         style={{
-          color: "#065f46",
+          color: Constants.YELLOW_PRIMARY,
         }}
         size="large"
       >

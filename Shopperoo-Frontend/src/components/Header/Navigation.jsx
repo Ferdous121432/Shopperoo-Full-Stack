@@ -19,11 +19,11 @@ function Navigation() {
 
   return (
     <nav className="max-md:ml-0 max-md:w-full ml-5 hidden flex-col lg:flex">
-      <ul className="max-md:mt-10 max-md:max-w-full my-auto flex items-center justify-center gap-8 self-stretch whitespace-nowrap text-base font-medium text-black">
+      <ul className="max-md:mt-10 max-md:max-w-full text-base my-auto flex items-center justify-center gap-8 self-stretch whitespace-nowrap font-medium text-black">
         {navItems.map((item, index) => (
           <li
             key={index}
-            className="hover:border-b-2 hover:border-emarald-primary hover:text-emarald-primary"
+            className="hover:border-yellow-primary hover:text-yellow-primary hover:border-b-2"
           >
             <a href={item.url.toLowerCase()}>{item.title}</a>
           </li>

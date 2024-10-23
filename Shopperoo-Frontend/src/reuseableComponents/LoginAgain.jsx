@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./Button";
+import Constants from "../../constants";
 
 const LoginAgain = () => {
   return (
@@ -7,7 +8,7 @@ const LoginAgain = () => {
       <h1>You are not logged in</h1>
       <p>Please log in to continue.</p>
       <Button
-        color="#065f46"
+        color={Constants.YELLOW_PRIMARY}
         handleClick={() => (window.location.href = "/signin")}
       >
         Go to Login

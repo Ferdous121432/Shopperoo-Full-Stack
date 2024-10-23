@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import Constants from "../../../constants";
+import Button from "../../reuseableComponents/Button";
 
 function SignInForm() {
   const { login } = useAuth();
@@ -26,16 +28,16 @@ function SignInForm() {
   };
 
   return (
-    <section className="max-md:px-5 mt-8 flex w-full flex-col justify-center overflow-hidden rounded-3xl border border-solid border-stone-500 border-opacity-50 bg-white px-14 py-10">
-      <div className="max-md:max-w-full flex w-full max-w-[528px] flex-col items-center justify-center">
-        <h1 className="text-zinc-800 text-center text-3xl font-medium">
+    <section className="mt-8 flex w-4/5 flex-col justify-center overflow-hidden rounded-3xl border border-solid border-stone-500 border-opacity-50 bg-white px-8 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+      <div className="flex w-full max-w-[528px] flex-col items-center justify-center">
+        <h1 className="text-zinc-800 text-center text-2xl font-medium md:text-3xl">
           Sign in
         </h1>
         <form
-          className="max-md:mt-10 mt-12 flex w-full flex-col"
+          className="mt-6 flex w-full flex-col text-sm md:mt-12 md:text-lg"
           onSubmit={handleSubmit}
         >
-          <label htmlFor="email" className="text-zinc-800 text-base">
+          <label htmlFor="email" className="text-zinc-800">
             Email
           </label>
           <input
@@ -46,7 +48,7 @@ function SignInForm() {
             onChange={handleChange}
             className="mt-2 rounded border border-solid border-stone-500 p-2"
           />
-          <label htmlFor="password" className="text-zinc-800 mt-4 text-base">
+          <label htmlFor="password" className="text-zinc-800 mt-4">
             Your password
           </label>
           <input
@@ -57,14 +59,9 @@ function SignInForm() {
             onChange={handleChange}
             className="mt-2 rounded border border-solid border-stone-500 p-2"
           />
-          <div className="max-md:max-w-full mt-6 flex w-full flex-col items-center justify-center">
-            <button
-              type="submit"
-              className="max-md:px-5 max-md:max-w-full flex w-full flex-col items-center justify-center overflow-hidden rounded-[40px] bg-emarald-primary px-16 py-4 text-center text-2xl font-medium text-white-primary"
-            >
-              <span className="gap-2 self-stretch">Log in</span>
-            </button>
-            <p className="max-md:max-w-full mt-2 gap-2.5 py-2 pr-2 text-base text-stone-500">
+          <div className="mt-6 flex w-full flex-col items-center justify-center">
+            <Button color={Constants.YELLOW_PRIMARY}>Log in</Button>
+            <p className="mt-2 gap-2.5 py-2 pr-2 text-stone-500">
               By continuing, you agree to the{" "}
               <a href="#" className="text-neutral-900 underline">
                 Terms of use
@@ -77,7 +74,7 @@ function SignInForm() {
           </div>
         </form>
 
-        <div className="max-md:mt-10 mt-12 flex w-full flex-wrap justify-between gap-5 text-right text-base text-neutral-900">
+        <div className="max-md:mt-10 mt-12 flex w-full flex-wrap justify-between gap-5 text-right text-neutral-900">
           <a href="#">Other issue with sign in</a>
           <a href="#">Forget your password</a>
         </div>

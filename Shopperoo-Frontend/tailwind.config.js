@@ -20,6 +20,8 @@ module.exports = withMT({
         montserrat: ["Montserrat", "sans-serif"],
       },
       colors: {
+        "yellow-primary": "#ca8a04",
+        "yellow-secondary": "#fde047",
         "white-primary": "#f8fafc",
         "white-secondary": "#e2e8f0",
         "black-primary": "#0f172a",
@@ -29,11 +31,7 @@ module.exports = withMT({
         "emarald-trans": "rgba(6, 95, 70, .01)",
         "red-primary": "#9f1239",
         "red-secondary": "#e11d48",
-        primary: "#ECEEFF",
-        "coral-red": "#FF6452",
-        "slate-gray": "#6D6D6D",
-        "pale-blue": "#F5F6FF",
-        "white-400": "rgba(255, 255, 255, 0.80)",
+
         transparent: "transparent",
         current: "currentColor",
         black: require("tailwindcss/colors").black,
@@ -55,7 +53,7 @@ module.exports = withMT({
         card: "url('assets/images/thumbnail-background.svg')",
       },
       screens: {
-        xs: "385px",
+        xs: "500px",
         // => @media (min-width: 375px) { ... }
         sm: "645px",
         // => @media (min-width: 640px) { ... }

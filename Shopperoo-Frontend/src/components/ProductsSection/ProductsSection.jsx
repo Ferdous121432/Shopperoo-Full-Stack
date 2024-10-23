@@ -72,16 +72,16 @@ const products = [
 
 function ProductsSection() {
   return (
-    <section className="mt-[3rem] flex flex-col items-center">
-      <h2 className="text-neutral-700 mb-4 text-center text-[2.5rem] font-bold leading-tight">
+    <section className="mt-[1rem] flex flex-col items-center justify-center">
+      <h2 className="mb-4 text-center text-[2.5rem] font-bold leading-tight text-neutral-700">
         Our Products
       </h2>
-      <div className="mt-[0.5rem] grid grid-cols-1 justify-center gap-[2rem] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-[0.5rem] flex flex-wrap items-start justify-center gap-6">
         {products.map((product, index) => (
           <ProductCard key={index} {...product} />
         ))}
       </div>
-      <button className="mb-12 mt-8 w-[15.3125rem] max-w-full border border-solid border-yellow-600 bg-white px-[1rem] py-[0.1875rem] text-base font-semibold text-yellow-600 max-md:px-[0.3125rem]">
+      <button className="text-base max-md:px-[0.3125rem] mb-12 mt-8 w-[15.3125rem] max-w-full border border-solid border-yellow-600 bg-white px-[1rem] py-[0.1875rem] font-semibold text-yellow-600">
         Show More
       </button>
     </section>

@@ -39,7 +39,7 @@ const CartItem = ({ item }) => {
   return (
     <div id={`${_id}`} className="max-md:flex-col flex gap-5">
       <div className="max-md:ml-0 max-md:w-full flex w-[35%] flex-col">
-        <div className="max-md:mt-10 flex grow gap-9 text-base text-neutral-400">
+        <div className="max-md:mt-10 text-base flex grow gap-9 text-neutral-400">
           <img
             loading="lazy"
             src={image}
@@ -51,7 +51,7 @@ const CartItem = ({ item }) => {
         </div>
       </div>
       <div className="max-md:ml-0 max-md:w-full ml-5 flex w-[65%] flex-col">
-        <div className="max-md:mt-10 max-md:max-w-full my-auto flex gap-10 self-stretch text-base text-black">
+        <div className="max-md:mt-10 max-md:max-w-full text-base my-auto flex gap-10 self-stretch text-black">
           <div className="my-auto basis-auto text-neutral-400">{price}</div>
           <div className="flex items-center">
             <button
@@ -65,7 +65,7 @@ const CartItem = ({ item }) => {
               type="number"
               min="1"
               max="10"
-              className="w-16 rounded border border-gray-300 px-2 py-1 text-base"
+              className="text-base w-16 rounded border border-gray-300 px-2 py-1"
               value={itemQuantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
@@ -77,7 +77,7 @@ const CartItem = ({ item }) => {
             </button>
           </div>
           <div className="my-auto basis-auto">{subtotal}</div>
-          <Button color={Constants.EMARALD_PRIMARY} handleClick={handleDelete}>
+          <Button color={Constants.YELLOW_PRIMARY} handleClick={handleDelete}>
             <DeleteIcon />
           </Button>
         </div>

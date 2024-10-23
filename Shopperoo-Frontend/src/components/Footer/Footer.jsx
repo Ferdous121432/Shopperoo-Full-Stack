@@ -1,40 +1,81 @@
 /* eslint-disable */
-import React from 'react';
-import FooterColumn from './FooterColumn';
-import NewsletterForm from './NewsletterForm';
+import React from "react";
+import FooterColumn from "./FooterColumn";
+import NewsletterForm from "./NewsletterForm";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const columns = [
     {
-      title: 'Links',
-      items: ['Home', 'Shop', 'About', 'Contact']
+      title: "Links",
+      items: ["Home", "Shop", "About", "Contact"],
     },
     {
-      title: 'Help',
-      items: ['Payment Options', 'Returns', 'Privacy Policies']
-    }
+      title: "Help",
+      items: ["Payment Options", "Returns", "Privacy Policies"],
+    },
+  ];
+
+  const footerText = [
+    {
+      title: "Contact",
+      items: [
+        "Terms & Conditions",
+        "Privacy Policy",
+        "Return Policy",
+        "Shipping Policy",
+      ],
+    },
+    {
+      title: "Information",
+      items: [
+        "Exchange & Refund",
+        "Size Guide",
+        "Loyalty Program",
+        "Display Centers",
+      ],
+    },
+    {
+      title: "Company",
+      items: ["About Us", "Contact Us", "Intellectual Property"],
+    },
   ];
 
   return (
-    <footer className="flex flex-col items-start px-20 py-11 w-full bg-white border-t border-black border-opacity-20 max-md:px-5 max-md:max-w-full">
-      <div className="flex flex-wrap gap-10 items-start w-full max-w-[1133px] max-md:max-w-full">
-        <div className="flex flex-col">
-          <h2 className="self-start text-2xl font-bold text-black">Funiro.</h2>
-          <address className="mt-12 text-base text-neutral-400 max-md:mt-10 not-italic">
-            400 University Drive Suite 200 Coral Gables,
-            <br />
-            FL 33134 USA
-          </address>
-        </div>
-        {columns.map((column, index) => (
-          <FooterColumn key={index} title={column.title} items={column.items} />
+    <footer className="w-full leading-5">
+      <div className="grid grid-cols-1 justify-between gap-12 px-14 py-10 font-semibold sm:grid-cols-2 lg:grid-cols-4">
+        {footerText.map((column, index) => (
+          <div key={index} className="flex flex-col">
+            <h2 className="pb-3 text-xl font-semibold">{column.title}</h2>
+            <ul className="flex flex-col">
+              {column.items.map((item, index) => (
+                <li
+                  key={index}
+                  className="hover:border-yellow-primary hover:text-yellow-primary py-1 hover:border-b-2"
+                >
+                  <Link to="/">{item}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-        <div className="flex-auto max-md:max-w-full">
-          <NewsletterForm />
+        <div className="w-full">
+          <h2 className="pb-3 text-xl">You can pay by</h2>
+          <div className="flex w-4/5 max-w-[260px] flex-wrap items-start justify-start gap-3">
+            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
+            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
+            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
+            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
+            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
+            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
+          </div>
         </div>
       </div>
-      <hr className="shrink-0 self-center mt-12 max-w-full h-px border border-solid border-zinc-300 w-[1240px] max-md:mt-10" />
-      <p className="mt-9 text-base text-black">2023 furino. All rights reverved</p>
+      <div className="flex w-full bg-black-primary py-4">
+        <p className="text-bold mt-2 w-full self-stretch text-center text-white-primary">
+          &copy; 2023 Shopperoo All rights reserved
+        </p>
+      </div>
     </footer>
   );
 };

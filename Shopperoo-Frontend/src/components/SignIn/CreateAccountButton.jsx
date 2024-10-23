@@ -7,8 +7,9 @@ function CreateAccountButton() {
   return (
     <Link
       to={frontendURL("signup")}
-      className="flex overflow-hidden flex-col justify-center items-center px-16 py-4 mt-8 w-full max-w-screen-sm text-xl text-center border border-solid border-neutral-900 rounded-[40px] text-neutral-900 max-md:px-5 max-md:max-w-full">
-      <span className="gap-2 self-stretch">Create an account</span>
+      className="hover:bg-yellow-primary mt-8 flex w-4/5 flex-1 flex-col items-center justify-center overflow-hidden rounded-[40px] border border-solid border-neutral-900 px-16 py-4 text-center text-xl text-neutral-900 hover:text-white-primary"
+    >
+      <div className="gap-2 self-stretch">Create an account</div>
     </Link>
   );
 }

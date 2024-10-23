@@ -67,7 +67,7 @@ export default function MobileNavigation() {
             <MenuTwoToneIcon
               sx={{
                 fontSize: window.innerWidth < 600 ? "2rem" : "3rem",
-                color: Constants.EMARALD_PRIMARY,
+                color: Constants.YELLOW_PRIMARY,
               }}
             />
           </Button>
@@ -92,7 +92,7 @@ export default function MobileNavigation() {
                 fontSize: window.innerWidth < 800 ? "1rem" : "1.5rem",
                 bottom: 0,
                 width: "100%",
-                background: Constants.EMARALD_PRIMARY,
+                background: Constants.YELLOW_PRIMARY,
                 color: Constants.WHITE_PRIMARY,
                 borderRadius: "0px",
               }}

@@ -14,6 +14,8 @@ class Constants {
   static BLACK_SECONDARY = "#334155";
   static EMARALD_PRIMARY = "#065f46";
   static EMARALD_SECONDARY = "#059669";
+  static YELLOW_PRIMARY = "#ca8a04";
+  static YELLOW_SECONDARY = "#fde047";
   static EMARALD_TRANS = "rgba(6, 95, 70, .01)";
 
   static getApiEndpoint(endpoint) {

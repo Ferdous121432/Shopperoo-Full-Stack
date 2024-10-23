@@ -19,7 +19,7 @@ function SocialIcons({ isScrolled }) {
         <ShoppingCartIcon
           className="cursor-pointer"
           fontSize={window.innerWidth < 600 ? "medium" : "large"}
-          style={{ color: Constants.EMARALD_PRIMARY }}
+          style={{ color: Constants.YELLOW_PRIMARY }}
         />
       </Link>
       <BasicMenu />

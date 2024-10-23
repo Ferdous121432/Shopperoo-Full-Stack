@@ -5,8 +5,9 @@ import Navigation from "./Navigation";
 import SocialIcons from "./SocialIcons";
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header({ setHeaderHeight }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = React.createRef();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,14 +18,25 @@ function Header() {
       }
     };
 
+    const calculateHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", calculateHeight);
+    calculateHeight();
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", calculateHeight);
     };
-  }, []);
+  }, [headerRef]);
 
   return (
     <header
+      ref={headerRef}
       className={`fixed top-0 z-50 w-full bg-yellow-50 px-4 transition-all duration-300 md:px-16 ${
         isScrolled ? "py-1 md:py-3" : "py-4 md:py-4"
       }`}

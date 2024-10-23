@@ -11,19 +11,19 @@ const CartSummary = ({ subtotal, total, handleCheckout }) => {
         Cart Totals
       </h2>
       <div className="max-md:mt-10 mt-16 flex justify-between gap-5">
-        <div className="flex flex-col self-start whitespace-nowrap text-base font-medium text-black">
+        <div className="text-base flex flex-col self-start whitespace-nowrap font-medium text-black">
           <div>Subtotal</div>
           <div className="mt-8 self-start">Total</div>
         </div>
         <div className="flex flex-col">
-          <div className="self-end text-base text-neutral-400">{subtotal}</div>
+          <div className="text-base self-end text-neutral-400">{subtotal}</div>
           <div className="mt-8 text-xl font-medium text-yellow-600">
             {total}
           </div>
         </div>
       </div>
 
-      <Button handleClick={handleCheckout} color={Constants.EMARALD_PRIMARY}>
+      <Button handleClick={handleCheckout} color={Constants.YELLOW_PRIMARY}>
         Check Out
       </Button>
     </div>

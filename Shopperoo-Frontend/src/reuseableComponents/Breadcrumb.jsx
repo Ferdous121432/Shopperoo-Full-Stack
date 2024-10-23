@@ -3,6 +3,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
+import Constants from "../../constants";
 
 const Breadcrumb = ({ name }) => {
   const currentURL = window.location.pathname;
@@ -49,7 +50,7 @@ const Breadcrumb = ({ name }) => {
             {item.label}
           </Link>
         ))}
-        <Typography sx={{ color: "#065f46", fontWeight: 700 }}>
+        <Typography sx={{ color: Constants.YELLOW_PRIMARY, fontWeight: 700 }}>
           {name}
         </Typography>
       </Breadcrumbs>

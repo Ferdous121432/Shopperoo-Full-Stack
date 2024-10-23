@@ -11,8 +11,8 @@ const ProductCard = ({
   oldPrice,
 }) => {
   return (
-    <article className="mx-auto my-auto flex w-[285px] min-w-[240px] flex-col self-stretch">
-      <div className="relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 text-base font-medium text-white max-md:px-5 max-md:pb-24">
+    <article className="flex w-[90%] min-w-[240px] flex-col sm:w-[45%] md:w-[30%] xl:w-[22%]">
+      <div className="text-base max-md:px-5 max-md:pb-24 relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 font-medium text-white">
         <img
           loading="lazy"
           src={image}
@@ -20,29 +20,29 @@ const ProductCard = ({
           className="absolute inset-0 size-full object-cover"
         />
         {discount && (
-          <div className="relative mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-1.5 max-md:mb-2.5">
-            <span className="transform-middle text-slate-100 text-sm font-semibold">
+          <div className="max-md:mb-2.5 relative mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-1.5">
+            <span className="transform-middle text-sm font-semibold text-slate-100">
               {discount}
             </span>
           </div>
         )}
         {newProduct && (
           <div className="relative h-12 w-12 rounded-full bg-teal-800">
-            <span className="transform-middle text-slate-100 text-sm font-semibold">
+            <span className="transform-middle text-sm font-semibold text-slate-100">
               New
             </span>
           </div>
         )}
       </div>
       <div className="flex w-full flex-col items-start bg-gray-100 px-4 pb-8 pt-4">
-        <h3 className="text-neutral-700 text-2xl font-semibold leading-tight">
+        <h3 className="text-2xl font-semibold leading-tight text-neutral-700">
           {name}
         </h3>
-        <p className="text-zinc-500 mt-2 text-base font-medium">
+        <p className="text-zinc-500 text-base mt-2 font-medium">
           {description}
         </p>
         <div className="mt-2 flex items-center gap-4 self-stretch">
-          <span className="text-neutral-700 my-auto self-stretch text-xl font-semibold">
+          <span className="my-auto self-stretch text-xl font-semibold text-neutral-700">
             {price}
           </span>
           {oldPrice && (
