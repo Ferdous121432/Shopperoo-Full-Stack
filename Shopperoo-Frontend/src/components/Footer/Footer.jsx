@@ -63,11 +63,27 @@ const Footer = () => {
           <h2 className="pb-3 text-xl">You can pay by</h2>
           <div className="flex w-4/5 max-w-[260px] flex-wrap items-start justify-start gap-3">
             <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
-            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
-            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
-            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
-            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
-            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
+            <img src="image/payment/ae.jpg" className="w-[70px]" alt="visa" />
+            <img
+              src="image/payment/mastercard.jpg"
+              className="w-[70px]"
+              alt="visa"
+            />
+            <img
+              src="image/payment/bkash.jpg"
+              className="w-[70px]"
+              alt="visa"
+            />
+            <img
+              src="image/payment/rocket.jpg"
+              className="w-[70px]"
+              alt="visa"
+            />
+            <img
+              src="image/payment/nagad.jpg"
+              className="w-[70px]"
+              alt="visa"
+            />
           </div>
         </div>
       </div>
