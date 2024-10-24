@@ -59,7 +59,7 @@ module.exports = withMT({
         sm: "645px",
         // => @media (min-width: 640px) { ... }
 
-        md: "775px",
+        md: "768px",
         // => @media (min-width: 768px) { ... }
 
         lg: "1030px",

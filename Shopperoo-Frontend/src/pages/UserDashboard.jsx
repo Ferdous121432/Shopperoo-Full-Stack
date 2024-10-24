@@ -134,17 +134,21 @@ const UserDashboard = () => {
 
   return (
     <div className="relative flex max-w-[1200px] flex-col justify-center gap-4 md:gap-10 lg:mx-20 lg:gap-16 lg:py-20">
-      <div className="max-width-[20%] w-[100px] md:w-[200px] lg:w-[250px]">
-        <img className="rounded-full" src={user.avatar} alt="User Avatar" />
-      </div>
-      <div className="flex">
-        <CustopTabs
-          tabData={tabData}
-          flexDirection="row"
-          orientation={"vertical"}
+      <div className="flex w-full justify-center">
+        <img
+          className="w-[100px] rounded-full md:w-[200px]"
+          src={user.avatar}
+          alt="User Avatar"
         />
       </div>
       <div className="flex justify-center">
+        <CustopTabs
+          tabData={tabData}
+          flexDirection={window.innerWidth < 768 ? "column" : "row"}
+          orientation={"vertical"}
+        />
+      </div>
+      <div className="flex w-4/5 justify-center">
         <Button handleClick={handleLogout}>Logout</Button>
       </div>
     </div>

@@ -25,7 +25,13 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
       }}
     >
       <TabContext value={value} sx={{ justifyContent: "start" }}>
-        <Box sx={{ borderRight: 1, borderColor: "divider", minWidth: "150px" }}>
+        <Box
+          sx={{
+            borderRight: window.innerWidth < 768 ? 0 : 1,
+            borderColor: window.innerWidth < 768 ? null : "divider",
+            minWidth: "150px",
+          }}
+        >
           <TabList
             onChange={handleChange}
             aria-label="lab API tabs example"
