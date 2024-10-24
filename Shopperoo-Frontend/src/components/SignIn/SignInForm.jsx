@@ -6,7 +6,7 @@ import Constants from "../../../constants";
 import Button from "../../reuseableComponents/Button";
 
 function SignInForm() {
-  const { login } = useAuth();
+  const { login, state } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "admin@a.com",
@@ -21,7 +21,9 @@ function SignInForm() {
     e.preventDefault();
     try {
       await login(formData);
-      navigate("/userprofile");
+      if (state.isAuthenticated) {
+        navigate("/userprofile");
+      }
     } catch (error) {
       console.error("Login failed", error);
     }
