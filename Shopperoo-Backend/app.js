@@ -21,7 +21,6 @@ const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const subCategoryRouter = require('./routes/subCategoryRoutes');
 const cartItemRouter = require('./routes/cartItemRoutes');
-const cartRouter = require('./routes/cartRoutes');
 const wishListRouter = require('./routes/wishListRoutes');
 const checkoutRouter = require('./routes/checkoutRoutes');
 const checkoutController = require('./controllers/checkoutController');
