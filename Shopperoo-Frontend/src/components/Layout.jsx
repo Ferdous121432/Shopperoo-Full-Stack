@@ -13,7 +13,9 @@ const Layout = ({ children }) => {
     <Suspense fallback={<SpinnerFullPage />}>
       <div className="relative flex flex-col overflow-hidden bg-white">
         <Header setHeaderHeight={setHeaderHeight} />
-        <main style={{ marginTop: `${headerHeight}px` }}>{children}</main>
+        <main className="mb-20" style={{ marginTop: `${headerHeight}px` }}>
+          {children}
+        </main>
         <Footer />
       </div>
     </Suspense>

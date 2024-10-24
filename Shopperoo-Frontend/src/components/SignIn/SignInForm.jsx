@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Constants from "../../../constants";
 import Button from "../../reuseableComponents/Button";
 
@@ -21,17 +21,17 @@ function SignInForm() {
     e.preventDefault();
     try {
       await login(formData);
-      if (state.isAuthenticated) {
-        navigate("/userprofile");
-      }
+      // if (state.isAuthenticated) {
+      //   navigate("/userprofile");
+      // }
     } catch (error) {
       console.error("Login failed", error);
     }
   };
 
   return (
-    <section className="mt-8 flex w-4/5 flex-col justify-center overflow-hidden rounded-3xl border border-solid border-stone-500 border-opacity-50 bg-white px-8 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-      <div className="flex w-full max-w-[528px] flex-col items-center justify-center">
+    <section className="mt-8 flex w-4/5 max-w-[600px] flex-col justify-center overflow-hidden rounded-3xl border border-solid border-stone-500 border-opacity-50 bg-white px-8 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+      <div className="flex w-full max-w-[450px] flex-col items-center justify-center">
         <h1 className="text-zinc-800 text-center text-2xl font-medium md:text-3xl">
           Sign in
         </h1>
@@ -39,6 +39,7 @@ function SignInForm() {
           className="mt-6 flex w-full flex-col text-sm md:mt-12 md:text-lg"
           onSubmit={handleSubmit}
         >
+          {state.isAuthenticated && <Navigate to="/userprofile" />}
           <label htmlFor="email" className="text-zinc-800">
             Email
           </label>

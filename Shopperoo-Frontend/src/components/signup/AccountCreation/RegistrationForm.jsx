@@ -2,16 +2,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../context/AuthProvider";
-import { frontendURL } from "../../../frontendURL/frontendURL";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { avatar } from "@material-tailwind/react";
+import { Navigate, useNavigate, useNavigation } from "react-router-dom";
+import Constants from "../../../../constants";
+import Button from "../../../reuseableComponents/Button";
 
 function RegistrationForm() {
-  const { signup } = useAuth();
+  const { signup, state } = useAuth();
 
   const [formData, setFormData] = React.useState({
     firstName: "Ferdous",
@@ -27,6 +29,8 @@ function RegistrationForm() {
   });
 
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [error, setError] = useState(null);
+  const [signupSuccess, setSignupSuccess] = useState(null);
 
   useEffect(() => {
     if (formData.password !== formData.passwordConfirm) {
@@ -42,18 +46,55 @@ function RegistrationForm() {
 
   console.log(formData);
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    signup(formData);
-    // window.location.href = frontendURL("signin");
+    try {
+      const response = await signup(formData);
+      console.log("Signup successful:", response);
+      // Handle successful signup (e.g., redirect to another page)
+
+      // window.location.href = frontendURL("signin");
+    } catch (error) {
+      console.error("Signup failed:", error);
+      setError(error.message);
+    }
   };
 
+  //Handle Form Response
+
+  useEffect(() => {
+    if (state.error) {
+      setError(state.error);
+      console.log("Error:", state.error);
+    }
+  }, [state.error]);
+
+  useEffect(() => {
+    if (state.signupData) {
+      setSignupSuccess(true);
+      console.log("SignUp", state.signupData);
+    }
+  }, [state.signupData]);
+
+  signupSuccess && <Navigate to="/signin" />;
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   signup(formData);
+  //   // window.location.href = frontendURL("signin");
+  // };
+
+  const navigation = useNavigation();
+  console.log(navigation);
+
   return (
-    <div className="bg-grey-lighter flex min-h-screen flex-col">
-      <div className="container mx-auto flex max-w-sm flex-1 flex-col items-center justify-center px-2">
+    <div className="bg-grey-lighter flex min-h-screen w-full flex-col">
+      <div className="container mx-auto flex flex-1 flex-col items-center justify-start px-2">
         <div className="w-full rounded bg-white px-6 py-8 text-black shadow-md">
           <h1 className="mb-8 text-center text-3xl">Sign up</h1>
           <form onSubmit={handleSubmit}>
+            {signupSuccess && <Navigate to="/signin" />}
             <input
               type="text"
               className="border-grey-light mb-4 block w-full rounded border p-3"
@@ -118,12 +159,10 @@ function RegistrationForm() {
                 }}
               />
             </LocalizationProvider>
-            <button
-              type="submit"
-              className="hover:bg-green-dark my-1 mt-8 w-full rounded bg-green-200 py-3 text-center text-slate-200 focus:outline-none"
-            >
-              Create Account
-            </button>
+
+            <div className="flex items-center justify-start py-10">
+              <Button color={Constants.YELLOW_PRIMARY}>Create Account</Button>
+            </div>
           </form>
           <div className="text-grey-dark mt-4 text-center text-sm">
             By signing up, you agree to the
@@ -142,15 +181,14 @@ function RegistrationForm() {
             </a>
           </div>
         </div>
-        <div className="text-grey-dark mt-6">
+        <div className="text-grey-dark mt-6 flex items-center justify-center">
           Already have an account?
           <a
-            className="border-blue text-blue border-b no-underline"
-            href="../login/"
+            className="border-b pl-4 text-lg font-semibold text-blue-500 no-underline hover:text-yellow-primary"
+            href="/signin"
           >
             Log in
           </a>
-          .
         </div>
       </div>
     </div>

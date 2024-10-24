@@ -48,25 +48,7 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
-// exports.signup = catchAsync(async (req, res, next) => {
-//   // Roles will be defined by the admin. Default role is user
-//   if (req.body.role) {
-//     req.body.role = 'user';
-//   }
-
-//   const newUser = await User.create(req.body);
-
-//   sendVerificationEmail(newUser);
-
-//   // const url = `${req.protocol}://${req.get('host')}/me`;
-
-//   // await new Email(newUser, url).sendWelcome();
-
-//   // Create token for signed up user and send it to client
-//   //TODO remove this functriuonality at production
-//   createSendToken(newUser, 201, res);
-// });
-
+// Login user
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   // 1. Check if email and password exist
@@ -98,6 +80,7 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user._id, 201, res);
 });
 
+// Protect routes
 exports.protect = catchAsync(async (req, res, next) => {
   // 1. Getting token and check if it's there
   let token;
@@ -196,6 +179,7 @@ exports.isLoggedIn = async (req, res, next) => {
   next();
 };
 
+// Logout user
 exports.logout = async (req, res) => {
   try {
     res.cookie('jwt', 'loggedout', {

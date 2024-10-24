@@ -16,13 +16,15 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
   return (
     <Box
       sx={{
-        width: "100%",
+        width: "90%",
+        justifyContent: "center",
+        alignItems: "center",
         typography: "body1",
         display: "flex",
         flexDirection: { flexDirection }, // "column + Horizontal" for horizontal tabs & "row + vertical" for vertical tabs
       }}
     >
-      <TabContext value={value}>
+      <TabContext value={value} sx={{ justifyContent: "start" }}>
         <Box sx={{ borderRight: 1, borderColor: "divider", minWidth: "150px" }}>
           <TabList
             onChange={handleChange}
@@ -53,7 +55,7 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
             ))}
           </TabList>
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, alignItems: "start" }}>
           {tabData.map((tab) => (
             <TabPanel key={tab.value} value={tab.value}>
               {tab.content}

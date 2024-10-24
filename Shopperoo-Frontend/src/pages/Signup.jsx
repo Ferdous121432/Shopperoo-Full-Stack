@@ -7,13 +7,10 @@ import IllustrationImage from "../components/signup/AccountCreation/Illustration
 function AccountCreation() {
   return (
     <Layout>
-      <main className="flex m-auto my-[4rem] flex-col w-full max-w-[1017px] max-md:max-w-full">
-        <section className="overflow-hidden py-14 pl-14 bg-white rounded-3xl border border-solid border-stone-500 border-opacity-50 max-md:pl-5 max-md:max-w-full">
-          <div className="flex gap-5 max-md:flex-col">
-            <div className="flex flex-col w-[58%] max-md:ml-0 max-md:w-full">
-              <RegistrationForm />
-            </div>
-            <IllustrationImage />
+      <main className="m-auto my-6 flex w-full items-start justify-center">
+        <section className="flex w-4/5 max-w-[700px] overflow-hidden rounded-3xl border border-solid border-stone-500 border-opacity-50 bg-white pb-14">
+          <div className="flex w-full min-w-[320px] justify-center">
+            <RegistrationForm />
           </div>
         </section>
       </main>

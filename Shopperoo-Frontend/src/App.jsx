@@ -1,6 +1,12 @@
 /* eslint-disable */
 import { useAuth } from "./context/AuthProvider";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import { lazy } from "react";
 
 // import ProductPage from "./pages/ProductPage";
@@ -43,35 +49,85 @@ const UserProfile = lazy(() => import("./pages/UserProfile"));
 // dist/assets/index-59fcab9b.css   30.56 kB │ gzip:   5.14 kB
 // dist/assets/index-f7c12d89.js   572.44 kB │ gzip: 151.29 kB
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "product",
+    element: <ProductPage />,
+  },
+  {
+    path: "product/f",
+    element: <SingleProductPage />,
+  },
+  {
+    path: "checkout",
+    element: <CheckoutPage />,
+  },
+  {
+    path: "contact-us",
+    element: <ContactUs />,
+  },
+  {
+    path: "cart",
+    element: <Cart />,
+  },
+  {
+    path: "checkout/:id",
+    element: <CheckoutPage />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
+  },
+  {
+    path: "signin",
+    element: <SignIn />,
+  },
+  {
+    path: "restricted",
+    element: <RestrictedPage />,
+  },
+  {
+    path: "/product/:product_id",
+    element: <SingleProductPage />,
+  },
+  {
+    path: "about",
+    element: <About />,
+  },
+  {
+    path: "ordermanagement",
+    element: <OrderManagement />,
+  },
+  {
+    path: "userprofile",
+    element: <UserProfile />,
+  },
+  {
+    path: "dashboard",
+    element: <DashboardLayoutBasic />,
+    children: [
+      {
+        path: "dashboard",
+        element: <DashboardHome />,
+      },
+      {
+        path: "ordermanagement",
+        element: <OrderManagement />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
+  },
+]);
+
 function App() {
-  const { state } = useAuth();
-  console.log(state);
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="product" element={<ProductPage />} />
-        <Route path="product/f" element={<SingleProductPage />} />
-        <Route path="checkout" element={<CheckoutPage />} />
-        <Route path="contact-us" element={<ContactUs />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="checkout/:id" element={<CheckoutPage />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="signin" element={<SignIn />} />
-        <Route path="restricted" element={<RestrictedPage />} />
-        <Route path="/product/:product_id" element={<SingleProductPage />} />
-        <Route path="about" element={<About />} />
-        {/* <Route path="dashboard" element={<DashboardHome />} /> */}
-        <Route path="ordermanagement" element={<OrderManagement />} />
-        <Route path="userprofile" element={<UserProfile />} />
-        <Route path="dashboard" element={<DashboardLayoutBasic />}>
-          <Route path="dashboard" element={<DashboardHome />} />
-          <Route path="ordermanagement" element={<OrderManagement />} />
-        </Route>
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

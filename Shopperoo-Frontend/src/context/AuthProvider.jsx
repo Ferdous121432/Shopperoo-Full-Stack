@@ -21,6 +21,7 @@ const initialState = {
   status: null,
   userData: null,
   cartData: null,
+  signupData: null,
 };
 
 // Action types
@@ -63,8 +64,9 @@ const authReducer = (state, action) => {
     case "SIGNUP_SUCCESS":
       return {
         ...state,
-        isAuthenticated: true,
-        user: action.payload,
+        signupData: action.payload,
+        // isAuthenticated: true,
+        // user: action.payload,
         loading: false,
         error: null,
       };
@@ -201,11 +203,13 @@ export const AuthProvider = ({ children }) => {
     try {
       const url = `${baseURL}/${signupURL}`;
       const response = await axios.post(url, signupData);
-      dispatch({ type: "SIGNUP_SUCCESS", payload: response.data });
-      alert("Account created successfully");
+      console.log(response.data.message);
+      dispatch({ type: "SIGNUP_SUCCESS", payload: response.data.message });
+      // alert("Account created successfully");
     } catch (error) {
-      dispatch({ type: "AUTH_ERROR", payload: error.message });
-      alert("Error signing up:", error);
+      dispatch({ type: "AUTH_ERROR", payload: error.response.data.message });
+      console.log("Error signing up:", error.response.data.message);
+      // alert("Error signing up:", error);
     }
   };
 
