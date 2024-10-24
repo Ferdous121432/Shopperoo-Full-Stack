@@ -48,6 +48,8 @@ const app = express();
 // Load environment variables
 dotenv.config({ path: './config.env' });
 
+app.set('trust proxy', true);
+
 // Set Cross-Origin-Resource-Policy header
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
