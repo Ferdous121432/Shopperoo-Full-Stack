@@ -1,17 +1,34 @@
 const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
 
 const sendVerificationEmail = async function (newUser, link) {
+  //   const transporter = nodemailer.createTransport({
+  //     host: 'sandbox.smtp.mailtrap.io',
+  //     port: 2525,
+  //     auth: {
+  //       user: '6c8c177764e280',
+  //       pass: '6ebbe961208c7d',
+  //     },
+  //   });
+
+  // Google Mail SMTP
+  const accessToken = await oAuth2Client.getAccessToken();
+
   const transporter = nodemailer.createTransport({
-    host: 'sandbox.smtp.mailtrap.io',
-    port: 2525,
+    service: 'gmail',
     auth: {
-      user: '6c8c177764e280',
-      pass: '6ebbe961208c7d',
+      type: 'OAuth2',
+      user: 'hrais7562@gmail.com',
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      refreshToken: process.env.REFRESH_TOKEN,
+      accessToken: accessToken.token,
     },
   });
 
   const mailOptions = {
-    from: 'your_email@gmail.com',
+    from: 'hrais7562@gmail.com',
     to: newUser.email,
     subject: 'Please verify your email',
     text: `Click the link to verify your email: ${link}`,
