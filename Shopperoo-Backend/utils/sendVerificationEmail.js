@@ -6,11 +6,11 @@ const { content } = require('googleapis/build/src/apis/content');
 
 dotenv.config({ path: './config.env' });
 
-const oAuth2Client = new OAuth2Client(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  process.env.REDIRECT_URI,
-);
+// const oAuth2Client = new OAuth2Client(
+//   process.env.CLIENT_ID,
+//   process.env.CLIENT_SECRET,
+//   process.env.REDIRECT_URI,
+// );
 
 const sendVerificationEmail = async function (newUser, link) {
   //   const transporter = nodemailer.createTransport({
@@ -23,7 +23,7 @@ const sendVerificationEmail = async function (newUser, link) {
   //   });
 
   // Google Mail SMTP
-  const accessToken = await oAuth2Client.getAccessToken();
+  //   const accessToken = await oAuth2Client.getAccessToken();
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
