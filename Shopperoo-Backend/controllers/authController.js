@@ -353,10 +353,12 @@ exports.signup = catchAsync(async (req, res, next) => {
 // Endpoint to verify email
 exports.verifyEmail = catchAsync(async (req, res, next) => {
   const token = req.params.token;
+
   const user = await User.findOne({
     verificationToken: token,
     verificationTokenExpires: { $gt: Date.now() },
   });
+
   if (!user) {
     return res.status(400).json({
       status: 'fail',
@@ -372,3 +374,41 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     message: 'Email verified successfully!',
   });
 });
+
+exports.resendVerificationToken = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'User not found' });
+    }
+
+    // Generate a new verification token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    user.verificationToken = verificationToken;
+    user.verificationTokenExpires = Date.now() + 3600000; // 1 hour
+
+    // Save the new token to the database
+    await user.save();
+
+    // Send the new token to the user's email
+    const verificationUrl = `${req.protocol}://${req.get('host')}/verify-email?token=${verificationToken}`;
+    await sendVerificationEmail(user, verificationUrl);
+
+    await sendEmail({
+      email: user.email,
+      subject: 'Email Verification',
+      message,
+    });
+
+    res
+      .status(200)
+      .json({ status: 'success', message: 'Verification token resent' });
+  } catch (error) {
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+};

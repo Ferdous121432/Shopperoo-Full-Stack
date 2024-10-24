@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.get('/verify/:token', authController.verifyEmail);
+router.post('/resend-verification', authController.resendVerificationToken);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 // router.post('/forgotpassword', authController.forgotPassword);
