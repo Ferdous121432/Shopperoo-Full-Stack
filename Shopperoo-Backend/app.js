@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin: '*', // Replace with your frontend URL
+  origin: 'http://localhost:5173', // Replace with your frontend URL
   credentials: true, // Allow credentials (cookies, etc.)
 };
 
