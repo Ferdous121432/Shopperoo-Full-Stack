@@ -21,8 +21,9 @@ const ProductCard = ({ product }) => {
     newItem,
     slug,
     description,
-    summary,
+    details,
     imageCover,
+    images,
     _id,
   } = product;
 
@@ -45,7 +46,8 @@ const ProductCard = ({ product }) => {
 
   const cart_productDetails = {
     product_id: _id,
-    image: imageCover.split("/").slice(-1).join(),
+    // image: imageCover.split("/").slice(-1).join(),
+    image: images[0],
     quantity: quantity,
     productName: name,
     price: price,
@@ -64,84 +66,48 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <article
-      key={_id}
-      className="group relative my-auto flex w-[90%] min-w-[240px] flex-col self-stretch bg-gray-100 sm:w-[45%] md:w-[30%] xl:w-[22%]"
-      data-id={_id}
-    >
-      <div>
-        <Link
-          to={redirectURL}
-          className="max-md:px-5 max-md:pb-24 text-base relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 font-medium text-white"
-        >
-          <LazyLoadImage
-            src={imageCover}
-            alt={name}
-            className="absolute inset-0 size-full object-cover"
-          />
-          {discount && (
-            <div className="max-md:mb-2.5 absolute left-2 top-5 mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-1.5">
-              <span className="transform-middle text-xs font-semibold text-white">
-                {discount}
-              </span>
-            </div>
-          )}
-          {newItem && (
-            <div className="max-md:mb-2.5 absolute right-2 top-5 mb-0 h-12 w-12 rounded-full bg-emerald-400 fill-emerald-400 px-1.5">
-              <span className="transform-middle text-xs font-semibold text-white">
-                New
-              </span>
-            </div>
-          )}
-        </Link>
-
-        <div className="flex w-full flex-col items-start px-4 pb-8 pt-4">
-          <Link to={redirectURL}>
-            <h3 className="text-2xl font-semibold leading-tight text-neutral-700">
-              {name}
-            </h3>
-          </Link>
-          <div className="mt-2 flex items-center gap-4 self-stretch">
-            <span className="my-auto self-stretch text-xl font-semibold text-neutral-700">
-              {price}
-            </span>
-
-            <span className="my-auto self-stretch text-lg text-black-primary line-through decoration-red-primary decoration-2">
-              {old_price !== 0 ? old_price : ""}
+    <article className="flex w-[90%] min-w-[240px] flex-col sm:w-[45%] md:w-[30%] xl:w-[22%]">
+      <div className="text-base max-md:px-5 max-md:pb-24 relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 font-medium text-white">
+        <img
+          loading="lazy"
+          src={images}
+          alt={name}
+          className="absolute inset-0 size-full object-cover"
+          onMouseOver={(e) => (e.currentTarget.src = images[1])}
+          onMouseOut={(e) => (e.currentTarget.src = images[0])}
+        />
+        {discount && (
+          <div className="max-md:mb-2.5 relative mb-0 h-12 w-12 rounded-full bg-red-400 fill-red-400 px-1.5">
+            <span className="transform-middle text-sm font-semibold text-slate-100">
+              {discount}
             </span>
           </div>
-        </div>
+        )}
+        {newItem && (
+          <div className="relative h-12 w-12 rounded-full bg-teal-800">
+            <span className="transform-middle text-sm font-semibold text-slate-100">
+              New
+            </span>
+          </div>
+        )}
       </div>
-
-      <div className="bg flex w-full flex-1 justify-between justify-items-stretch bg-opacity-[.9] px-4 py-2 lg:absolute lg:top-[50%] lg:bg-transparent lg:opacity-0 lg:transition-opacity lg:duration-700 lg:group-hover:opacity-100">
-        <button
-          onClick={handleAddToCart}
-          className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
-        >
-          <ShoppingCartIcon />
-        </button>
-        <button
-          // onClick={handleMakePayment}
-          className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
-        >
-          <FavoriteIcon />
-        </button>
-        {/* <div className="flex items-center">
-          <input
-            id={`quantity-${_id}`}
-            type="number"
-            min="1"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            className="w-16 rounded border border-gray-300 px-2 py-1 text-center text-base"
-          />
-        </div> */}
-        <button
-          onClick={handleMakePayment}
-          className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
-        >
-          <LocalMallRoundedIcon />
-        </button>
+      <div className="flex w-full flex-col items-start bg-gray-100 px-4 pb-8 pt-4">
+        <h3 className="text-2xl font-semibold leading-tight text-neutral-700">
+          {name}
+        </h3>
+        <p className="text-zinc-500 text-base mt-2 font-medium">
+          {description}
+        </p>
+        <div className="mt-2 flex items-center gap-4 self-stretch">
+          <span className="my-auto self-stretch text-xl font-semibold text-neutral-700">
+            {price}
+          </span>
+          {old_price && (
+            <span className="my-auto self-stretch text-lg line-through decoration-red-700 decoration-2">
+              {old_price}
+            </span>
+          )}
+        </div>
       </div>
     </article>
   );

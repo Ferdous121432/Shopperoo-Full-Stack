@@ -16,21 +16,29 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A product must have a description'],
   },
-  summary: {
+  details: {
     type: String,
+    required: [true, 'A product must have a summary'],
+  },
+  materials: {
+    type: Array,
     required: [true, 'A product must have a summary'],
   },
   imageCover: {
     type: String,
-    required: [true, 'A product must have a cover image'],
+    // required: [true, 'A product must have a cover image'],
   },
   images: {
     type: [String],
+    required: [true, 'A product must have images'],
   },
-  categoryID: {
-    type: mongoose.Schema.ObjectId,
-    // required: [true, 'A product must have a category'],
-  },
+  categories: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Category',
+      default: '671b3d757169d20734e3645b',
+    },
+  ],
   created_at: {
     type: Date,
     default: Date.now,

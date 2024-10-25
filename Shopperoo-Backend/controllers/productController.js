@@ -95,7 +95,7 @@ exports.checkBody = (req, res, next) => {
 };
 
 exports.getProductsByCategory = catchAsync(async (req, res, next) => {
-  const { categoryID } = req.params.categoryID;
+  const categoryID = req.params.categoryID;
 
   if (!categoryID) {
     return next(new AppError('Please provide a category ID', 400));
@@ -110,18 +110,20 @@ exports.getProductsByCategory = catchAsync(async (req, res, next) => {
   // Set imageCover directory if imageCover exists in the document and the document is an array
   if (products.length) {
     products.map((product) => {
-      if (product.imageCover) {
-        product.imageCover =
-          `${req.protocol}://${req.get('host')}/img/products/cover-image/${product.imageCover}`.replace(
-            'http:',
-            'https:',
-          );
+      if (product.images) {
         product.images = product.images.map((image) => {
           return `${req.protocol}://${req.get('host')}/img/products/images/${image}`.replace(
             'http:',
             'https:',
           );
         });
+      }
+      if (product.imageCover) {
+        product.imageCover =
+          `${req.protocol}://${req.get('host')}/img/products/cover-image/${product.imageCover}`.replace(
+            'http:',
+            'https:',
+          );
       }
     });
   }

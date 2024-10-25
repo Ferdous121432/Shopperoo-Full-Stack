@@ -39,9 +39,11 @@ const sendErrorDev = (err, req, res) => {
   } else {
     console.error('ERROR 💥❌', err);
 
-    return res.status(err.statusCode).render('error', {
-      title: 'Something went wrong!',
-      msg: err.message,
+    res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
+      error: err,
+      stack: err.stack,
     });
   }
 };
@@ -65,14 +67,14 @@ const sendErrorProd = (err, req, res) => {
   // B) Rendered website
   if (err.isOperational) {
     console.error('ERROR 😐😐💥', err);
-    return res.status(err.statusCode).render('error', {
-      title: 'Something went wrong!',
-      msg: err.message,
+    return res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
     });
   }
   console.error('ERROR 😒😒💥', err);
 
-  return res.status(err.statusCode).render('error', {
+  return res.status(err.statusCode).json({
     title: 'Something went wrong!',
     msg: 'Please try again later.',
   });

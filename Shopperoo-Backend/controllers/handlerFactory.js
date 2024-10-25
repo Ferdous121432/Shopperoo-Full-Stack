@@ -23,6 +23,13 @@ exports.getAll = (Model) =>
         if (item.imageCover) {
           item.imageCover = `${req.protocol}://${req.get('host')}/img/products/cover-image/${item.imageCover}`;
         }
+        if (item.images) {
+          item.images = item.images
+            .filter((image) => image) // Filter out undefined images
+            .map((image) => {
+              return `${req.protocol}://${req.get('host')}/img/products/images/${image}`;
+            });
+        }
       });
     }
 

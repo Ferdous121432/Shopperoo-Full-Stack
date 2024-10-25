@@ -66,15 +66,15 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Set the view engine to 'pug'
-app.set('view engine', 'pug');
-
-// Set the views directory
-app.set('views', path.join(__dirname, 'views'));
-
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Handle favicon requests
+app.get('/favicon.ico', (req, res) => res.status(204));
+
+// Set the view engine to 'pug'
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 // Error handling for static files
 app.use((err, req, res, next) => {
   if (err) {
