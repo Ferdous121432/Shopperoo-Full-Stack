@@ -102,7 +102,7 @@ exports.getProductsByCategory = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide a category ID', 400));
   }
 
-  const products = await Product.find({ categoryID: categoryID });
+  const products = await Product.find({ categories: categoryID });
 
   if (!products.length) {
     return next(new AppError('No products found for this category', 404));

@@ -10,7 +10,7 @@ import {
 import { lazy } from "react";
 
 import Home from "./pages/Home";
-import ProductPage from "./pages/ProductPage";
+import ProductPage, { loader } from "./pages/ProductPage";
 import SingleProductPage from "./pages/SingleProductPage";
 import Cart from "./pages/Cart";
 import ContactUs from "./pages/ContactUs";
@@ -56,8 +56,9 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "product",
+    path: "category/:category_id",
     element: <ProductPage />,
+    loader: loader,
   },
   {
     path: "product/f",
