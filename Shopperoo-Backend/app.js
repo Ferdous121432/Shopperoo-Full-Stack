@@ -47,11 +47,12 @@ const app = express();
 // Load environment variables
 // dotenv.config({ path: './config.env' });
 
-// app.set('trust proxy', true);
+app.set('trust proxy', true);
 app.set('trust proxy', 1);
 
 // Set Cross-Origin-Resource-Policy header
 app.use((req, res, next) => {
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS'); // Allow specific methods
@@ -60,7 +61,7 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin: '*', // Replace with your frontend URL
+  origin: 'http://localhost:5173', // Replace with your frontend URL
   credentials: true, // Allow credentials (cookies, etc.)
 };
 
