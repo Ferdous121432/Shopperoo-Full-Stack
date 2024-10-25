@@ -45,7 +45,7 @@ mongoose
 const app = express();
 
 // Load environment variables
-dotenv.config({ path: './config.env' });
+// dotenv.config({ path: './config.env' });
 
 // app.set('trust proxy', true);
 app.set('trust proxy', 1);
@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin: 'http://localhost:5173', // Replace with your frontend URL
+  origin: '*', // Replace with your frontend URL
   credentials: true, // Allow credentials (cookies, etc.)
 };
 

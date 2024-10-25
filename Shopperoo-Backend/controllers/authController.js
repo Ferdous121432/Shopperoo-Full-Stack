@@ -62,7 +62,7 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 
   if (userVerify.verified === false) {
-    return next(new AppError('User not found', 404));
+    return next(new AppError('verify your email', 404));
   }
 
   // 2. Check if user exists && password is correct
