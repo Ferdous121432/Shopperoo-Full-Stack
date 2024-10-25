@@ -105,7 +105,11 @@ exports.getProductsByCategory = catchAsync(async (req, res, next) => {
   const products = await Product.find({ categories: categoryID });
 
   if (!products.length) {
-    return next(new AppError('No products found for this category', 404));
+    // return next(new AppError('No products found for this category', 404));
+    res.status(200).json({
+      status: 'success',
+      message: 'No products found for this category',
+    });
   }
 
   // Set imageCover directory if imageCover exists in the document and the document is an array
