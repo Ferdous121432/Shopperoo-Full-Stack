@@ -9,7 +9,7 @@ const GalaryImageList = ({ images, setImageIndex }) => {
         <div key={index} className="w-[20%]">
           <Img
             key={index}
-            src={`${baseURL}/img/products/images/${image}`}
+            src={`${image}`}
             alt="product"
             style={{ width: "100%" }}
             onClick={() => setImageIndex(index)}

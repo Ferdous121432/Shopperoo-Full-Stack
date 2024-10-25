@@ -33,4 +33,13 @@ export async function loader({ params }) {
   return products;
 }
 
+export function ErrorElement({ error }) {
+  return (
+    <div className="error">
+      <h2>Something went wrong</h2>
+      <p>{error}</p>
+    </div>
+  );
+}
+
 export default ProductPage;

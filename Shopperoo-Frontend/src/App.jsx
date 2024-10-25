@@ -10,7 +10,10 @@ import {
 import { lazy } from "react";
 
 import Home from "./pages/Home";
-import ProductPage, { loader } from "./pages/ProductPage";
+import ProductPage, {
+  loader as ProductLoader,
+  ErrorElement,
+} from "./pages/ProductPage";
 import SingleProductPage from "./pages/SingleProductPage";
 import Cart from "./pages/Cart";
 import ContactUs from "./pages/ContactUs";
@@ -58,7 +61,8 @@ const router = createBrowserRouter([
   {
     path: "category/:category_id",
     element: <ProductPage />,
-    loader: loader,
+    loader: ProductLoader,
+    errorElement: <ErrorElement />,
   },
   {
     path: "product/f",

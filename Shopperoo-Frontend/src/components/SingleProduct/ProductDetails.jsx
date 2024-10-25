@@ -115,7 +115,7 @@ const ProductDetails = ({ product }) => {
       <div className="flex flex-col gap-6 lg:w-[30%]">
         <div className="">
           <img
-            src={`${baseURL}/img/products/images/${image}`}
+            src={`${image}`}
             alt={name}
             className="h-[400px] w-full object-cover"
           />
