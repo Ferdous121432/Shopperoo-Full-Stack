@@ -30,12 +30,13 @@ const ProductPage = () => {
     fetchProduct();
   }, [product_id]);
   const [loadingError, setLoadingError] = useState(false);
+  console.log(product);
 
   useEffect(() => {
     if (!product) {
       const timer = setTimeout(() => {
         setLoadingError(true);
-      }, 5000); // 5 seconds timeout
+      }, 40000); // 40 seconds timeout
 
       return () => clearTimeout(timer);
     }

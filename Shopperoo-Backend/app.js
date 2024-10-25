@@ -44,11 +44,19 @@ mongoose
 // Start express app
 const app = express();
 
+const corsOptions = {
+  origin: 'http://localhost:5173', // Replace with your frontend URL
+  modules: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Allow credentials (cookies, etc.)
+};
+
+app.use(cors(corsOptions));
+
 // Load environment variables
 // dotenv.config({ path: './config.env' });
 
 app.set('trust proxy', true);
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 // Set Cross-Origin-Resource-Policy header
 app.use((req, res, next) => {
@@ -59,13 +67,6 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
   next();
 });
-
-const corsOptions = {
-  origin: 'http://localhost:5173', // Replace with your frontend URL
-  credentials: true, // Allow credentials (cookies, etc.)
-};
-
-app.use(cors(corsOptions));
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));

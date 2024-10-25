@@ -10,7 +10,11 @@ exports.getMyCart = catchAsync(async (req, res, next) => {
   const cartItems = await CartItem.find({ user_id: req.user.id });
 
   if (!cartItems.length) {
-    return next(new AppError('No products found for this category', 404));
+    return res.status(200).json({
+      status: 'success',
+      message: 'No cart items found',
+      results: cartItems.length,
+    });
   }
 
   let totalPrice = 0;
@@ -18,7 +22,7 @@ exports.getMyCart = catchAsync(async (req, res, next) => {
   if (cartItems.length) {
     cartItems.map((cartItem) => {
       if (cartItem.image) {
-        cartItem.image = `${req.protocol === 'https' ? 'https' : 'http'}://${req.get('host')}/img/products/cover-image/${cartItem.image}`;
+        cartItem.image = `${req.protocol === 'https' ? 'https' : 'http'}://${req.get('host')}/img/products/images/${cartItem.image}`;
         // cartItem.image = `${req.protocol}://${req.get('host')}/img/products/cover-image/${cartItem.image}`;
       }
       totalPrice += cartItem.subtotal;

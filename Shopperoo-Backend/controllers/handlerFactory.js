@@ -66,6 +66,12 @@ exports.getOne = (Model, popOptions) =>
       doc.imageCover = `${req.protocol}://${req.get('host')}/img/products/cover-image/${doc.imageCover}`;
     }
 
+    if (doc.images) {
+      doc.images = doc.images.map((image) => {
+        return `${req.protocol}://${req.get('host')}/img/products/images/${image}`;
+      });
+    }
+
     res.status(200).json({
       status: 'success',
       data: {

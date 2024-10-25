@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuantitySelector from "./QuantitySelector";
 import { addToCart } from "../../api/apiCart";
 
@@ -15,7 +15,7 @@ const ProductDetails = ({ product }) => {
   const { state } = useAuth();
   const { name, price, old_price, imageCover, images, _id } = product;
 
-  const [imageIndex, setImageIndex] = useState(3);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const [color, setColor] = React.useState("");
   const [sizes, setSizes] = React.useState("");
@@ -38,19 +38,39 @@ const ProductDetails = ({ product }) => {
     quantity,
     productName: name,
     price,
-    image: imageCover,
+    image: images[0],
     subtotal: price * quantity,
+    product_spec: [
+      {
+        key: "Color",
+        value: color,
+      },
+      {
+        key: "Size",
+        value: sizes,
+      },
+    ],
   };
 
   const checkout_productDetails = [checkout_product];
 
   const cart_productDetails = {
     product_id: _id,
-    image: imageCover?.split("/").slice(-1).join(),
+    image: images[0],
     quantity: quantity,
     productName: name,
     price: price,
     subtotal: price * quantity,
+    product_spec: [
+      {
+        key: "Color",
+        value: color,
+      },
+      {
+        key: "Size",
+        value: sizes,
+      },
+    ],
   };
 
   const handleAddToCart = async () => {
@@ -84,14 +104,20 @@ const ProductDetails = ({ product }) => {
     },
   ];
 
+  const [image, setImage] = useState(images[imageIndex]);
+  console.log(image);
+  useEffect(() => {
+    setImage(images[imageIndex]);
+  }, [imageIndex]);
+
   return (
     <section className="flex max-w-[1200px] flex-col flex-wrap items-center justify-center bg-white px-4 pb-14 pt-9 sm:px-10 md:px-20 lg:flex-row lg:items-start lg:gap-10">
       <div className="flex flex-col gap-6 lg:w-[30%]">
         <div className="">
-          <ResponsiveImage
-            src={`${baseURL}/img/products/images/${images[imageIndex]}`}
+          <img
+            src={`${baseURL}/img/products/images/${image}`}
             alt={name}
-            sizes={{ large: imageCover }}
+            className="h-[400px] w-full object-cover"
           />
         </div>
         <div className="w-full">

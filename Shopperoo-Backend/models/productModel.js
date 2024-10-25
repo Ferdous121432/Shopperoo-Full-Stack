@@ -36,6 +36,18 @@ const productSchema = new mongoose.Schema({
     type: [String],
     required: [true, 'A product must have images'],
   },
+  product_spec: [
+    {
+      key: {
+        type: String,
+        // required: [true, 'A product specification must have a key'],
+      },
+      value: {
+        type: String,
+        // required: [true, 'A product specification must have a value'],
+      },
+    },
+  ],
   categories: [
     {
       type: mongoose.Schema.ObjectId,

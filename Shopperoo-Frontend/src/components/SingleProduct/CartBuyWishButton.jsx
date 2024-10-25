@@ -7,28 +7,34 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Constants from "../../../constants";
+import Button from "../../reuseableComponents/Button";
 
 export default function CartBuyWishButton({
   handleAddToCart,
   handleMakePayment,
-  handleChangeQuantity,
-  quantity,
 }) {
   return (
     <div className="flex w-full flex-1 justify-center justify-items-stretch gap-8 bg-opacity-[.9] px-4 py-2 sm:gap-20">
-      <button
+      {/* <button
         onClick={handleAddToCart}
-        className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
+        className="rounded bg-yellow-primary px-4 py-2 text-white hover:bg-white-secondary hover:text-yellow-primary"
       >
         <ShoppingCartIcon />
-      </button>
+      </button> */}
+      <Button color={Constants.YELLOW_PRIMARY} handleClick={handleAddToCart}>
+        ADD TO BAG
+      </Button>
+      <Button color={Constants.YELLOW_PRIMARY} handleClick={handleMakePayment}>
+        Buy Now
+      </Button>
 
-      <button
+      {/* <button
         // onClick={handleMakePayment}
-        className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
+        className="rounded bg-yellow-primary px-4 py-2 text-white hover:bg-white-secondary hover:text-yellow-primary"
       >
         <FavoriteIcon />
-      </button>
+      </button> */}
       {/* <div className="flex items-center">
       <input
         id={`quantity-${_id}`}
@@ -39,12 +45,12 @@ export default function CartBuyWishButton({
         className="w-16 rounded border border-gray-300 px-2 py-1 text-center text-base"
       />
     </div> */}
-      <button
+      {/* <button
         onClick={handleMakePayment}
-        className="bg-yellow-primary hover:text-yellow-primary rounded px-4 py-2 text-white hover:bg-white-secondary"
+        className="rounded bg-yellow-primary px-4 py-2 text-white hover:bg-white-secondary hover:text-yellow-primary"
       >
         <LocalMallRoundedIcon />
-      </button>
+      </button> */}
     </div>
   );
 }
