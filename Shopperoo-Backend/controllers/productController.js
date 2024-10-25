@@ -42,10 +42,11 @@ exports.uploadProductImages = upload.fields([
 
 exports.resizeProductCoverImage = catchAsync(async (req, res, next) => {
   if (!req.files.imageCover && !req.files.images) return next();
+  const user_id = req.user.id;
 
   // 1) Cover Image
   if (req.files.imageCover) {
-    req.body.imageCover = `product-${req.user.id}-${Date.now()}-cover-image.jpeg`;
+    req.body.imageCover = `product-${user_id}-${Date.now()}-cover-image.jpeg`;
 
     await sharp(req.files.imageCover[0].buffer)
       .resize(400, 500)
@@ -62,7 +63,7 @@ exports.resizeProductCoverImage = catchAsync(async (req, res, next) => {
 
     await Promise.all(
       req.files.images.map(async (file, i) => {
-        const filename = `product-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+        const filename = `product-${user_id}-${Date.now()}-${i + 1}.jpeg`;
 
         await sharp(file.buffer)
           .resize(400, 500)
