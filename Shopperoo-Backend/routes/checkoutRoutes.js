@@ -12,17 +12,19 @@ router
   .post(checkoutController.getCheckoutSession);
 router.route('/checkout-session').post(checkoutController.getCheckoutSession);
 
+router.route('/my-orders').get(checkoutController.GetMyOrders);
+
 // router.use(authController.restrictedTo('admin', 'lead-guide'));
 
 // router
 //   .route('/')
-//   .get(checkoutController.getAllBookings)
-//   .post(checkoutController.createBooking);
+//   .get(checkoutController.getAllOrders)
+//   .post(checkoutController.createOrder);
 
 // router
 //   .route('/:id')
-//   .get(checkoutController.getBooking)
-//   .patch(checkoutController.updateBooking)
-//   .delete(checkoutController.deleteBooking);
+//   .get(checkoutController.getOrder)
+//   .patch(checkoutController.updateOrder)
+//   .delete(checkoutController.deleteOrder);
 
 module.exports = router;

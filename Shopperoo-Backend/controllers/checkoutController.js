@@ -235,39 +235,19 @@ exports.getAllBookings = factory.getAll(Checkout);
 exports.updateBooking = factory.updateOne(Checkout);
 exports.deleteBooking = factory.deleteOne(Checkout);
 
-// exports.webhookCheckout = async (req, res, next) => {
-//   const signature = req.headers['stripe-signature'];
+exports.GetMyOrders = catchAsync(async (req, res, next) => {
+  req.query.user = req.user.id;
+  let query = Checkout.find(req.query);
+  const doc = await query;
 
-//   let event = req.body;
-//   try {
-//     event = stripe.webhooks.constructEvent(
-//       req.body,
-//       signature,
-//       process.env.STRIPE_WEBHOOK_SECRET,
-//     );
-//   } catch (err) {
-//     console.error(`Webhook error: ${err.message}`);
-//     return res.status(400).send(`Webhook error: ${err.message}`);
-//   }
+  if (!doc) {
+    return next(new AppError('No orders found for this user', 404));
+  }
 
-//   // Handle the event
-//   if (event.type === 'checkout.session.completed') {
-//     console.log('Checkout session completed event received');
-//     const session = await stripe.checkout.sessions.retrieve(
-//       event.data.object.id,
-//       { expand: ['line_items', 'line_items.data.price.product'] },
-//     );
-
-//     // Check if the session has already been processed
-//     const existingCheckout = await Checkout.findOne({ session_id: session.id });
-//     if (existingCheckout) {
-//       console.log('Session already processed, skipping creation');
-//       return res.status(200).json({ received: true });
-//     }
-
-//     // Fulfill the purchase
-//     await createProductCheckout(session);
-//   }
-
-//   res.status(200).json({ received: true });
-// };
+  res.status(200).json({
+    status: 'success',
+    data: {
+      orders: doc,
+    },
+  });
+});
