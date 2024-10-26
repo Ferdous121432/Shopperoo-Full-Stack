@@ -45,7 +45,7 @@ mongoose
 const app = express();
 
 const corsOptions = {
-  origin: 'https://shopperoo-backend.vercel.app', // Replace with your frontend URL
+  origin: 'https://shopperoo-frontend.vercel.app', // Replace with your frontend URL
   modules: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Allow credentials (cookies, etc.)
 };
