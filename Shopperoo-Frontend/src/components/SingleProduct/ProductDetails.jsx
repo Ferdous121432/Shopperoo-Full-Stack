@@ -87,23 +87,31 @@ const ProductDetails = ({ product }) => {
     {
       label: "Specification",
       value: "0",
-      content:
-        "This is the specification content. Here you can add details about the product specifications.",
+      content: product.details ? product.details : "No details available",
     },
     {
       label: "Description",
       value: "1",
-      content:
-        "This is the description content. Here you can add a detailed description of the product.",
+      content: product.description
+        ? product.description
+        : "No description available",
     },
     {
       label: "Reviews",
       value: "2",
       content:
-        "This is the reviews content. Here you can add customer reviews and ratings.",
+        product.reviews?.length > 0 ? (
+          product.reviews.map((review) => (
+            <div key={review._id}>
+              <h1>{review.name}</h1>
+              <p>{review.comment}</p>
+            </div>
+          ))
+        ) : (
+          <p>No reviews yet</p>
+        ),
     },
   ];
-
   const [image, setImage] = useState(images[imageIndex]);
   console.log(image);
   useEffect(() => {
