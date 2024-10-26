@@ -8,6 +8,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import Constants from "../../../constants";
+import { Link } from "react-router-dom";
 
 export default function MobileNavigation() {
   const [state, setState] = React.useState({
@@ -51,7 +52,9 @@ export default function MobileNavigation() {
               <ListItemText
                 primary={text}
                 sx={{ fontWeight: 700, fontSize: "2rem" }}
-              />
+              >
+                <Link to={`/${text.toLowerCase()}`}>{text}</Link>
+              </ListItemText>
             </ListItemButton>
           </ListItem>
         ))}

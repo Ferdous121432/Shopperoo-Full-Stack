@@ -6,13 +6,24 @@ import { baseURL, carItemsURL } from "./apiURL";
 export const addToCart = async (credentials, token) => {
   try {
     // const credentials = {
-    //     product_id: _id,
-    //     image: imageCover.split("/").slice(-1).join(),
-    //     quantity: quantity,
-    //     productName: name,
-    //     price: price,
-    //     subtotal: price * quantity,
-    //   };
+    //   product_id: _id,
+    //   image: images[0].split("/").slice(-1).join(),
+    //   quantity: quantity,
+    //   productName: name,
+    //   price: price,
+    //   subtotal: price * quantity,
+    //   product_spec: [
+    //     {
+    //       key: "Color",
+    //       value: color,
+    //     },
+    //     {
+    //       key: "Size",
+    //       value: sizes,
+    //     },
+    //   ],
+    // };
+    console.log(credentials);
     const response = await axios.post(
       `${baseURL}/${carItemsURL}`,
       credentials,
@@ -20,7 +31,7 @@ export const addToCart = async (credentials, token) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     console.log(response);
     if (response.status === 201) {
@@ -41,12 +52,12 @@ export const deleteFromCart = async (cartItem, token) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.status === 204) {
       console.log(
-        `${cartItem.productName} with ID ${cartItem._id} deleted from cart`
+        `${cartItem.productName} with ID ${cartItem._id} deleted from cart`,
       );
     } else {
       console.error("Failed to delete product from cart");
@@ -85,7 +96,7 @@ export const updateCartItem = async (cartItem, token) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.status === 200) {

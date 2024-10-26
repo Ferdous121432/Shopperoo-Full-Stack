@@ -38,7 +38,7 @@ const ProductDetails = ({ product }) => {
     quantity,
     productName: name,
     price,
-    image: images[0],
+    image: images[0].split("/").slice(-1).join(),
     subtotal: price * quantity,
     product_spec: [
       {
@@ -56,7 +56,7 @@ const ProductDetails = ({ product }) => {
 
   const cart_productDetails = {
     product_id: _id,
-    image: images[0],
+    image: images[0].split("/").slice(-1).join(),
     quantity: quantity,
     productName: name,
     price: price,
@@ -72,6 +72,7 @@ const ProductDetails = ({ product }) => {
       },
     ],
   };
+  console.log(cart_productDetails);
 
   const handleAddToCart = async () => {
     addToCart(cart_productDetails, state.token);

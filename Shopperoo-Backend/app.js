@@ -104,13 +104,6 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
-// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
-app.post(
-  '/webhook-checkout',
-  express.raw({ type: 'application/json' }),
-  checkoutController.webhookCheckout,
-);
-
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10000kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10000kb' }));
@@ -143,6 +136,13 @@ app.get('/', (req, res) => {
     message: 'Varsel check route is working!',
   });
 });
+
+// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  checkoutController.webhookCheckout,
+);
 
 // 3) ROUTES
 app.use('/api/v1/users', userRouter);
