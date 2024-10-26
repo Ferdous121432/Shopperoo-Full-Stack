@@ -23,7 +23,8 @@ const CartItem = ({ item }) => {
     }
   };
 
-  const { image, productName, price, quantity, subtotal, _id } = item;
+  const { image, productName, price, quantity, subtotal, _id, product_spec } =
+    item;
   const handleIncreaseQuantity = () => {
     if (itemQuantity < 10) {
       setQuantity(itemQuantity + 1);
@@ -47,12 +48,18 @@ const CartItem = ({ item }) => {
             className="aspect-[1.03] w-[54px] max-w-full shrink-0 rounded-none object-contain" // Adjusted width for smaller image
             srcSet={`${image}?w=54&h=54&fit=crop&auto=format 1x, ${image}?w=108&h=108&fit=crop&auto=format 2x`} // Adjusted srcSet for smaller image
           />
-          <div className="my-auto w-[86px] shrink grow">{productName}</div>
+          <div className="my-auto w-[86px] shrink grow">
+            <h1 className="text-md text-slate-900">{productName}</h1>
+            <p className="flex flex-row gap-2 text-sm">
+              <span>size: {product_spec.sizes}</span>
+              <span>color: {product_spec.color}</span>
+            </p>
+          </div>
         </div>
       </div>
       <div className="max-md:ml-0 max-md:w-full ml-5 flex w-[65%] flex-col">
         <div className="max-md:mt-10 max-md:max-w-full text-base my-auto flex gap-10 self-stretch text-black">
-          <div className="my-auto basis-auto text-neutral-400">{price}</div>
+          <div className="my-auto basis-auto text-slate-900">{price}</div>
           <div className="flex items-center">
             <button
               onClick={handleDecreaseQuantity}

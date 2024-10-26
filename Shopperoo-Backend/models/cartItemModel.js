@@ -32,18 +32,15 @@ const cartItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  product_spec: [
-    {
-      key: {
-        type: String,
-        // required: [true, 'A product specification must have a key'],
-      },
-      value: {
-        type: String,
-        // required: [true, 'A product specification must have a value'],
-      },
+  product_spec: {
+    sizes: {
+      type: String,
     },
-  ],
+    color: {
+      type: String,
+    },
+  },
+
   created_at: {
     type: Date,
     default: Date.now,
@@ -52,6 +49,14 @@ const cartItemSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+cartItemSchema.pre('save', function (next) {
+  this.updated_at = Date.now();
+  if (this.isNew) {
+    this.created_at = this.updated_at;
+  }
+  next();
 });
 
 cartItemSchema.index({ user_id: 1, product_id: 1 }, { unique: true });

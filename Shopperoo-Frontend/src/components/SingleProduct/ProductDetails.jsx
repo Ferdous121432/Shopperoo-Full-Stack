@@ -20,9 +20,9 @@ const ProductDetails = ({ product }) => {
   const [color, setColor] = React.useState("");
   const [sizes, setSizes] = React.useState("");
   const [quantity, setQuantity] = useState(1);
-
   const handleChangeColor = (event) => {
     setColor(event.target.value);
+    console.log(color);
   };
 
   const handleChangeSizes = (event) => {
@@ -61,16 +61,7 @@ const ProductDetails = ({ product }) => {
     productName: name,
     price: price,
     subtotal: price * quantity,
-    product_spec: [
-      {
-        key: "Color",
-        value: color,
-      },
-      {
-        key: "Size",
-        value: sizes,
-      },
-    ],
+    product_spec: { color, sizes },
   };
   console.log(cart_productDetails);
 
