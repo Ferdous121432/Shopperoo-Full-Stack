@@ -32,6 +32,18 @@ const cartItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  product_spec: [
+    {
+      key: {
+        type: String,
+        // required: [true, 'A product specification must have a key'],
+      },
+      value: {
+        type: String,
+        // required: [true, 'A product specification must have a value'],
+      },
+    },
+  ],
   created_at: {
     type: Date,
     default: Date.now,
