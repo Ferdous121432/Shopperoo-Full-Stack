@@ -9,6 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import Constants from "../../../constants";
 import { Link } from "react-router-dom";
+import { frontendURL } from "../../frontendURL/frontendURL";
 
 export default function MobileNavigation() {
   const [state, setState] = React.useState({
@@ -29,6 +30,29 @@ export default function MobileNavigation() {
     setState({ ...state, [anchor]: open });
   };
 
+  const navItems = [
+    // { title: "Home", url: "/" },
+    // { title: "Product", url: "/product" },
+    // { title: "Dashboard", url: "/dashboard" },
+    // { title: "Contact", url: "/contact-us" },
+    {
+      title: "New Arrivals",
+      url: "new-arrivals",
+      id: "671b3f3f7169d20734e3645c",
+    },
+    { title: "Men", url: "men", id: "66ebd7abb5d3c708b4f5da07" },
+    { title: "Women", url: "women", id: "671b3c7b7169d20734e36454" },
+    { title: "Kids", url: "kids", id: "671b3c9d7169d20734e36455" },
+    { title: "Footwear", url: "footwear", id: "671b3cc27169d20734e36456" },
+    { title: "Fragrance", url: "fragrance", id: "671b3cf77169d20734e36457" },
+    {
+      title: "Accessories",
+      url: "/accessories",
+      id: "671d0cc0f78b7cbfd7a56c7f",
+    },
+    { title: "Furniture", url: "/furniture", id: "671b3d187169d20734e36458" },
+  ];
+
   const list = (anchor) => (
     <Box
       sx={{ minWidth: "300px" }}
@@ -37,25 +61,18 @@ export default function MobileNavigation() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {[
-          "New Arrivals",
-          "Men",
-          "Women",
-          "Kids",
-          "Footwear",
-          "Fragrance",
-          "Accessories",
-          "Furniture",
-        ].map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemText
-                primary={text}
-                sx={{ fontWeight: 700, fontSize: "2rem" }}
-              >
-                <Link to={`/${text.toLowerCase()}`}>{text}</Link>
-              </ListItemText>
-            </ListItemButton>
+        {navItems.map((item) => (
+          <ListItem key={item.id} disablePadding>
+            <Link to={`${frontendURL()}/category/${item.id}`}>
+              <ListItemButton>
+                <ListItemText
+                  primary={item.title}
+                  sx={{ fontWeight: 700, fontSize: "2rem" }}
+                >
+                  {item.title}
+                </ListItemText>
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
