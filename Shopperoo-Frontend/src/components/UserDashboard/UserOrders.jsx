@@ -44,9 +44,9 @@ export default function UserOrders() {
           <div>No orders</div>
         ) : (
           orders.map((order) => (
-            <div key={order.id} className="flex flex-row justify-between">
-              <p>{order.id}</p>
-              <p>{order.created_at}</p>
+            <div key={order._id} className="flex flex-row justify-between">
+              <p>{order._id}</p>
+              <p>{order.createdAt}</p>
               <p>{order.total_amount}</p>
               <p
                 className={
