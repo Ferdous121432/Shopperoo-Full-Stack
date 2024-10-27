@@ -11,10 +11,10 @@ const { create } = require('../models/cartModel');
 const User = require('../models/userModel'); // Add this line to import the User model
 const { meta } = require('eslint-plugin-prettier');
 
-// const stripe = require('stripe')(
-//   'sk_test_51Q8ouGIeuxFSv7HPlr9sfndE1pFAldh7omOqoAd44Lquoh0PcZbKLS1p267wdRlk9kfdMo4rPlZOri9fsJdY7ojU00VEDXXFI0',
-// );
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(
+  'sk_test_51Q8ouGIeuxFSv7HPlr9sfndE1pFAldh7omOqoAd44Lquoh0PcZbKLS1p267wdRlk9kfdMo4rPlZOri9fsJdY7ojU00VEDXXFI0',
+);
+// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // multiple or single products to checkout create
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
