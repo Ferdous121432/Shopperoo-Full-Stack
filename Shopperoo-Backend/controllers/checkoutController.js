@@ -12,6 +12,8 @@ const { create } = require('../models/cartModel');
 const User = require('../models/userModel'); // Add this line to import the User model
 const { meta } = require('eslint-plugin-prettier');
 
+dotenv.config({ path: './config.env' });
+
 //  product to checkout
 
 // exports.getCheckoutSession = catchAsync(async (req, res, next) => {
