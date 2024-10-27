@@ -34,7 +34,7 @@ const Breadcrumb = ({ name }) => {
     >
       <img
         loading="lazy"
-        src={`${window.location.protocol}//${window.location.host}/public/image/breadcum-image.webp`}
+        src={`./image/breadcum-image.webp`}
         alt=""
         className="absolute inset-0 size-full object-cover opacity-40"
       />
