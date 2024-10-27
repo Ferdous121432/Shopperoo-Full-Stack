@@ -49,7 +49,7 @@ const Footer = () => {
               {column.items.map((item, index) => (
                 <li
                   key={index}
-                  className="hover:border-yellow-primary hover:text-yellow-primary group relative"
+                  className="group relative hover:border-yellow-primary hover:text-yellow-primary"
                 >
                   <Link
                     to="/"
@@ -57,7 +57,7 @@ const Footer = () => {
                   >
                     {item}
                   </Link>
-                  <span className="bg-yellow-primary absolute bottom-[-5px] left-0 h-0.5 w-full scale-x-0 transition-transform duration-500 ease-in-out group-hover:scale-x-100"></span>
+                  <span className="absolute bottom-[-5px] left-0 h-0.5 w-full scale-x-0 bg-yellow-primary transition-transform duration-500 ease-in-out group-hover:scale-x-100"></span>
                 </li>
               ))}
             </ul>
@@ -66,25 +66,29 @@ const Footer = () => {
         <div className="w-full">
           <h2 className="pb-3 text-xl">You can pay by</h2>
           <div className="flex w-4/5 max-w-[260px] flex-wrap items-start justify-start gap-3">
-            <img src="image/payment/visa.jpg" className="w-[70px]" alt="visa" />
-            <img src="image/payment/ae.jpg" className="w-[70px]" alt="visa" />
             <img
-              src="image/payment/mastercard.jpg"
+              src="./image/payment/visa.jpg"
+              className="w-[70px]"
+              alt="visa"
+            />
+            <img src="./image/payment/ae.jpg" className="w-[70px]" alt="visa" />
+            <img
+              src="./image/payment/mastercard.jpg"
               className="w-[70px]"
               alt="visa"
             />
             <img
-              src="image/payment/bkash.jpg"
+              src="./image/payment/bkash.jpg"
               className="w-[70px]"
               alt="visa"
             />
             <img
-              src="image/payment/rocket.jpg"
+              src="./image/payment/rocket.jpg"
               className="w-[70px]"
               alt="visa"
             />
             <img
-              src="image/payment/nagad.jpg"
+              src="./image/payment/nagad.jpg"
               className="w-[70px]"
               alt="visa"
             />
