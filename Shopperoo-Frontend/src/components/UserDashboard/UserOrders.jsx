@@ -48,7 +48,13 @@ export default function UserOrders() {
               <p>{order.id}</p>
               <p>{order.created_at}</p>
               <p>{order.total_amount}</p>
-              <p>{order.status}</p>
+              <p
+                className={
+                  order.status === "delivered" ? "text-yellow-50" : "text-green"
+                }
+              >
+                {order.status}
+              </p>
               <Link to={`/order/${order.id}`}>View</Link>
             </div>
           ))
