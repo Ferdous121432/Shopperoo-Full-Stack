@@ -7,7 +7,6 @@ const Product = require('../models/productModel');
 const Checkout = require('../models/checkoutModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
-const dotenv = require('dotenv');
 const { create } = require('../models/cartModel');
 const User = require('../models/userModel'); // Add this line to import the User model
 const { meta } = require('eslint-plugin-prettier');
