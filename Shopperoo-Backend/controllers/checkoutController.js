@@ -16,67 +16,6 @@ const { meta } = require('eslint-plugin-prettier');
 // );
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-//  product to checkout
-
-// exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-//   // 1) Get the currently booked tour
-//   //TODO: for multiple products, we need to loop through the products and get the price of each product
-//   const product = req.body;
-//   console.log('Booking controller ❌❌❌❌❌ Product', product);
-//   const image = `${req.protocol}://${req.get('host')}/img/products/cover-image/${product.image}`;
-
-//   // 2) Create checkout session
-//   const session = await stripe.checkout.sessions.create({
-//     payment_method_types: ['card'],
-//     success_url: `http://localhost:5173/product/${product.product_id}`,
-//     cancel_url: `http://localhost:5173/product/${product.product_id}`,
-//     customer_email: req.user.email,
-//     client_reference_id: req.user.id,
-//     mode: 'payment',
-//     billing_address_collection: 'required',
-//     metadata: {
-//       product_id: product.product_id,
-//       quantity: product.quantity,
-//       unit_price: product.price,
-//       image: image,
-//     },
-//     line_items: [
-//       {
-//         price_data: {
-//           currency: 'usd',
-//           product_data: {
-//             name: `${product.productName}`,
-//             images: [image],
-//           },
-//           unit_amount: product.price * 100, // In stripe, currency is in cents
-//         },
-//         quantity: product.quantity,
-//       },
-//     ],
-//     // shipping_options: [
-//     //   {
-//     //     shipping_rate_data: {
-//     //       type: 'fixed_amount',
-//     //       fixed_amount: { amount: 1000, currency: 'usd' },
-//     //       display_name: 'Standard shipping',
-//     //       delivery_estimate: {
-//     //         minimum: { unit: 'business_day', value: 5 },
-//     //         maximum: { unit: 'business_day', value: 7 },
-//     //       },
-//     //     },
-//     //   },
-//     // ],
-//   });
-
-//   console.log('Checkout controller ❌❌❌❌❌', session);
-
-//   // 3) Create session as response
-//   res.status(200).json({
-//     status: 'success',
-//     session,
-//   });
-// });
-
 // multiple or single products to checkout create
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
@@ -229,7 +168,8 @@ exports.webhookCheckout = async (req, res, next) => {
     event = stripe.webhooks.constructEvent(
       req.body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET,
+      'whsec_wrdzJEWFaq8SmQVulxa3XW4AliW9AsJb',
+      // process.env.STRIPE_WEBHOOK_SECRET,
     );
   } catch (err) {
     console.error(`Webhook error: ${err.message}`);
