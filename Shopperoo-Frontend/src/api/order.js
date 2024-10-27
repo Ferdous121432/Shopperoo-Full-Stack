@@ -1,11 +1,16 @@
 import axios from "axios";
 
-import { baseURL, productURL } from "./apiURL";
+import { baseURL, userOrdersURL } from "./apiURL";
 
-export const getOrdersByUser = async (productId) => {
+export const getOrdersByUser = async (token) => {
   try {
-    const response = await axios.get(`${baseURL}/${productURL}/${productId}`);
-    return response.data;
+    const response = await axios.get(`${baseURL}/${userOrdersURL}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log(response.data.data.orders);
+    return response.data.data.orders;
   } catch (error) {
     console.error("Error fetching product:", error);
     throw error;

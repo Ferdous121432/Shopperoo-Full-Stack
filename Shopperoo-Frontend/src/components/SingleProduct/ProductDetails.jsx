@@ -17,8 +17,8 @@ const ProductDetails = ({ product }) => {
 
   const [imageIndex, setImageIndex] = useState(0);
 
-  const [color, setColor] = React.useState("");
-  const [sizes, setSizes] = React.useState("");
+  const [color, setColor] = React.useState("green");
+  const [sizes, setSizes] = React.useState("M");
   const [quantity, setQuantity] = useState(1);
   const handleChangeColor = (event) => {
     setColor(event.target.value);
@@ -36,20 +36,12 @@ const ProductDetails = ({ product }) => {
   const checkout_product = {
     product_id: _id,
     quantity,
+    color,
+    size: sizes,
     productName: name,
     price,
     image: images[0].split("/").slice(-1).join(),
     subtotal: price * quantity,
-    product_spec: [
-      {
-        key: "Color",
-        value: color,
-      },
-      {
-        key: "Size",
-        value: sizes,
-      },
-    ],
   };
 
   const checkout_productDetails = [checkout_product];
@@ -58,6 +50,8 @@ const ProductDetails = ({ product }) => {
     product_id: _id,
     image: images[0].split("/").slice(-1).join(),
     quantity: quantity,
+    color: color,
+    size: sizes,
     productName: name,
     price: price,
     subtotal: price * quantity,

@@ -48,21 +48,21 @@ function CheckoutPage() {
   }
 
   return (
-    <div className="flex overflow-hidden flex-col pb-12 bg-white">
+    <div className="flex flex-col overflow-hidden bg-white pb-12">
       <Layout>
         <img
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/ebe5bf593d0bacf83c999db9295be0fb791a675551c59ff97286405620db1dc2?placeholderIfAbsent=true&apiKey=5f7c255a63be4d4b97b4f114fa9e17d0"
-          className="object-contain w-full aspect-[4.57] max-md:max-w-full"
+          className="max-md:max-w-full aspect-[4.57] w-full object-contain"
           alt="Banner image"
         />
-        <main className="flex flex-col items-start px-20 pt-16 pb-32 w-full bg-white max-md:px-5 max-md:pb-24 max-md:max-w-full">
-          <div className="self-end w-full max-w-[1168px] max-md:max-w-full">
-            <div className="flex gap-5 max-md:flex-col">
-              <div className="flex flex-col w-[43%] max-md:ml-0 max-md:w-full">
+        <main className="max-md:px-5 max-md:pb-24 max-md:max-w-full flex w-full flex-col items-start bg-white px-20 pb-32 pt-16">
+          <div className="max-md:max-w-full w-full max-w-[1168px] self-end">
+            <div className="max-md:flex-col flex gap-5">
+              <div className="max-md:ml-0 max-md:w-full flex w-[43%] flex-col">
                 <BillingDetails />
               </div>
-              <div className="flex flex-col ml-5 w-[57%] max-md:ml-0 max-md:w-full">
+              <div className="max-md:ml-0 max-md:w-full ml-5 flex w-[57%] flex-col">
                 <OrderSummary
                   quantity={quantity}
                   product={product}

@@ -42,6 +42,14 @@ const checkoutSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Cart must have a quantity.'],
       },
+      color: {
+        type: String,
+        // required: [true, 'Cart must have a color.'],
+      },
+      size: {
+        type: String,
+        // required: [true, 'Cart must have a size.'],
+      },
 
       product_image: {
         type: String,
@@ -83,6 +91,38 @@ const checkoutSchema = new mongoose.Schema({
   paid: {
     type: Boolean,
     default: true,
+  },
+  status: {
+    type: String,
+    enum: ['processing', 'shipped', 'delivered'],
+    default: 'processing',
+  },
+  invoice_pdf: {
+    type: String,
+    default: null,
+  },
+  payment_status: {
+    type: String,
+    enum: ['pending', 'paid', 'failed'],
+    default: 'pending',
+  },
+  payment_method: {
+    type: Array,
+    default: null,
+  },
+  payment_details: {
+    card_name: {
+      type: String,
+      default: null,
+    },
+    card_brand: {
+      type: String,
+      default: null,
+    },
+    card_last4: {
+      type: String,
+      default: null,
+    },
   },
 });
 

@@ -16,7 +16,7 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
   return (
     <Box
       sx={{
-        width: "90%",
+        width: "100%",
         justifyContent: "center",
         alignItems: "center",
         typography: "body1",
@@ -24,18 +24,25 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
         flexDirection: { flexDirection }, // "column + Horizontal" for horizontal tabs & "row + vertical" for vertical tabs
       }}
     >
-      <TabContext value={value} sx={{ justifyContent: "start" }}>
+      <TabContext
+        value={value}
+        sx={{ justifyContent: "start", width: "inherit" }}
+      >
         <Box
           sx={{
-            borderRight: window.innerWidth < 768 ? 0 : 1,
-            borderColor: window.innerWidth < 768 ? null : "divider",
             minWidth: "150px",
+            width: "full",
           }}
         >
           <TabList
             onChange={handleChange}
             aria-label="lab API tabs example"
             orientation={orientation || "horizontal"}
+            sx={{
+              display: "flex",
+              justifyContent: "between",
+              flexWrap: "wrap",
+            }}
             TabIndicatorProps={{
               style: {
                 backgroundColor: Constants.YELLOW_PRIMARY,
@@ -57,13 +64,15 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
                 key={tab.value}
                 label={tab.label}
                 value={tab.value}
+                component="a"
+                href={`#${tab.slug}`} // Internal page URL
               />
             ))}
           </TabList>
         </Box>
-        <Box sx={{ flexGrow: 1, alignItems: "start" }}>
+        <Box sx={{ flexGrow: 1, width: "inherit", alignItems: "start" }}>
           {tabData.map((tab) => (
-            <TabPanel key={tab.value} value={tab.value}>
+            <TabPanel id={tab.slug} key={tab.value} value={tab.value}>
               {tab.content}
             </TabPanel>
           ))}

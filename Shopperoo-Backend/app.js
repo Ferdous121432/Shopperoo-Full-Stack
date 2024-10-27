@@ -45,7 +45,9 @@ mongoose
 const app = express();
 
 const corsOptions = {
-  origin: 'https://shopperoo-frontend.vercel.app', // Replace with your frontend URL
+  origin: 'https://shopperoo-frontend.vercel.app',
+  // origin: 'http://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   modules: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Allow credentials (cookies, etc.)
 };
@@ -104,6 +106,12 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  checkoutController.webhookCheckout,
+);
+
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10000kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10000kb' }));
@@ -138,11 +146,11 @@ app.get('/', (req, res) => {
 });
 
 // Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
-app.post(
-  '/webhook-checkout',
-  express.raw({ type: 'application/json' }),
-  checkoutController.webhookCheckout,
-);
+// app.post(
+//   '/webhook-checkout',
+//   express.raw({ type: 'application/json' }),
+//   checkoutController.webhookCheckout,
+// );
 
 // 3) ROUTES
 app.use('/api/v1/users', userRouter);

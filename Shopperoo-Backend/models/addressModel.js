@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const addressSchema = new mongoose.Schema({
+  default: { type: Boolean, default: false },
   userID: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
   title: { type: String, required: true },
   address_line_1: { type: String, required: true },

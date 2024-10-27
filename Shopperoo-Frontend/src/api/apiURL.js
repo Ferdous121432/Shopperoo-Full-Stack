@@ -10,3 +10,5 @@ export const productCategory = "api/v1/categories"; // /:category
 export const mycartURL = "api/v1/cartItems/mycart";
 export const carItemsURL = "api/v1/cartitems";
 export const checkoutURL = "api/v1/checkout/checkout-session";
+
+export const userOrdersURL = "api/v1/checkout/my-orders";

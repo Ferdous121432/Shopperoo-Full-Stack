@@ -79,6 +79,9 @@ const userSchema = new mongoose.Schema(
       default: true,
       select: false,
     },
+    gender: {
+      type: String,
+    },
 
     dateOfBirth: {
       type: Date,

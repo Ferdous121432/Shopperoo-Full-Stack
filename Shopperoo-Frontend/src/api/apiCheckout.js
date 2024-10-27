@@ -11,6 +11,8 @@ export const makePayment = async (paymentDetails, token) => {
   // const paymentDetails = {
   //   product_id: _id,
   //   quantity: quantity,
+  //   color: product.color,
+  //   size: product.size,
   //   productName: name,
   //   price: price,
   //   subtotal: price * quantity,
@@ -44,6 +46,8 @@ export const makeMultiplePayments = async (products, token) => {
   //   {
   //     product_id: product._id,
   //     quantity: product.quantity,
+  //     color: product.color,
+  //     size: product.size,
   //     productName: product.name,
   //     price: product.price,
   //     subtotal: product.price * product.quantity,
