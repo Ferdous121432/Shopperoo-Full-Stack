@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useProduct, ProductProvider } from "../context/product";
 
 import Layout from "../components/Layout";
@@ -11,6 +11,8 @@ import { AuthProvider } from "../context/AuthProvider";
 import Breadcrumb from "../reuseableComponents/Breadcrumb";
 import { useParams } from "react-router-dom";
 import { getProductsByCategory } from "../api/apiProduct";
+import Button from "../reuseableComponents/Button";
+import Constants from "../../constants";
 
 function ProductPage() {
   const products = useLoaderData();
@@ -34,11 +36,22 @@ export async function loader({ params }) {
 }
 
 export function ErrorElement({ error }) {
+  const navigate = useNavigate();
+  // console.log(error.);
+
   return (
-    <div className="error">
-      <h2>Something went wrong</h2>
-      <p>{error}</p>
-    </div>
+    <Layout>
+      <div className="my-20 flex w-full flex-col items-center justify-items-center gap-10">
+        <h2 className="py-10">Something went wrong</h2>
+        {error && <p>{error.message}</p>}
+        <Button
+          color={Constants.YELLOW_PRIMARY}
+          handleClick={() => navigate("/")}
+        >
+          Back to Homepage
+        </Button>
+      </div>
+    </Layout>
   );
 }
 
