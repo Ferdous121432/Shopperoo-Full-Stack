@@ -11,7 +11,7 @@ function Logo({ isScrolled }) {
       <div className="max-md:mt-10 flex flex-col items-center justify-center gap-1 whitespace-nowrap text-4xl font-bold text-black md:flex-row md:gap-3">
         <img
           loading="lazy"
-          src="./shopperoo.png"
+          src={`${window.location.protocol}//${window.location.host}/shopperoo.png`}
           alt=""
           className="my-auto aspect-[1.56] w-[50px] shrink-0 items-center self-stretch object-contain transition-transform duration-700 hover:rotate-180"
         />
