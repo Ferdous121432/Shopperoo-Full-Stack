@@ -227,7 +227,8 @@ exports.webhookCheckout = async (req, res, next) => {
     event = stripe.webhooks.constructEvent(
       req.body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET,
+      'whsec_wrdzJEWFaq8SmQVulxa3XW4AliW9AsJb',
+      // process.env.STRIPE_WEBHOOK_SECRET,
     );
   } catch (err) {
     console.error(`Webhook error: ${err.message}`);
