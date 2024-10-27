@@ -1,5 +1,8 @@
 // const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
+
 const Product = require('../models/productModel');
 const Checkout = require('../models/checkoutModel');
 const catchAsync = require('../utils/catchAsync');
@@ -8,8 +11,6 @@ const dotenv = require('dotenv');
 const { create } = require('../models/cartModel');
 const User = require('../models/userModel'); // Add this line to import the User model
 const { meta } = require('eslint-plugin-prettier');
-
-dotenv.config({ path: './config.env' });
 
 // const stripe = require('stripe')(
 //   'sk_test_51Q8ouGIeuxFSv7HPlr9sfndE1pFAldh7omOqoAd44Lquoh0PcZbKLS1p267wdRlk9kfdMo4rPlZOri9fsJdY7ojU00VEDXXFI0',
@@ -230,7 +231,6 @@ exports.webhookCheckout = async (req, res, next) => {
       req.body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET,
-      // 'whsec_wrdzJEWFaq8SmQVulxa3XW4AliW9AsJb',
     );
   } catch (err) {
     console.error(`Webhook error: ${err.message}`);
