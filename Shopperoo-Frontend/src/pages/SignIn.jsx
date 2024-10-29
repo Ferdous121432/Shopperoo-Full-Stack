@@ -10,6 +10,7 @@ import { Navigate } from "react-router-dom";
 
 function SignInPage() {
   const { state } = useAuth();
+  console.log(state.loading);
   return (
     <Layout>
       {state.isAuthenticated && <Navigate to="/userprofile" />}

@@ -23,8 +23,10 @@ const initialState = {
   status: null,
   userData: null,
   cartData: null,
-  signupData: null,
   update_status: null,
+  signupStatus: null,
+  signupMessage: null,
+  signupError: null,
 };
 
 // Reducer function
@@ -61,9 +63,18 @@ const authReducer = (state, action) => {
     case "SIGNUP_SUCCESS":
       return {
         ...state,
-        signupData: action.payload,
+        signupStatus: action.payload.status,
+        signupData: action.payload.message,
         loading: false,
         error: null,
+      };
+
+    case "SIGNUP_ERROR":
+      return {
+        ...state,
+        signupStatus: action.payload.status,
+        signupData: action.payload.message,
+        loading: false,
       };
 
     case "UPDATE_ME":
@@ -118,12 +129,13 @@ export const AuthProvider = ({ children }) => {
 
   // Load state from local storage
   useEffect(() => {
-    dispatch({ type: "LOADING" });
+    // dispatch({ type: "LOADING" });
+
     const storedState = localStorage.getItem("appState");
     if (storedState) {
       dispatch({ type: "LOAD_STATE", payload: JSON.parse(storedState) });
     }
-  }, [dispatch]);
+  }, []);
 
   // Login function to authenticate the user and save the token to local storage and user data to state and local storage
   const login = async (credentials) => {
@@ -161,7 +173,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch the user's data when the token changes and it will ensure whether page is authenticated or not and fetch the user data
   useEffect(() => {
     const fetchUserData = async () => {
-      dispatch({ type: "LOADING" });
+      // dispatch({ type: "LOADING" });
       if (state.token) {
         try {
           const userdata = await axios.get(`${baseURL}/${userURL}`, {
@@ -202,13 +214,32 @@ export const AuthProvider = ({ children }) => {
     try {
       const url = `${baseURL}/${signupURL}`;
       const response = await axios.post(url, signupData);
-      console.log(response.data.message);
-      dispatch({ type: "SIGNUP_SUCCESS", payload: response.data.message });
+      console.log(response.data);
+
+      dispatch({
+        type: "SIGNUP_SUCCESS",
+        payload: {
+          status: response.data.status,
+          message: response.data.message,
+        },
+      });
     } catch (error) {
-      dispatch({ type: "AUTH_ERROR", payload: error.response.data.message });
-      console.log("Error signing up:", error.response.data.message);
+      dispatch({
+        type: "SIGNUP_ERROR",
+        payload: {
+          status: error.response.data.status,
+          message: error.response.data.message,
+        },
+      });
+      console.log(error.response.data);
+      console.log(state.signupError);
+      console.log(state.signupStatus);
+      alert("❌❌❌😒", error.response.data.message);
     }
   };
+  useEffect(() => {
+    console.log(state);
+  }, [state.signupStatus]);
 
   // Update Me
   const updateMe = async (data) => {

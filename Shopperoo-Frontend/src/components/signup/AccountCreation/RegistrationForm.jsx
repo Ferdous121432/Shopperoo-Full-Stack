@@ -1,36 +1,32 @@
-/* eslint-disable */
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../context/AuthProvider";
-
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { avatar } from "@material-tailwind/react";
-import { Navigate, useNavigate, useNavigation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Constants from "../../../../constants";
 import Button from "../../../reuseableComponents/Button";
+import TextField from "@mui/material/TextField";
+import CheckIcon from "@mui/icons-material/Check";
 
 function RegistrationForm() {
   const { signup, state } = useAuth();
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     firstName: "Ferdous",
     lastName: "Azam",
     email: "admin@a.com",
     password: "test1234",
     passwordConfirm: "test1234",
     role: "admin",
-    dateOfBirth: "13 july 1990",
+    dateOfBirth: "1990-07-13",
     phoneNumber: "01521427421",
     userName: "atsss",
-    avatar: "default.jpg",
   });
 
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [error, setError] = useState(null);
-  const [signupSuccess, setSignupSuccess] = useState(null);
+  const [errors, setErrors] = React.useState({});
 
   useEffect(() => {
     if (formData.password !== formData.passwordConfirm) {
@@ -44,49 +40,89 @@ function RegistrationForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  console.log(formData);
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    let error = "";
+    switch (name) {
+      case "firstName":
+        if (!/^[A-Za-z ]+$/.test(value)) {
+          error = "Invalid name format";
+        }
+        break;
+      case "lastName":
+        if (!/^[A-Za-z ]+$/.test(value)) {
+          error = "Invalid name format";
+        }
+        break;
+      case "userName":
+        if (!/^[A-Za-z0-9_]+$/.test(value)) {
+          error = "Invalid user name format";
+        }
+        break;
+      case "email":
+        if (!/^[A-Za-z0-9@.]+$/.test(value)) {
+          error = "Invalid email format";
+        }
+        break;
+      case "phoneNumber":
+        if (!/^[0-9]{11}$/.test(value)) {
+          error = "Phone number must be exactly 11 digits";
+        }
+        break;
+      case "gender":
+        if (!/^[A-Za-z ]+$/.test(value)) {
+          error = "Invalid gender format";
+        }
+        break;
+      default:
+        break;
+    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: error,
+    }));
+  };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await signup(formData);
-      console.log("Signup successful:", response);
-      // Handle successful signup (e.g., redirect to another page)
-
-      // window.location.href = frontendURL("signin");
+      // state.signupData === "success" && <Navigate to="/signin" />;
+      console.log(response.data);
+      alert("✌️✌️😒", response.data.data);
     } catch (error) {
-      console.error("Signup failed:", error);
-      setError(error.message);
+      console.log(error.response);
+      console.log(state.signupError);
+      console.log(state.signupStatus);
+      alert("❌❌❌😒", error.response);
     }
   };
 
-  //Handle Form Response
-
   useEffect(() => {
-    if (state.error) {
-      setError(state.error);
-      console.log("Error:", state.error);
+    if (state.signupStatus === "failed") {
+      //FIXME: Toaster for error messages
+      alert("❌❌❌😒", state.signupError);
     }
-  }, [state.error]);
-
-  useEffect(() => {
-    if (state.signupData) {
-      setSignupSuccess(true);
-      console.log("SignUp", state.signupData);
+    if (state.signupStatus === "success") {
+      alert("✌️✌️", state.signupData);
+      <Navigate to="/signin" />;
     }
-  }, [state.signupData]);
+  }, [state.signupStatus]);
 
-  signupSuccess && <Navigate to="/signin" />;
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   signup(formData);
-  //   // window.location.href = frontendURL("signin");
-  // };
-
-  const navigation = useNavigation();
-  console.log(navigation);
+  const muiCustomInput = {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": { borderColor: Constants.YELLOW_PRIMARY },
+      "&:hover fieldset": { borderColor: Constants.EMARALD_PRIMARY },
+      "&.Mui-focused fieldset": {
+        borderColor: Constants.YELLOW_PRIMARY,
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: Constants.BLACK_PRIMARY,
+      "&:hover": { color: Constants.EMARALD_PRIMARY },
+      "&.Mui-focused": { color: Constants.YELLOW_PRIMARY },
+    },
+  };
 
   return (
     <div className="bg-grey-lighter flex min-h-screen w-full flex-col">
@@ -94,74 +130,174 @@ function RegistrationForm() {
         <div className="w-full rounded bg-white px-6 py-8 text-black shadow-md">
           <h1 className="mb-8 text-center text-3xl">Sign up</h1>
           <form onSubmit={handleSubmit}>
-            {signupSuccess && <Navigate to="/signin" />}
-            <input
-              type="text"
-              className="border-grey-light mb-4 block w-full rounded border p-3"
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              className="border-grey-light mb-4 block w-full rounded border p-3"
-              name="lastName"
-              placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-            <input
-              type="email"
-              className="border-grey-light mb-4 block w-full rounded border p-3"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              className="border-grey-light mb-4 block w-full rounded border p-3"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            <div className="mb-6">
-              <input
+            <div className="flex flex-col gap-2">
+              <TextField
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="First Name"
+                sx={muiCustomInput}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                inputProps={{ pattern: "[A-Za-z ]+" }}
+                error={!!errors.firstName && formData.firstName !== ""}
+                helperText={
+                  formData.firstName === "" ? (
+                    <span style={{ color: "black" }}>
+                      First Name is required
+                    </span>
+                  ) : errors.firstName && formData.firstName !== "" ? (
+                    errors.lastName
+                  ) : formData.firstName &&
+                    /^[A-Za-z ]+$/.test(formData.firstName) ? (
+                    <CheckIcon
+                      style={{
+                        color: "green",
+                        background: Constants.YELLOW_SECONDARY,
+                        borderRadius: "100%",
+                        fontSize: "1rem",
+                      }}
+                    />
+                  ) : null
+                }
+              />
+              <TextField
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Last Name"
+                sx={muiCustomInput}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                error={!!errors.lastName && formData.lastName !== ""}
+                helperText={
+                  formData.lastName === "" ? (
+                    <span style={{ color: "black" }}>
+                      Last Name is required
+                    </span>
+                  ) : errors.lastName && formData.lastName !== "" ? (
+                    errors.lastName
+                  ) : formData.lastName &&
+                    /^[A-Za-z ]+$/.test(formData.lastName) ? (
+                    <CheckIcon
+                      style={{
+                        color: "green",
+                        background: Constants.YELLOW_SECONDARY,
+                        borderRadius: "100%",
+                        fontSize: "1rem",
+                      }}
+                    />
+                  ) : null
+                }
+              />
+              <TextField
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Email"
+                sx={muiCustomInput}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                error={!!errors.email && formData.email !== ""}
+                helperText={
+                  formData.email === "" ? (
+                    <span style={{ color: "black" }}>
+                      Last Name is required
+                    </span>
+                  ) : errors.email && formData.email !== "" ? (
+                    errors.email
+                  ) : formData.email &&
+                    /^[A-Za-z0-9@.]+$/.test(formData.email) ? (
+                    <CheckIcon
+                      style={{
+                        color: "green",
+                        background: Constants.YELLOW_SECONDARY,
+                        borderRadius: "100%",
+                        fontSize: "1rem",
+                      }}
+                    />
+                  ) : null
+                }
+              />
+              <TextField
+                id="password"
+                name="password"
                 type="password"
-                className="border-grey-light mb-2 block w-full rounded border p-3"
+                value={formData.password}
+                onChange={handleChange}
+                label="Password"
+                sx={muiCustomInput}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                id="passwordConfirm"
                 name="passwordConfirm"
-                placeholder="Confirm Password"
+                type="password"
                 value={formData.passwordConfirm}
                 onChange={handleChange}
+                label="Confirm Password"
+                sx={muiCustomInput}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                error={!passwordMatch}
+                helperText={
+                  !passwordMatch ? (
+                    "Passwords do not match"
+                  ) : (
+                    <CheckIcon
+                      style={{
+                        color: "green",
+                        background: Constants.YELLOW_SECONDARY,
+                        borderRadius: "100%",
+                        fontSize: "1rem",
+                      }}
+                    />
+                  )
+                }
               />
-              {!passwordMatch && (
-                <p className="mb-8 text-xs italic text-red-500">
-                  Passwords do not match
-                </p>
-              )}
-              {passwordMatch &&
-                formData.password &&
-                formData.passwordConfirm && (
-                  <p className="mb-8 text-xs italic text-green-500">
-                    Passwords match
-                  </p>
-                )}
-            </div>
-            {/* Mui date picker */}
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Date of Birth"
-                value={dayjs(formData.dateOfBirth)}
-                onChange={(newValue) => {
-                  setFormData({ ...formData, dateOfBirth: newValue });
-                }}
-              />
-            </LocalizationProvider>
-
-            <div className="flex items-center justify-start py-10">
-              <Button color={Constants.YELLOW_PRIMARY}>Create Account</Button>
+              <div className="py-1">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Date of Birth"
+                    value={dayjs(formData.dateOfBirth)}
+                    onChange={(newValue) => {
+                      setFormData({
+                        ...formData,
+                        dateOfBirth: newValue.format("YYYY-MM-DD"),
+                      });
+                    }}
+                    sx={{
+                      ...muiCustomInput,
+                      "& .MuiIconButton-root": {
+                        color: Constants.YELLOW_PRIMARY,
+                      },
+                      ".MuiPopper-root .MuiPickersLayout-root": {
+                        backgroundColor: Constants.YELLOW_PRIMARY,
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              </div>
+              <div className="flex items-center justify-start py-10">
+                <Button
+                  color={Constants.YELLOW_PRIMARY}
+                  disabled={state.loading}
+                >
+                  {state.loading ? "Creating Account..." : "Create Account"}
+                </Button>
+              </div>
             </div>
           </form>
           <div className="text-grey-dark mt-4 text-center text-sm">

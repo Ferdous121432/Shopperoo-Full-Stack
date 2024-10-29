@@ -122,11 +122,13 @@ export default function EditProfile({ user, setEditProfile }) {
             error={!!errors.firstName}
             FormHelperTextProps={{ style: { color: "red" } }}
             helperText={
-              !formData.firstName
-                ? "First name is required"
-                : !/^[A-Za-z ]+$/.test(formData.firstName)
-                  ? "Invalid name format"
-                  : ""
+              !formData.firstName ? (
+                "First name is required"
+              ) : !/^[A-Za-z ]+$/.test(formData.firstName) ? (
+                "Invalid name format"
+              ) : (
+                <span style={{ color: "green" }}>Valid name format</span>
+              )
             }
           />
         </div>
