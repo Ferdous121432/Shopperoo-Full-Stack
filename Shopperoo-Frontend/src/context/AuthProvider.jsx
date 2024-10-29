@@ -9,7 +9,9 @@ import {
   userURL,
   mycartURL,
   signupURL,
+  userEditProfileURL,
 } from "../api/apiURL";
+
 // Initial state
 const initialState = {
   isAuthenticated: false,
@@ -22,13 +24,8 @@ const initialState = {
   userData: null,
   cartData: null,
   signupData: null,
+  update_status: null,
 };
-
-// Action types
-// const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-// const LOGOUT = "LOGOUT";
-// const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
-// const AUTH_ERROR = "AUTH_ERROR";
 
 // Reducer function
 const authReducer = (state, action) => {
@@ -65,11 +62,18 @@ const authReducer = (state, action) => {
       return {
         ...state,
         signupData: action.payload,
-        // isAuthenticated: true,
-        // user: action.payload,
         loading: false,
         error: null,
       };
+
+    case "UPDATE_ME":
+      return {
+        ...state,
+        loading: false,
+        update_status: action.payload,
+        error: null,
+      };
+
     case "LOGOUT":
       return {
         ...state,
@@ -79,6 +83,7 @@ const authReducer = (state, action) => {
         loading: false,
         error: null,
       };
+
     case "AUTH_ERROR":
       return {
         ...state,
@@ -153,7 +158,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Fetch the user's data when the token changes and  it will ensure whether page is authenticated or not and fetch the user data
+  // Fetch the user's data when the token changes and it will ensure whether page is authenticated or not and fetch the user data
   useEffect(() => {
     const fetchUserData = async () => {
       dispatch({ type: "LOADING" });
@@ -180,12 +185,6 @@ export const AuthProvider = ({ children }) => {
               loading: false,
             },
           });
-          // localStorage.setItem(
-          //   "cartState",
-          //   JSON.stringify({
-          //     cartData: cartData.data.data.cartItems,
-          //   })
-          // );
         } catch (error) {
           console.error("Error fetching user data:", error);
           dispatch({ type: "AUTH_ERROR", payload: error.message });
@@ -205,24 +204,45 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(url, signupData);
       console.log(response.data.message);
       dispatch({ type: "SIGNUP_SUCCESS", payload: response.data.message });
-      // alert("Account created successfully");
     } catch (error) {
       dispatch({ type: "AUTH_ERROR", payload: error.response.data.message });
       console.log("Error signing up:", error.response.data.message);
-      // alert("Error signing up:", error);
+    }
+  };
+
+  // Update Me
+  const updateMe = async (data) => {
+    dispatch({ type: "LOADING" });
+    try {
+      const response = await axios.patch(
+        `${baseURL}/${userEditProfileURL}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        },
+      );
+      console.log(response.data.status);
+      dispatch({
+        type: "UPDATE_ME",
+        payload: response.data.status,
+      });
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      dispatch({ type: "AUTH_ERROR", payload: error.message });
     }
   };
 
   // Logout function to remove the token from local storage and set the user state to null
   const logout = (e) => {
     dispatch({ type: "LOADING" });
-    // Perform logout logic here (e.g., API call)
     localStorage.removeItem("appState");
     dispatch({ type: "LOGOUT" });
   };
 
   return (
-    <AuthContext.Provider value={{ state, login, signup, logout }}>
+    <AuthContext.Provider value={{ state, login, signup, logout, updateMe }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,15 +1,4 @@
 import React from "react";
-import QuantitySelector from "./QuantitySelector";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Button from "@mui/material/Button";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocalMallRoundedIcon from "@mui/icons-material/LocalMallRounded";
-import { useStyles } from "../../mui/muiCSS";
 import SizeColorSelector from "./SizeColorSelector";
 import ProductHead from "./ProductHead";
 import CartBuyWishButton from "./CartBuyWishButton";
