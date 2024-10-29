@@ -8,28 +8,18 @@ import Button from "../reuseableComponents/Button";
 import CustopTabs from "../components/SingleProduct/CustomTabs";
 import UserDetails from "../components/UserDashboard/UserDetails";
 import UserOrders from "../components/UserDashboard/UserOrders";
+import Layout from "../components/Layout";
+import { getOrdersByUser } from "../api/order";
+import SpinnerFullPage from "../components/SpinnerFullPage";
 
 const UserDashboard = () => {
   const { state, dispatch, logout } = useAuth();
   const userData = state.userData ? state.userData : [];
   console.log(userData);
+  const [loading, setLoading] = useState(true);
 
   const user = {
-    address: userData.address,
     avatar: userData.avatar,
-    cart: userData.cart || [],
-    created_at: userData.created_at,
-    dateOfBirth: userData.dateOfBirth,
-    email: userData.email,
-    firstName: userData.firstName,
-    fullName: userData.fullName,
-    id: userData.id,
-    lastName: userData.lastName,
-    phoneNumber: userData.phoneNumber,
-    role: userData.role,
-    updated_at: userData.updated_at,
-    userName: userData.userName,
-    _id: userData._id,
   };
 
   const handleLogout = (e) => {
@@ -44,6 +34,26 @@ const UserDashboard = () => {
     setValue(newValue);
   };
 
+  // User orders
+
+  const [orders, setOrders] = React.useState([]);
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setLoading(true);
+      try {
+        const orders = await getOrdersByUser(state.token);
+        setOrders(orders);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  // Tab data
   const tabData = [
     {
       label: "User Details",
@@ -56,7 +66,7 @@ const UserDashboard = () => {
       label: "My Orders",
       slug: "my-orders",
       value: "1",
-      content: <UserOrders />,
+      content: <UserOrders orders={orders} />,
     },
     {
       label: "Wishlist",
@@ -74,6 +84,7 @@ const UserDashboard = () => {
     },
   ];
 
+  //  data loading error
   const [loadingError, setLoadingError] = useState(false);
 
   useEffect(() => {
@@ -89,9 +100,11 @@ const UserDashboard = () => {
 
   if (loadingError) {
     return (
-      <div className="items-center justify-center align-middle">
-        Error loading page
-      </div>
+      <Layout>
+        <div className="items-center justify-center align-middle">
+          Error loading page
+        </div>
+      </Layout>
     );
   }
 
@@ -111,7 +124,7 @@ const UserDashboard = () => {
           orientation={window.innerWidth < 800 ? "vertical" : "horizontal"}
         />
       </div>
-      <div className="flex w-4/5 justify-center">
+      <div className="flex w-full justify-center">
         <Button handleClick={handleLogout}>Logout</Button>
       </div>
     </div>

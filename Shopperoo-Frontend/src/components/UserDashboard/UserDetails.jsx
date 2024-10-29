@@ -1,5 +1,9 @@
 import React from "react";
 import { useAuth } from "../../context/AuthProvider";
+import Constants from "../../../constants";
+import Button from "../../reuseableComponents/Button";
+import { Edit } from "@mui/icons-material";
+import EditProfile from "./EditProfile";
 
 export default function UserDetails() {
   const { state, dispatch, logout } = useAuth();
@@ -18,6 +22,14 @@ export default function UserDetails() {
     phoneNumber: userData.phoneNumber,
     userName: userData.userName,
     _id: userData._id,
+  };
+
+  // Edit profile
+  const [editProfile, setEditProfile] = React.useState(false);
+
+  const handleEditProfile = (e) => {
+    e.preventDefault();
+    setEditProfile(true);
   };
 
   return (
@@ -65,6 +77,31 @@ export default function UserDetails() {
               : "No address provided"}
           </h2>
           <span className="absolute bottom-0 left-0 h-0.5 w-full scale-x-100 bg-yellow-primary"></span>
+        </div>
+      </div>
+
+      <div className="z-10 bg-red-100">
+        {editProfile && (
+          <div>
+            <EditProfile user={user} />
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-col justify-center gap-4 py-4 sm:flex-row">
+        <div className="w-full sm:w-1/2">
+          <Button
+            handleClick={handleEditProfile}
+            width={"full"}
+            color={Constants.YELLOW_PRIMARY}
+          >
+            Edit Profile
+          </Button>
+        </div>
+        <div className="w-full sm:w-1/2">
+          <Button width={"full"} color={Constants.YELLOW_PRIMARY}>
+            Change Password
+          </Button>
         </div>
       </div>
     </div>

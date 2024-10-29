@@ -3,30 +3,10 @@ import React, { useEffect } from "react";
 import { getOrdersByUser } from "../../api/order";
 import { useAuth } from "../../context/AuthProvider";
 import { Link } from "react-router-dom";
+import Button from "../../reuseableComponents/Button";
+import Constants from "../../../constants";
 
-export default function UserOrders() {
-  const { state } = useAuth();
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      const orders = await getOrdersByUser(state.token);
-      console.log(orders);
-    };
-
-    fetchOrders();
-  }, [state.token]);
-
-  const [orders, setOrders] = React.useState([]);
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      const orders = await getOrdersByUser(state.token);
-      setOrders(orders);
-    };
-
-    fetchOrders();
-  }, [state.token]);
-
+export default function UserOrders({ orders }) {
   return (
     <div className="flex min-w-[550px] flex-col gap-2 border-2 border-slate-400 px-5 py-10">
       <div className="flex flex-row justify-between">

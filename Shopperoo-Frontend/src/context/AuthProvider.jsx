@@ -221,32 +221,6 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: "LOGOUT" });
   };
 
-  // Fetch the user's cart when the token changes
-  // //TODO: cart will be fetched when the user is logged in
-  // useEffect(() => {
-  //   const fetchCart = async () => {
-  //     console.log(state.token);
-  //     try {
-  //       const response = await axios.get(
-  //         "http://127.0.0.1:3000/api/v1/carts/my-cart",
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${state.token}`,
-  //           },
-  //         }
-  //       );
-
-  //       // Handle the response data here
-  //       console.log("Cart data:", response.data);
-  //     } catch (error) {
-  //       console.log(state.token);
-  //       console.error("Error fetching the cart:", error);
-  //     }
-  //   };
-
-  //   fetchCart();
-  // }, [state.token]);
-
   return (
     <AuthContext.Provider value={{ state, login, signup, logout }}>
       {children}
