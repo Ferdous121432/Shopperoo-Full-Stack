@@ -11,6 +11,7 @@ import UserOrders from "../components/UserDashboard/UserOrders";
 import Layout from "../components/Layout";
 import { getOrdersByUser } from "../api/order";
 import SpinnerFullPage from "../components/SpinnerFullPage";
+import EditProfile from "../components/UserDashboard/EditProfile";
 
 const UserDashboard = () => {
   const { state, dispatch, logout } = useAuth();
@@ -19,7 +20,17 @@ const UserDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   const user = {
+    address: userData.address,
     avatar: userData.avatar,
+    dateOfBirth: userData.dateOfBirth,
+    email: userData.email,
+    firstName: userData.firstName,
+    fullName: userData.fullName,
+    id: userData.id,
+    lastName: userData.lastName,
+    phoneNumber: userData.phoneNumber,
+    userName: userData.userName,
+    _id: userData._id,
   };
 
   const handleLogout = (e) => {
@@ -53,14 +64,25 @@ const UserDashboard = () => {
     fetchOrders();
   }, []);
 
+  // Edit profile
+  const [editProfile, setEditProfile] = React.useState(false);
+
+  const handleEditProfile = (e) => {
+    e.preventDefault();
+    setEditProfile(true);
+  };
+
   // Tab data
   const tabData = [
     {
       label: "User Details",
       slug: "user-details",
       value: "0",
-      // content: userDetails,
-      content: <UserDetails />,
+      content: editProfile ? (
+        <EditProfile user={user} setEditProfile={setEditProfile} />
+      ) : (
+        <UserDetails handleEditProfile={handleEditProfile} />
+      ),
     },
     {
       label: "My Orders",
@@ -73,7 +95,7 @@ const UserDashboard = () => {
       slug: "wishlist",
       value: "2",
       content:
-        "This is the reviews content. Here you can add customer reviews and ratings.",
+        "This is the wishlist content. Here you can add items to your wishlist.",
     },
     {
       label: "Reviews",

@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
+import Button from "../../reuseableComponents/Button";
+import Constants from "../../../constants";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
-export default function EditProfile({ user }) {
-  const [formData, setFormData] = useState({
+export default function EditProfile({ user, setEditProfile }) {
+  console.log(user);
+  const [formData, setFormData] = React.useState({
     fullName: user.fullName,
     userName: user.userName,
     email: user.email,
     phoneNumber: user.phoneNumber,
-    gender: user.gender,
-    dateOfBirth: user.dateOfBirth,
-    address: user.address || "No address provided",
+    gender: user.gender || "",
+    dateOfBirth: user.dateOfBirth || "",
+    address: user.address || "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -28,26 +37,195 @@ export default function EditProfile({ user }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col">
-        {Object.keys(formData).map((key) => (
-          <div key={key} className="relative mb-6 flex flex-col gap-1 pb-1">
-            <label className="text-sm text-slate-600" htmlFor={key}>
-              {key.charAt(0).toUpperCase() +
-                key.slice(1).replace(/([A-Z])/g, " $1")}
-            </label>
-            <input
-              type={key === "dateOfBirth" ? "date" : "text"}
-              id={key}
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
-              className="text-lg"
+        <div className="relative mb-6 flex flex-col gap-1 pb-1">
+          <TextField
+            id="outlined-basic"
+            value={formData.fullName}
+            onChange={handleChange}
+            label="Name"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: Constants.YELLOW_PRIMARY },
+                "&:hover fieldset": { borderColor: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused fieldset": {
+                  borderColor: Constants.YELLOW_PRIMARY,
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: Constants.BLACK_PRIMARY,
+                "&:hover": { color: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused": { color: Constants.YELLOW_PRIMARY },
+              },
+            }}
+            variant="outlined"
+          />
+        </div>
+        <div className="relative mb-6 flex flex-col gap-1 pb-1">
+          <TextField
+            id="outlined-basic"
+            value={formData.userName}
+            disabled
+            onChange={handleChange}
+            label="User Name"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: Constants.YELLOW_PRIMARY },
+                "&:hover fieldset": { borderColor: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused fieldset": {
+                  borderColor: Constants.YELLOW_PRIMARY,
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: Constants.BLACK_PRIMARY,
+                "&:hover": { color: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused": { color: Constants.YELLOW_PRIMARY },
+              },
+            }}
+            variant="outlined"
+          />
+        </div>
+        <div className="relative mb-6 flex flex-col gap-1 pb-1">
+          <TextField
+            id="outlined-basic"
+            value={formData.email}
+            disabled
+            onChange={handleChange}
+            label="Email"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: Constants.YELLOW_PRIMARY },
+                "&:hover fieldset": { borderColor: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused fieldset": {
+                  borderColor: Constants.YELLOW_PRIMARY,
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: Constants.BLACK_PRIMARY,
+                "&:hover": { color: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused": { color: Constants.YELLOW_PRIMARY },
+              },
+            }}
+            variant="outlined"
+          />
+        </div>
+        <div className="relative mb-6 flex flex-col gap-1 pb-1">
+          <TextField
+            id="outlined-basic"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            label="Phone Number"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: Constants.YELLOW_PRIMARY },
+                "&:hover fieldset": { borderColor: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused fieldset": {
+                  borderColor: Constants.YELLOW_PRIMARY,
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: Constants.BLACK_PRIMARY,
+                "&:hover": { color: Constants.EMARALD_PRIMARY },
+                "&.Mui-focused": { color: Constants.YELLOW_PRIMARY },
+              },
+            }}
+            variant="outlined"
+          />
+        </div>
+        <div className="relative mb-6 flex flex-col gap-1 pb-1">
+          <Autocomplete
+            disablePortal
+            options={["Male", "Female", "Other"]}
+            value={formData.gender}
+            onChange={(event, newValue) => {
+              setFormData({ ...formData, gender: newValue });
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Gender"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: Constants.YELLOW_PRIMARY },
+                    "&:hover fieldset": {
+                      borderColor: Constants.EMARALD_PRIMARY,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: Constants.YELLOW_PRIMARY,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: Constants.BLACK_PRIMARY,
+                    "&:hover": { color: Constants.EMARALD_PRIMARY },
+                    "&.Mui-focused": { color: Constants.YELLOW_PRIMARY },
+                  },
+                }}
+              />
+            )}
+          />
+        </div>
+        <div className="relative mb-6 flex flex-col gap-1 pb-1">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Date of Birth"
+              value={dayjs(formData.dateOfBirth)}
+              onChange={(newValue) => {
+                setFormData({ ...formData, dateOfBirth: newValue });
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: Constants.YELLOW_PRIMARY },
+                  "&:hover fieldset": {
+                    borderColor: Constants.EMARALD_PRIMARY,
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: Constants.YELLOW_PRIMARY,
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: Constants.BLACK_PRIMARY,
+                  "&:hover": { color: Constants.EMARALD_PRIMARY },
+                  "&.Mui-focused": { color: Constants.YELLOW_PRIMARY },
+                },
+                "& .MuiIconButton-root": {
+                  color: Constants.YELLOW_PRIMARY,
+                },
+                "& .MuiPickersDay-root": {
+                  "&.Mui-selected": {
+                    backgroundColor: Constants.YELLOW_PRIMARY,
+                    "&:hover": {
+                      backgroundColor: Constants.EMARALD_PRIMARY,
+                    },
+                  },
+                  "&.Mui-active": {
+                    backgroundColor: Constants.YELLOW_PRIMARY,
+                    "&:hover": {
+                      backgroundColor: Constants.EMARALD_PRIMARY,
+                    },
+                  },
+                },
+              }}
             />
-            <span className="absolute bottom-0 left-0 h-0.5 w-full scale-x-100 bg-yellow-primary"></span>
-          </div>
-        ))}
-        <button type="submit" className="mt-4 bg-blue-500 p-2 text-white">
-          Save Changes
-        </button>
+          </LocalizationProvider>
+        </div>
+      </div>
+
+      <div className="z-10 bg-red-100"></div>
+
+      <div className="flex flex-col justify-center gap-4 py-4 sm:flex-row">
+        <div className="w-full sm:w-1/2">
+          <Button width={"full"} color={Constants.YELLOW_PRIMARY} type="submit">
+            Submit
+          </Button>
+        </div>
+        <div className="w-full sm:w-1/2">
+          <Button
+            width={"full"}
+            color={Constants.YELLOW_PRIMARY}
+            handleClick={() => setEditProfile(false)}
+          >
+            Exit
+          </Button>
+        </div>
       </div>
     </form>
   );

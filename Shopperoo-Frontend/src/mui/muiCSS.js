@@ -7,4 +7,7 @@ export const useStyles = makeStyles({
       backgroundColor: "#14532d",
     },
   },
+  "MuiButtonBase-root-MuiPickersDay-root:focus.Mui-selected": {
+    backgroundColor: "#065f46",
+  },
 });

@@ -7,7 +7,9 @@
     all: unset;
   }
 }
-
+::selection {
+  background: rgba(184, 142, 47, 0.6);
+}
 :root {
   --primary: rgba(184, 142, 47, 1);
 }

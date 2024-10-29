@@ -5,7 +5,7 @@ import Button from "../../reuseableComponents/Button";
 import { Edit } from "@mui/icons-material";
 import EditProfile from "./EditProfile";
 
-export default function UserDetails() {
+export default function UserDetails({ handleEditProfile }) {
   const { state, dispatch, logout } = useAuth();
   const userData = state.userData ? state.userData : [];
   console.log(userData);
@@ -22,14 +22,6 @@ export default function UserDetails() {
     phoneNumber: userData.phoneNumber,
     userName: userData.userName,
     _id: userData._id,
-  };
-
-  // Edit profile
-  const [editProfile, setEditProfile] = React.useState(false);
-
-  const handleEditProfile = (e) => {
-    e.preventDefault();
-    setEditProfile(true);
   };
 
   return (
@@ -80,13 +72,7 @@ export default function UserDetails() {
         </div>
       </div>
 
-      <div className="z-10 bg-red-100">
-        {editProfile && (
-          <div>
-            <EditProfile user={user} />
-          </div>
-        )}
-      </div>
+      <div className="z-10 bg-red-100"></div>
 
       <div className="flex flex-col justify-center gap-4 py-4 sm:flex-row">
         <div className="w-full sm:w-1/2">
