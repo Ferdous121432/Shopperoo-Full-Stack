@@ -253,13 +253,14 @@ export const AuthProvider = ({ children }) => {
           },
         },
       );
-      console.log(response.data.status);
+      // console.log(response.data.status);
       dispatch({
         type: "UPDATE_ME",
         payload: response.data.status,
       });
     } catch (error) {
       console.error("Error updating user data:", error);
+      alert("Error updating user data:", error);
       dispatch({ type: "AUTH_ERROR", payload: error.message });
     }
   };

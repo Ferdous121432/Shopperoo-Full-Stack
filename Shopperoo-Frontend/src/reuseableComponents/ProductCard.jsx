@@ -11,7 +11,8 @@ const ProductCard = ({
   oldPrice,
 }) => {
   return (
-    <article className="flex w-[90%] min-w-[240px] flex-col sm:w-[45%] md:w-[30%] xl:w-[22%]">
+    // <article className="flex w-[94%] min-w-[240px] flex-col justify-self-center sm:w-[45%] md:w-[30%] xl:w-[24%] ">
+    <article className="">
       <div className="text-base max-md:px-5 max-md:pb-24 relative flex aspect-[0.947] w-full flex-col items-end whitespace-nowrap px-7 pb-56 pt-6 font-medium text-white">
         <img
           loading="lazy"

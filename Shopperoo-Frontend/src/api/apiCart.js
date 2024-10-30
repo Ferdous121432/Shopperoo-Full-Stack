@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { baseURL, carItemsURL } from "./apiURL";
+import { toast } from "react-toastify";
 
 // post & patch request will be handle with this route
 export const addToCart = async (credentials, token) => {
@@ -35,6 +36,7 @@ export const addToCart = async (credentials, token) => {
     );
     console.log(response);
     if (response.status === 201) {
+      toast.success(`Product ${credentials.productName} added to cart`);
       console.log(`Product ${credentials.productName} added to cart`);
     } else {
       console.error("Failed to add product to cart");

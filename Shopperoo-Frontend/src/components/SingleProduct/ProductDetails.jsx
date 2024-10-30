@@ -61,6 +61,7 @@ const ProductDetails = ({ product }) => {
 
   const handleAddToCart = async () => {
     addToCart(cart_productDetails, state.token);
+
     setQuantity(1);
   };
 

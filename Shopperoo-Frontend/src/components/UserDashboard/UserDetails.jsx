@@ -25,9 +25,9 @@ export default function UserDetails({ handleEditProfile }) {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col">
-        <div className="relative mb-6 flex flex-col gap-1 pb-1">
+    <div className="flex w-full max-w-[800px] flex-col justify-self-center">
+      <div className="flex w-full flex-col">
+        <div className="relative mb-6 flex w-full flex-col gap-1 pb-1">
           <h2 className="text-sm text-slate-600">Name</h2>
           <h2 className="text-lg">{user.fullName}</h2>
           <span className="absolute bottom-0 left-0 h-0.5 w-full scale-x-100 bg-yellow-primary"></span>

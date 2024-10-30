@@ -213,6 +213,7 @@ exports.deleteBooking = factory.deleteOne(Checkout);
 exports.GetMyOrders = catchAsync(async (req, res, next) => {
   req.query.user = req.user.id;
   let query = Checkout.find(req.query);
+  console.log(req.query);
   const doc = await query;
 
   if (!doc) {

@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 import Constants from "../../../constants";
 import Button from "../../reuseableComponents/Button";
+import { toast } from "react-toastify";
 
 function SignInForm() {
   const { login, state } = useAuth();
@@ -21,13 +22,17 @@ function SignInForm() {
     e.preventDefault();
     try {
       await login(formData);
-      // if (state.isAuthenticated) {
-      //   navigate("/userprofile");
-      // }
     } catch (error) {
-      console.error("Login failed", error);
+      toast.error("Login failed", error);
     }
   };
+
+  useEffect(() => {
+    if (state.isAuthenticated) {
+      toast.success("Login successful");
+      navigate("/userprofile");
+    }
+  }, [state.isAuthenticated, navigate]);
 
   return (
     <section className="mt-8 flex w-4/5 max-w-[600px] flex-col justify-center overflow-hidden rounded-3xl border border-solid border-stone-500 border-opacity-50 bg-white px-8 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">

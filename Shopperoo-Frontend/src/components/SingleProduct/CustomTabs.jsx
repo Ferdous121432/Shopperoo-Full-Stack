@@ -65,7 +65,14 @@ function CustomTabs({ tabData, flexDirection, orientation }) {
                 label={tab.label}
                 value={tab.value}
                 component="a"
-                href={`#${tab.slug}`} // Internal page URL
+                href={`#${tab.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setValue(tab.value);
+                  document
+                    .getElementById(tab.slug)
+                    .scrollIntoView({ behavior: "smooth" });
+                }}
               />
             ))}
           </TabList>

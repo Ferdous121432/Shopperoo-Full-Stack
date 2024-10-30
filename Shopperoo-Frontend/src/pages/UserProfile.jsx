@@ -8,8 +8,10 @@ export default function UserProfile() {
   const { state } = useAuth();
   return (
     <Layout>
-      {state.isAuthenticated === false && <LoginAgain />}
-      <UserDashboard />
+      <div className="flex w-full justify-center">
+        {state.isAuthenticated === false && <LoginAgain />}
+        <UserDashboard />
+      </div>
     </Layout>
   );
 }

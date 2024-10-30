@@ -46,7 +46,6 @@ const UserDashboard = () => {
   };
 
   // User orders
-
   const [orders, setOrders] = React.useState([]);
   useEffect(() => {
     const fetchOrders = async () => {
@@ -62,7 +61,7 @@ const UserDashboard = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [state.token]);
 
   // Edit profile
   const [editProfile, setEditProfile] = React.useState(false);
@@ -131,15 +130,15 @@ const UserDashboard = () => {
   }
 
   return (
-    <div className="relative flex max-w-[1200px] flex-col justify-center gap-4 md:gap-10 lg:mx-20 lg:gap-16 lg:py-20">
-      <div className="flex w-full justify-center py-14 md:py-20">
+    <div className="relative flex w-full max-w-[1200px] flex-col justify-center gap-4 lg:mx-20 lg:gap-8 lg:py-10">
+      <div className="flex w-full justify-center py-8 md:py-12">
         <img
           className="w-[100px] rounded-full md:w-[200px]"
           src={user.avatar}
           alt="User Avatar"
         />
       </div>
-      <div className="flex max-w-[1200px] justify-center">
+      <div className="flex justify-center">
         <CustopTabs
           tabData={tabData}
           flexDirection="column"

@@ -300,28 +300,28 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   createSendToken(user._id, 201, res);
 });
 
-// ggg
+//
 exports.signup = catchAsync(async (req, res, next) => {
   // Roles will be defined by the admin. Default role is user
   if (req.body.role) {
     req.body.role = 'user';
   }
   // Ensure required fields are provided
-  // const requiredFields = [
-  //   'firstName',
-  //   'lastName',
-  //   'email',
-  //   'password',
-  //   'passwordConfirm',
-  // ];
-  // for (const field of requiredFields) {
-  //   if (!req.body[field]) {
-  //     return res.status(400).json({
-  //       status: 'fail',
-  //       message: `Missing required field: ${field}`,
-  //     });
-  //   }
-  // }
+  const requiredFields = [
+    'firstName',
+    'lastName',
+    'email',
+    'password',
+    'passwordConfirm',
+  ];
+  for (const field of requiredFields) {
+    if (!req.body[field]) {
+      return res.status(400).json({
+        status: 'fail',
+        message: `Missing required field: ${field}`,
+      });
+    }
+  }
 
   // check if user with the email already exists
   const user = await User.findOne({ email: req.body.email });
