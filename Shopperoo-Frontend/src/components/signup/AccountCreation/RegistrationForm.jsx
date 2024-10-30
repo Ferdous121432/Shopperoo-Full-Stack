@@ -4,11 +4,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Constants from "../../../../constants";
 import Button from "../../../reuseableComponents/Button";
 import TextField from "@mui/material/TextField";
 import CheckIcon from "@mui/icons-material/Check";
+import { toast } from "react-toastify";
+import validator from "validator";
 
 function RegistrationForm() {
   const { signup, state } = useAuth();
@@ -45,28 +47,28 @@ function RegistrationForm() {
     let error = "";
     switch (name) {
       case "firstName":
-        if (!/^[A-Za-z ]+$/.test(value)) {
+        if (!validator.isAlpha(value, "en-US", { ignore: " " })) {
           error = "Invalid name format";
         }
         break;
       case "lastName":
-        if (!/^[A-Za-z ]+$/.test(value)) {
+        if (!validator.isAlpha(value, "en-US", { ignore: " " })) {
           error = "Invalid name format";
         }
         break;
       case "userName":
-        if (!/^[A-Za-z0-9_]+$/.test(value)) {
+        if (!validator.isAlphanumeric(value, "en-US", { ignore: "_" })) {
           error = "Invalid user name format";
         }
         break;
       case "email":
-        if (!/^[A-Za-z0-9@.]+$/.test(value)) {
+        if (!validator.isEmail(value)) {
           error = "Invalid email format";
         }
         break;
       case "phoneNumber":
-        if (!/^[0-9]{11}$/.test(value)) {
-          error = "Phone number must be exactly 11 digits";
+        if (!validator.isMobilePhone(value, "any", { strictMode: true })) {
+          error = "Invalid phone number format";
         }
         break;
       case "gender":
@@ -87,27 +89,25 @@ function RegistrationForm() {
     e.preventDefault();
     try {
       const response = await signup(formData);
-      // state.signupData === "success" && <Navigate to="/signin" />;
-      console.log(response.data);
-      alert("✌️✌️😒", response.data.data);
     } catch (error) {
-      console.log(error.response);
-      console.log(state.signupError);
-      console.log(state.signupStatus);
       alert("❌❌❌😒", error.response);
     }
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (state.signupStatus === "failed") {
+    if (state.signupStatus === "fail") {
       //FIXME: Toaster for error messages
-      alert("❌❌❌😒", state.signupError);
+      console.log(state.signupData);
+      // Display error message using a toast notification
+      toast.error(`✌️✌️😒❌ ${state.signupData}`);
     }
     if (state.signupStatus === "success") {
-      alert("✌️✌️", state.signupData);
-      <Navigate to="/signin" />;
+      toast(`✌️✌️ ${state.signupData}`);
+      navigate("/signin");
     }
-  }, [state.signupStatus]);
+  }, [state.signupStatus, navigate]);
 
   const muiCustomInput = {
     "& .MuiOutlinedInput-root": {
@@ -142,7 +142,10 @@ function RegistrationForm() {
                 variant="outlined"
                 fullWidth
                 margin="normal"
-                inputProps={{ pattern: "[A-Za-z ]+" }}
+                inputProps={{
+                  pattern: "[A-Za-z0-9@.]+",
+                  title: "Please enter a valid email address",
+                }}
                 error={!!errors.firstName && formData.firstName !== ""}
                 helperText={
                   formData.firstName === "" ? (
@@ -210,13 +213,10 @@ function RegistrationForm() {
                 error={!!errors.email && formData.email !== ""}
                 helperText={
                   formData.email === "" ? (
-                    <span style={{ color: "black" }}>
-                      Last Name is required
-                    </span>
+                    <span style={{ color: "black" }}>Email is required</span>
                   ) : errors.email && formData.email !== "" ? (
                     errors.email
-                  ) : formData.email &&
-                    /^[A-Za-z0-9@.]+$/.test(formData.email) ? (
+                  ) : formData.email && validator.isEmail(formData.email) ? (
                     <CheckIcon
                       style={{
                         color: "green",

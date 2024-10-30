@@ -306,16 +306,33 @@ exports.signup = catchAsync(async (req, res, next) => {
   if (req.body.role) {
     req.body.role = 'user';
   }
+  // Ensure required fields are provided
+  // const requiredFields = [
+  //   'firstName',
+  //   'lastName',
+  //   'email',
+  //   'password',
+  //   'passwordConfirm',
+  // ];
+  // for (const field of requiredFields) {
+  //   if (!req.body[field]) {
+  //     return res.status(400).json({
+  //       status: 'fail',
+  //       message: `Missing required field: ${field}`,
+  //     });
+  //   }
+  // }
 
-  console.log('req.body :', req.body);
   // check if user with the email already exists
   const user = await User.findOne({ email: req.body.email });
   if (user) {
     return res.status(400).json({
-      status: 'failed',
+      status: 'fail',
       message: 'User with this email already exists.',
     });
   }
+
+  console.log('req.body :', req.body);
 
   const newUser = await User.create(req.body);
   console.log(newUser);

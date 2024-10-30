@@ -214,7 +214,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const url = `${baseURL}/${signupURL}`;
       const response = await axios.post(url, signupData);
-      console.log(response.data);
 
       dispatch({
         type: "SIGNUP_SUCCESS",
@@ -231,10 +230,10 @@ export const AuthProvider = ({ children }) => {
           message: error.response.data.message,
         },
       });
-      console.log(error.response.data);
-      console.log(state.signupError);
-      console.log(state.signupStatus);
-      alert("❌❌❌😒", error.response.data.message);
+      // console.log(error.response.data);
+      // console.log(state.signupError);
+      // console.log(state.signupStatus);
+      // alert("❌❌❌😒", error.response.data.message);
     }
   };
   useEffect(() => {

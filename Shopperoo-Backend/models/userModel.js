@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
     },
     userName: {
       type: String,
-      required: [true, 'A user must have a username'],
+      // required: [true, 'A user must have a username'],
       trim: true,
       maxlength: [30, 'A username must have less or equal than 30 characters'],
       validate: [
