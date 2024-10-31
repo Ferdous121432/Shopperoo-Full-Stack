@@ -132,9 +132,11 @@ exports.getProductsByCategory = catchAsync(async (req, res, next) => {
       }
     });
   }
+  const totalProducts = await Product.countDocuments();
 
   res.status(200).json({
     status: 'success',
+    totalLength: totalProducts,
     results: products.length,
     data: {
       products,

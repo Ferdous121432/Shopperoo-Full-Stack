@@ -46,8 +46,7 @@ function Navigation() {
           >
             <Link
               to={`${frontendURL()}/category/${item.id}`}
-              className="relative block cursor-pointer text-black no-underline transition-all duration-500 ease-in-out"
-              style={{ fontSize: ".9rem", padding: "6px 0" }}
+              className="relative block cursor-pointer py-2 text-sm text-black no-underline transition-all duration-500 ease-in-out md:text-md lg:text-lg xl:text-xl"
             >
               {item.title}
             </Link>

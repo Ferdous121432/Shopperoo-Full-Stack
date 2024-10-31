@@ -76,6 +76,14 @@ productSchema.pre('save', function (next) {
   next();
 });
 
+// Query middleware to populate category field
+productSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'categories',
+    select: '-__v',
+  });
+  next();
+});
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;

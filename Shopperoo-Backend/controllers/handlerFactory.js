@@ -33,10 +33,14 @@ exports.getAll = (Model) =>
       });
     }
 
+    const totalProducts = await Model.countDocuments();
+
     res.status(200).json({
       status: 'success',
       requestedAt: req.requestTime,
+      totalLength: doc.length,
       length: doc.length,
+      totalProducts: totalProducts,
       data: {
         data: doc,
       },
