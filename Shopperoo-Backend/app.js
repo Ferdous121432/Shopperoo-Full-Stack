@@ -57,8 +57,8 @@ app.use(cors(corsOptions));
 // Load environment variables
 // dotenv.config({ path: './config.env' });
 
-app.set('trust proxy', true);
-// app.set('trust proxy', 1);
+// app.set('trust proxy', true);
+app.set('trust proxy', 1);
 
 // Set Cross-Origin-Resource-Policy header
 app.use((req, res, next) => {
