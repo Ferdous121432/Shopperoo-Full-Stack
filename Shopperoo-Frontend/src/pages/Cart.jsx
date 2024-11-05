@@ -10,6 +10,7 @@ import CartItemHeader from "../components/Cart/CartItemHeader";
 import { makeMultiplePayments } from "../api/apiCheckout";
 import Breadcrumb from "../reuseableComponents/Breadcrumb";
 import LoginAgain from "../reuseableComponents/LoginAgain";
+import Button from "../reuseableComponents/Button";
 
 // const cartItems = [
 //   {
@@ -26,12 +27,28 @@ const Cart = () => {
   const { state } = useAuth();
   const cart = state.cartData ? state.cartData.cartItems : [];
   const totalPrice = state.cartData ? state.cartData.totalPrice : 0;
-  console.log(cart);
+  console.log(cart.length);
   console.log(totalPrice);
 
   const handleCheckout = () => {
     makeMultiplePayments(cart, state.token);
   };
+
+  if (cart.length === 0) {
+    return (
+      <Layout>
+        <div
+          className="flex flex-col items-center justify-center gap-4 py-10"
+          style={{ height: "50vh" }}
+        >
+          <div>No items in cart</div>
+          <Button handleClick={() => (window.location.href = "/")}>
+            Continue Shopping
+          </Button>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <div className="flex flex-col overflow-hidden bg-white pb-12">
