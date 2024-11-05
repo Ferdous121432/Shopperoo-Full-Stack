@@ -3,13 +3,11 @@
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
-const Product = require('../models/productModel');
+const CartItem = require('../models/cartItemModel');
 const Checkout = require('../models/checkoutModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
-const { create } = require('../models/cartModel');
-const User = require('../models/userModel'); // Add this line to import the User model
-const { meta } = require('eslint-plugin-prettier');
+const User = require('../models/userModel');
 
 const stripe = require('stripe')(
   'sk_test_51Q8ouGIeuxFSv7HPlr9sfndE1pFAldh7omOqoAd44Lquoh0PcZbKLS1p267wdRlk9kfdMo4rPlZOri9fsJdY7ojU00VEDXXFI0',
@@ -20,7 +18,7 @@ const stripe = require('stripe')(
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
   const products = req.body;
-  console.log('Booking controller ❌❌❌❌❌ Product', products);
+  // console.log('Booking controller ❌❌❌❌❌ Product', products);
   const lineItems = products.map((product) => {
     const image = product.image;
     // const image = `http://localhost:3000/img/products/cover-image/${product.image.split('/')[-1]}`;
@@ -78,7 +76,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     // ],
   });
 
-  console.log('Checkout controller ❌❌❌❌❌', session);
+  // console.log('Checkout controller ❌❌❌❌❌', session);
 
   res.status(200).json({
     status: 'success',
@@ -145,6 +143,11 @@ const createProductCheckout = async (session, invoice) => {
 
   console.log('products ⏩⏩', products);
 
+  await CartItem.deleteMany({
+    user_id: user,
+  });
+  console.log('😍😍😍😍', user);
+
   const data = await Checkout.create({
     session_id,
     currency,
@@ -156,8 +159,9 @@ const createProductCheckout = async (session, invoice) => {
     payment_method,
     invoice_pdf,
   });
+  console.log('😍😍😍😍', user);
 
-  console.log('Final checkout data after creating DB ⏩😁', data);
+  // console.log('Final checkout data after creating DB ⏩😁', data);
 };
 
 exports.webhookCheckout = async (req, res, next) => {

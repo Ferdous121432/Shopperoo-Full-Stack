@@ -9,7 +9,6 @@ export default function UserProfile() {
   return (
     <Layout>
       <div className="flex w-full justify-center">
-        {state.isAuthenticated === false && <LoginAgain />}
         <UserDashboard />
       </div>
     </Layout>
